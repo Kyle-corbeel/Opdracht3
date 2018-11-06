@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 
 public class MyServer implements Login {
-    HashMap ipMap;
+    static HashMap<String, Integer> ipMap;
     protected MyServer() throws RemoteException {
     }
 
@@ -29,6 +29,7 @@ public class MyServer implements Login {
             {
                 load(ipFile);
             }
+            saveFile(ipFile);
             MyServer obj = new MyServer();
             Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
             Registry r = LocateRegistry.createRegistry(1099);
@@ -39,15 +40,28 @@ public class MyServer implements Login {
         }
     }
 
+    private static void saveFile(File saveFile) throws IOException {
+        Writer writer = new BufferedWriter(new FileWriter(saveFile));
+        for (String name: ipMap.keySet()){
+
+            String key =name.toString();
+            String value = ipMap.get(name).toString();
+            writer.write(key + " " + value +"\n");
+
+
+
+        }
+    }
+
     private static void load(File loadFile) throws IOException {
         HashMap<String, Integer> ipTemp = new HashMap<String, Integer>();
         BufferedReader br = new BufferedReader(new FileReader(loadFile));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] splitLine = line.split(" ");
-                ipTemp.put(splitLine[0], Integer.parseInt(splitLine[1]));
-            }
+        String line;
+        while ((line = br.readLine()) != null)
+        {
+            String[] splitLine = line.split(" ");
+            ipTemp.put(splitLine[0], Integer.parseInt(splitLine[1]));
         }
-
+        ipMap = ipTemp;
     }
 }
