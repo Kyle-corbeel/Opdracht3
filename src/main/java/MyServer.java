@@ -40,12 +40,12 @@ public class MyServer implements Login {
     }
 
     private static void load(File loadFile) throws IOException {
-        HashMap ipTemp = new HashMap();
+        HashMap<String, Integer> ipTemp = new HashMap<String, Integer>();
         BufferedReader br = new BufferedReader(new FileReader(loadFile));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] splitLine = line.split(" ");
-                ipTemp.put()
+                ipTemp.put(splitLine[0], Integer.parseInt(splitLine[1]));
             }
         }
 
