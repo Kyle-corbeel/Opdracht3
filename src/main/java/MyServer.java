@@ -1,27 +1,34 @@
+import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 
 public class MyServer implements Login {
+    HashMap ipMap;
     protected MyServer() throws RemoteException {
     }
 
 
-    public int getBalance() throws RemoteException {
-        return(0);
+    public Boolean register(String ip) throws RemoteException {
+        int hash;
+        hash = Math.abs(ip.hashCode()) % 327680;
+
+        return true;
     }
 
-    public int withdraw(int amount) throws RemoteException {
-        return(0);
-    }
-
-    public int deposit(int amount) throws RemoteException {
-        return(0);
+    public String getOwner(String fileName) throws RemoteException {
+        return null;
     }
 
     public static void main(String args[]) {
         try {
+            File ipFile = new File("IpMap.xml");
+            if(ipFile.exists())
+            {
+                load(ipFile);
+            }
             MyServer obj = new MyServer();
             Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
             Registry r = LocateRegistry.createRegistry(1099);
@@ -30,5 +37,17 @@ public class MyServer implements Login {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void load(File loadFile) throws IOException {
+        HashMap ipTemp = new HashMap();
+        BufferedReader br = new BufferedReader(new FileReader(loadFile));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] splitLine = line.split(" ");
+                ipTemp.put()
+            }
+        }
+
     }
 }
