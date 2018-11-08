@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class MyServer implements Login {
     static HashMap<Integer, String> ipMap;
+    static File ipFile;
+
     protected MyServer() throws RemoteException {
     }
 
@@ -16,6 +18,13 @@ public class MyServer implements Login {
         int hash;
         hash = Math.abs(ip.hashCode()) % 327680;
         ipMap.put(hash, ip);
+        try {
+            saveFile(ipFile);
+            System.out.println("Saved: Hash: "+hash+"\tHost: "+ip);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 
@@ -23,6 +32,12 @@ public class MyServer implements Login {
         int hash;
         hash = Math.abs(ip.hashCode()) % 327680;
         ipMap.remove(hash);
+        try {
+            saveFile(ipFile);
+            System.out.println("Removed: Hash: "+hash+"\tHost: "+ip);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -30,6 +45,7 @@ public class MyServer implements Login {
         int hash;
         int closeKey = 0;
         hash = Math.abs(fileName.hashCode()) % 327680;
+        System.out.println(hash);
         for (Integer key: ipMap.keySet()){
 
             if(key<hash)
@@ -40,16 +56,18 @@ public class MyServer implements Login {
                 }
             }
         }
+
         if(closeKey ==0 )
         {
             closeKey = Collections.max(ipMap.keySet());
         }
+        System.out.println(closeKey);
         return ipMap.get(closeKey);
     }
 
     public static void main(String args[]) {
         try {
-            File ipFile = new File("IpMap.xml");
+            ipFile = new File("IpMap.xml");
             if(ipFile.exists())
             {
                 loadFile(ipFile);
@@ -76,6 +94,7 @@ public class MyServer implements Login {
 
 
         }
+        writer.close();
     }
 
     private static void loadFile(File loadFile) throws IOException {
