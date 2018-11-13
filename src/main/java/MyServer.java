@@ -1,4 +1,6 @@
 import java.io.*;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -14,18 +16,24 @@ public class MyServer implements Login {
     }
 
 
-    public Boolean register(String ip) throws RemoteException {
+    public Boolean register(String nodeName) throws RemoteException {
         int hash;
-        hash = Math.abs(ip.hashCode()) % 327680;
-        ipMap.put(hash, ip);
+        hash = Math.abs(nodeName.hashCode()) % 327680;
+        ipMap.put(hash, nodeName);
         try {
             saveFile(ipFile);
-            System.out.println("Saved: Hash: "+hash+"\tHost: "+ip);
+            System.out.println("Saved: Hash: "+hash+"\tHost: "+nodeName);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return true;
+    }
+
+    public int hash(String nodeName)throws RemoteException {
+        int hash;
+        hash = Math.abs(nodeName.hashCode()) % 327680;
+        return hash;
     }
 
     public Boolean remove(String ip) throws RemoteException {
@@ -73,10 +81,15 @@ public class MyServer implements Login {
                 loadFile(ipFile);
             }
             MyServer obj = new MyServer();
+            MulticastPublisher publisher = new MulticastPublisher();
+            MulticastReceiver receiver = new MulticastReceiver("NameServer");
+            receiver.start();
             Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
             Registry r = LocateRegistry.createRegistry(1099);
             r.bind("myserver", stub);
             System.out.println("Naming server is ready");
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
