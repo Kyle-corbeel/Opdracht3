@@ -72,6 +72,11 @@ public class MyServer implements Login {
             {
                 loadFile(ipFile);
             }
+            else
+            {
+                ipFile.createNewFile();
+
+            }
             MyServer obj = new MyServer();
             Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
             Registry r = LocateRegistry.createRegistry(1099);
