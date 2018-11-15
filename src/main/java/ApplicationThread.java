@@ -22,7 +22,7 @@ public class ApplicationThread extends Thread {
             theServer = (Login) Naming.lookup("rmi://localhost/myserver");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String s = br.readLine();
-            MulticastPublisher publisher = new MulticastPublisher();
+            MulticastPublisher publisher = new MulticastPublisher(name);
 
             Boolean cont = true;
             theServer.register(name);
@@ -42,7 +42,7 @@ public class ApplicationThread extends Thread {
                 if (s.equals("2")) {
                     System.out.println("Geef messagetekst: ");
                     String mess = br.readLine();
-                    publisher.multicast(mess + "\tsender:" +name);
+                    publisher.multicast(mess);
                 }
             /*if(s.equals("2")){
                 System.out.println("Wie wenst u te verwijderen?");
