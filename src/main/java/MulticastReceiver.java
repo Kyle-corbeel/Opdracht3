@@ -44,4 +44,12 @@ public class MulticastReceiver extends Thread {
         }
 
     }
+
+    public boolean hasMessage() {
+        return true;
+    }
+
+    public String getMessage() {
+        return null;
+    }
 }
