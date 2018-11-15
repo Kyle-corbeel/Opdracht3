@@ -34,6 +34,17 @@ public class MyClient {
         receiver.start();
         app.start();
 
+        //Bootstrap
+        MulticastPublisher publisher = new MulticastPublisher(ip+":"+naam);
+        publisher.multicast("Bootstrap");
+
+        while(true){
+            if(receiver.hasMessage()){
+                receiver.getMessage();
+            }
+
+        }
+
 
         /*while(cont)
         {
