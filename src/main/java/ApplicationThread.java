@@ -1,14 +1,14 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 public class ApplicationThread extends Thread {
 
     private String name;
+    private static boolean hasMessage=false;
+    protected String message ="";
+
+
 
     public ApplicationThread(String nodeName) {
         this.name = nodeName;
@@ -35,14 +35,18 @@ public class ApplicationThread extends Thread {
                 System.out.println("4:Sluit af");
                 s = br.readLine();
                 if (s.equals("1")) {
+                    hasMessage=true;
                     System.out.println("Wat is de filenaam waarvan u de owner wilt weten?");
                     String fName = br.readLine();
                     System.out.println("De fileowner is " + theServer.getOwner(fName));
+                    message="getFileOwner"+":"+fName;
                 }
                 if (s.equals("2")) {
+                    hasMessage=true;
                     System.out.println("Geef messagetekst: ");
                     String mess = br.readLine();
                     publisher.multicast(mess);
+                    message="sendMessText"+":"+mess;
                 }
             /*if(s.equals("2")){
                 System.out.println("Wie wenst u te verwijderen?");
@@ -50,7 +54,9 @@ public class ApplicationThread extends Thread {
                 System.out.println("Verwijderd:" +theServer.remove(dude));
             }*/
                 if (s.equals("4")) {
+                    hasMessage=true;
                     cont = false;
+                    message="shutdown";
                 }
 
             }
@@ -58,5 +64,12 @@ public class ApplicationThread extends Thread {
             e.printStackTrace();
 
         }
+    }
+    public boolean hasCommand(){
+        return hasMessage;
+    }
+    public String getMessage(){
+        hasMessage = false;
+        return message;
     }
 }

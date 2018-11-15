@@ -48,6 +48,10 @@ public class MyServer implements Login {
                         publisher.multicast("BootstrapReply");
 
                     }
+                    if(message.contains("shutdown")){
+                        String str = message.split("\tSender:")[1].split(":")[0];
+                        remove(str);
+                    }
                 }
             }
 
@@ -93,7 +97,7 @@ public class MyServer implements Login {
         return hash;
     }
 
-    public Boolean remove(String ip) throws RemoteException {
+    public static Boolean remove(String ip) throws RemoteException {
         int hash;
         hash = Math.abs(ip.hashCode()) % 327680;
         ipMap.remove(hash);
