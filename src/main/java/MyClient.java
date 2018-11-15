@@ -9,35 +9,33 @@ import java.net.DatagramSocket;
 public class MyClient {
 
     public static void main(String[] args) throws IOException, NotBoundException {
+        //Startup
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welkom bij RMI filesharing, gelieve uw naam in te geven:");
         String s = br.readLine();
         String naam = s;
         String ip="";
-
-
-
-        Login theServer = (Login) Naming.lookup("rmi://localhost/myserver");
-        Boolean cont = true;
-
-
-
+        //get IP
         try{
             final DatagramSocket socket = new DatagramSocket();
             socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
             ip = socket.getLocalAddress().getHostAddress();
             System.out.println(ip);
-            theServer.register(ip+":"+naam);
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        MulticastPublisher publisher = new MulticastPublisher();
+
+
+
+        //Start threads
         MulticastReceiver receiver = new MulticastReceiver(ip+":"+naam);
+        ApplicationThread app = new ApplicationThread(ip + ":" +naam);
         receiver.start();
+        app.start();
 
 
-        while(cont)
+        /*while(cont)
         {
             System.out.println("Wat wilt u doen:");
             System.out.println("1:Get file owner");
@@ -56,16 +54,16 @@ public class MyClient {
                 String mess = br.readLine();
                 publisher.multicast(mess+"\tsender:"+ip+":"+naam);
             }
-            /*if(s.equals("2")){
+            *//*if(s.equals("2")){
                 System.out.println("Wie wenst u te verwijderen?");
                 String dude = br.readLine();
                 System.out.println("Verwijderd:" +theServer.remove(dude));
-            }*/
+            }*//*
             if(s.equals("4")){
                 cont = false;
             }
 
-        }
+        }*/
 
     }
 
