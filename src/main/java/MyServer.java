@@ -11,12 +11,69 @@ import java.util.HashMap;
 public class MyServer implements Login {
     static HashMap<Integer, String> ipMap;
     static File ipFile;
+    static String ip;
 
     protected MyServer() throws RemoteException {
     }
 
+    public static void main(String args[]) {
+        try {
+            //Checking or creating IpMap
+            ipFile = new File("IpMap.xml");
+            if(ipFile.exists())
+            {
+                loadFile(ipFile);
+            }
+            ip = getIp();
 
-    public Boolean register(String nodeName) throws RemoteException {
+            //Opstarten multicast
+            MulticastPublisher publisher = new MulticastPublisher(ip +":NameServer");
+            MulticastReceiver receiver = new MulticastReceiver("NameServer");
+            receiver.start();
+
+            //Opstarten RMI
+            MyServer obj = new MyServer();
+            Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
+            Registry r = LocateRegistry.createRegistry(1099);
+            r.bind("myserver", stub);
+            System.out.println("Naming server is ready");
+
+            String message = new String();
+
+            while(true)
+            {
+                if(receiver.hasMessage()){
+                    message = receiver.getMessage();
+                    if(message.contains("Bootstrap")){
+                        publisher.multicast("BootstrapReply");
+
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getIp()
+    {
+        try{
+            String ip = new String();
+            final DatagramSocket socket = new DatagramSocket();
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
+            ip = socket.getLocalAddress().getHostAddress();
+            return ip;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    public HashMap<Integer, String> register(String nodeName) throws RemoteException {
         int hash;
         hash = Math.abs(nodeName.hashCode()) % 327680;
         ipMap.put(hash, nodeName);
@@ -27,7 +84,7 @@ public class MyServer implements Login {
             e.printStackTrace();
         }
 
-        return true;
+        return ipMap;
     }
 
     public int hash(String nodeName)throws RemoteException {
@@ -71,28 +128,6 @@ public class MyServer implements Login {
         }
         System.out.println(closeKey);
         return ipMap.get(closeKey);
-    }
-
-    public static void main(String args[]) {
-        try {
-            ipFile = new File("IpMap.xml");
-            if(ipFile.exists())
-            {
-                loadFile(ipFile);
-            }
-            MyServer obj = new MyServer();
-            MulticastPublisher publisher = new MulticastPublisher();
-            MulticastReceiver receiver = new MulticastReceiver("NameServer");
-            receiver.start();
-            Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
-            Registry r = LocateRegistry.createRegistry(1099);
-            r.bind("myserver", stub);
-            System.out.println("Naming server is ready");
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private static void saveFile(File saveFile) throws IOException {
