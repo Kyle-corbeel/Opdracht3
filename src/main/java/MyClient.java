@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.net.DatagramSocket;
+import java.rmi.RemoteException;
 
 public class MyClient {
 
@@ -15,6 +16,7 @@ public class MyClient {
         String s = br.readLine();
         String naam = s;
         String ip="";
+        String message="";
         //get IP
         try{
             final DatagramSocket socket = new DatagramSocket();
@@ -33,6 +35,21 @@ public class MyClient {
         ApplicationThread app = new ApplicationThread(ip + ":" +naam);
         receiver.start();
         app.start();
+
+        //Bootstrap
+        MulticastPublisher publisher = new MulticastPublisher(ip+":"+naam);
+        publisher.multicast("Bootstrap");
+        RmiHandler rmiboi = new RmiHandler(ip+":"+naam);
+
+        while(true){
+            if(receiver.hasMessage()){
+                message = receiver.getMessage();
+                if(message.contains("BootstrapReply")){
+                    rmiboi.initialise(message.split("\tsender:")[1].split(":")[0]);
+                }
+            }
+
+        }
 
 
         /*while(cont)
@@ -65,6 +82,12 @@ public class MyClient {
 
         }*/
 
+    }
+
+    public static int hash(String nodeName) {
+        int hash;
+        hash = Math.abs(nodeName.hashCode()) % 327680;
+        return hash;
     }
 
     public static void multiCastToIP(){

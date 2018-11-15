@@ -8,6 +8,8 @@ public class MulticastReceiver extends Thread {
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
     protected String thisNode="";
+    protected boolean gotMessage = false;
+    protected String received ="";
 
     public MulticastReceiver(String s){
         thisNode = s;
@@ -24,11 +26,12 @@ public class MulticastReceiver extends Thread {
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-                String received = new String(packet.getData(), 0, packet.getLength());
+                received = new String(packet.getData(), 0, packet.getLength());
 
                 if(received.length()>1 && received.contains("\tsender:")){
                     sender=received.split("\tsender:")[1];
                     if(!sender.equals(thisNode)) {
+                        gotMessage = true;
                         System.out.println(received);
                         if (received.equals("end")) {
                             break;
@@ -45,11 +48,12 @@ public class MulticastReceiver extends Thread {
 
     }
 
-    public boolean hasMessage() {
-        return true;
+    public boolean hasMessage(){
+        return gotMessage;
     }
 
-    public String getMessage() {
-        return null;
+    public String getMessage(){
+        gotMessage = false;
+        return received;
     }
 }
