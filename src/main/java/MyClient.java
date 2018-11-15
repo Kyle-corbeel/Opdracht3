@@ -6,8 +6,13 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.net.DatagramSocket;
 import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class MyClient {
+    private static String nodeName="";
+    private static String nextNode="";
+    private static String previousNode="";
 
     public static void main(String[] args) throws IOException, NotBoundException {
         //Startup
@@ -26,26 +31,28 @@ public class MyClient {
         }catch(Exception e){
             e.printStackTrace();
         }
+        nodeName=ip+":"+naam;
 
 
 
 
         //Start threads
-        MulticastReceiver receiver = new MulticastReceiver(ip+":"+naam);
-        ApplicationThread app = new ApplicationThread(ip + ":" +naam);
+        MulticastReceiver receiver = new MulticastReceiver(nodeName);
+        ApplicationThread app = new ApplicationThread(nodeName);
         receiver.start();
         app.start();
 
         //Bootstrap
-        MulticastPublisher publisher = new MulticastPublisher(ip+":"+naam);
+        MulticastPublisher publisher = new MulticastPublisher(nodeName);
         publisher.multicast("Bootstrap");
-        RmiHandler rmiboi = new RmiHandler(ip+":"+naam);
+        RmiHandler rmiboi = new RmiHandler(nodeName);
 
         while(true){
             if(receiver.hasMessage()){
                 message = receiver.getMessage();
                 if(message.contains("BootstrapReply")){
                     rmiboi.initialise(message.split("\tsender:")[1].split(":")[0]);
+                    rearrange();
                 }
             }
 
@@ -82,6 +89,51 @@ public class MyClient {
 
         }*/
 
+    }
+
+    private void getNextNode(RmiHandler rmiboi){
+        HashMap<Integer,String> ipMap = rmiboi.getMap();
+        int hash;
+        int closeKey = 327680;
+        hash = hash(nodeName);
+        for (Integer key: ipMap.keySet()){
+
+            if(key>hash)
+            {
+                if(key<closeKey)
+                {
+                    closeKey = key;
+                }
+            }
+        }
+
+        if(closeKey ==327680)
+        {
+            closeKey = Collections.min(ipMap.keySet());
+        }
+        nextNode=ipMap.get(closeKey);
+    }
+    public void getPreviousNode(RmiHandler rmiboi){
+        HashMap<Integer,String> ipMap=rmiboi.getMap();
+        int hash;
+        int closeKey = 0;
+        hash = hash(nodeName);
+        for (Integer key: ipMap.keySet()){
+
+            if(key<hash)
+            {
+                if(key>closeKey)
+                {
+                    closeKey = key;
+                }
+            }
+        }
+
+        if(closeKey ==0 )
+        {
+            closeKey = Collections.max(ipMap.keySet());
+        }
+        previousNode=ipMap.get(closeKey);
     }
 
     public static int hash(String nodeName) {
