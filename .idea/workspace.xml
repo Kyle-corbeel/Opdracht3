@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d47f5f35-c645-4837-b716-d4849362a42c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ApplicationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ApplicationThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MulticastReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MulticastReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RmiHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RmiHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -62,7 +59,7 @@
     <session id="716455721">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.6" value="1" />
@@ -87,14 +84,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="2370" />
-          <entry key="txt" value="27" />
+          <entry key="java" value="2557" />
+          <entry key="txt" value="131" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2370" />
-          <entry key="PLAIN_TEXT" value="27" />
+          <entry key="JAVA" value="2557" />
+          <entry key="PLAIN_TEXT" value="131" />
         </counts>
       </usages-collector>
     </session>
@@ -113,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/MyServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="52" column="36" lean-forward="true" selection-start-line="52" selection-start-column="36" selection-end-line="52" selection-end-column="36" />
+            <state relative-caret-position="221">
+              <caret line="55" column="57" selection-start-line="55" selection-start-column="57" selection-end-line="55" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -125,11 +122,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/RmiHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+            <state relative-caret-position="128">
+              <caret line="23" column="13" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
               <folding>
-                <element signature="e#303#304#0" expanded="true" />
-                <element signature="e#341#342#0" expanded="true" />
+                <element signature="e#476#477#0" expanded="true" />
+                <element signature="e#514#515#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,8 +144,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/MyClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1173">
-              <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
+            <state relative-caret-position="400">
+              <caret line="86" column="25" lean-forward="true" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -156,11 +156,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/MulticastReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+            <state relative-caret-position="408">
+              <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
               <folding>
-                <element signature="e#1520#1521#0" expanded="true" />
-                <element signature="e#1553#1554#0" expanded="true" />
+                <element signature="e#412#413#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#1523#1524#0" expanded="true" />
+                <element signature="e#1556#1557#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -206,6 +208,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Satish Singh &lt;raju-52@hotmail.com&gt;" />
         <option value="Kyle" />
         <option value="kyle" />
         <option value="Kyle-corbeel" />
@@ -225,9 +228,10 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ApplicationThread.java" />
         <option value="$PROJECT_DIR$/src/main/java/RmiHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MyServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/Login.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MulticastReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/MyClient.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MyServer.java" />
       </list>
     </option>
   </component>
@@ -287,7 +291,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542704726117" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542706423428" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -387,12 +391,18 @@
       <option name="project" value="LOCAL" />
       <updated>1542274129312</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap">
+      <created>1542705128387</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1542705128387</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.12633263" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -458,7 +468,8 @@
     <MESSAGE value="test" />
     <MESSAGE value="Base" />
     <MESSAGE value="Verbeter bootstrap myClient" />
-    <option name="LAST_COMMIT_MESSAGE" value="Verbeter bootstrap myClient" />
+    <MESSAGE value="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
@@ -478,13 +489,22 @@
     <entry file="file://$PROJECT_DIR$/Opdracht3.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ApplicationThread.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
+        <state relative-caret-position="85">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/MulticastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
           <folding>
-            <element signature="e#2157#2158#0" expanded="true" />
-            <element signature="e#2190#2191#0" expanded="true" />
+            <element signature="e#412#413#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="true" />
+            <element signature="e#1556#1557#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -496,49 +516,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MulticastReceiver.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ApplicationThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="497">
+          <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
           <folding>
-            <element signature="e#1520#1521#0" expanded="true" />
-            <element signature="e#1553#1554#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RmiHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
-          <folding>
-            <element signature="e#303#304#0" expanded="true" />
-            <element signature="e#341#342#0" expanded="true" />
+            <element signature="e#2157#2158#0" expanded="true" />
+            <element signature="e#2190#2191#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MyServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="52" column="36" lean-forward="true" selection-start-line="52" selection-start-column="36" selection-end-line="52" selection-end-column="36" />
+        <state relative-caret-position="221">
+          <caret line="55" column="57" selection-start-line="55" selection-start-column="57" selection-end-line="55" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RmiHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="23" column="13" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <element signature="e#476#477#0" expanded="true" />
+            <element signature="e#514#515#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MyClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1173">
-          <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
+        <state relative-caret-position="400">
+          <caret line="86" column="25" lean-forward="true" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

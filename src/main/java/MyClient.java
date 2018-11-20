@@ -51,36 +51,42 @@ public class MyClient {
 
         //BootstrapReplyHandler
         while(running){
-            if(receiver.hasMessage()){
-                message = receiver.getMessage();
-                if(message.contains("BootstrapReply")){
-                    rmiHandler.initialise(message.split("\tsender:")[1].split(":")[0]);
-                    //rearrange();
-                    //hij calculate zijn positie
-                    getNextNode(rmiHandler); //nextnode
-                    getPreviousNode(rmiHandler); //previous node
-                }
-                if(message.contains("shutdown")){
-                    if(previousNode.equals(message.split("\tsender:")[1].split(":")[0])){
-                        previousNode=message.split("\tsender:")[0].split(":")[1];
+            try {
+                if (receiver.hasMessage()) {
+                    message = receiver.getMessage();
+                    if (message.contains("BootstrapReply")) {
+                        rmiHandler.initialise(message.split("\tsender:")[1].split(":")[0]);
+                        //rearrange();
+                        //hij calculate zijn positie
+                        getNextNode(rmiHandler); //nextnode
+                        getPreviousNode(rmiHandler); //previous node
                     }
-                    if(nextNode.equals((message.split("\tsender:")[1].split(":")[0]))){
-                        nextNode=message.split("\tsender:")[0].split(":")[3];
+                    if (message.contains("shutdown")) {
+                        if (previousNode.equals(message.split("\tsender:")[1].split(":")[0])) {
+                            previousNode = message.split("\tsender:")[0].split(":")[1];
+                        }
+                        if (nextNode.equals((message.split("\tsender:")[1].split(":")[0]))) {
+                            nextNode = message.split("\tsender:")[0].split(":")[3];
+                        }
+                        running = false;
                     }
-                    running=false;
                 }
-            }
-            if((app.hasCommand())){
-                String command = app.getMessage();
-                if(command.equals("shutdown")){
-                    shutdown(publisher);
+                if ((app.hasCommand())) {
+                    String command = app.getMessage();
+                    if (command.equals("shutdown")) {
+                        shutdown(publisher);
+                    }
+                    if (command.contains("sendMessText")) {
+                        //gebeurt in applicationthread.
+                    }
+                    if (command.contains("getFileOwner")) {
+                        rmiHandler.getOwner(command.split(":")[1]);
+                    }
                 }
-                if(command.contains("sendMessText")){
-                    //gebeurt in applicationthread.
-                }
-                if(command.contains("getFileOwner")){
-                    rmiHandler.getOwner(command.split(":")[1]);
-                }
+            }catch(Exception e){
+                //FAILURE
+                //hier komt de multicast
+                publisher.multicast("Failed"); //FAILURE 1)
             }
         }
 

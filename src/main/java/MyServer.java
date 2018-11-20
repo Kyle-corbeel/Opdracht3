@@ -52,6 +52,8 @@ public class MyServer implements Login {
                         String str = message.split("\tSender:")[1].split(":")[0];
                         remove(str);
                     }
+                    if("Failed")
+                        //stuur nieuwe ipmap naar iederen
                 }
             }
 
