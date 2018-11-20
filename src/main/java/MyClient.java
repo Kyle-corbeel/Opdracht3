@@ -92,6 +92,7 @@ public class MyClient {
                 }
 
 
+
                 if (app.hasCommand()) {
                     String command = app.getCommand();
                     if (command.equals("shutdown")) {
