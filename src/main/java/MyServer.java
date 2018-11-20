@@ -23,6 +23,7 @@ public class MyServer implements Login {
 
         try {
             //Checking or creating IpMap
+            ipMap = new HashMap<Integer, String>();
             ipFile = new File("IpMap.xml");
             if(ipFile.exists())
             {
@@ -47,10 +48,12 @@ public class MyServer implements Login {
             {
                 if(receiver.hasMessage()){
                     message = receiver.getMessage();
+                    System.out.println(message.contains("Bootstrap"));
 
                     if(message.contains("Bootstrap")){
                         addToMap(message.getSender());
-                        publisher.multicast("BootstrapReply "+countNodes());
+                        System.out.println("rebroadcasten");
+                        publisher.multicast("BootstrapReply "+countNodes());        //Wilt nog geen reply geven, contains niet goed?
 
                     }
                     if(message.contains("Shut")){
@@ -163,6 +166,7 @@ public class MyServer implements Login {
 
 
         }
+        System.out.println("Wrote file");
         writer.close();
     }
 
@@ -176,6 +180,8 @@ public class MyServer implements Login {
             ipTemp.put(Integer.parseInt(splitLine[0]), splitLine[1]);
         }
         ipMap = ipTemp;
+
+        System.out.println("loaded file");
     }
 
     private static int countNodes(){

@@ -24,13 +24,12 @@ public class RmiHandler {
     public void initialise(String serverIp){
 
         try {
-            theServer = (Login) Naming.lookup("rmi://"+serverIp+"/myserver");
+            theServer = (Login) Naming.lookup("rmi://"+"localhost"+"/myserver");        //Later localhost vervangen door serverIP
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String s = br.readLine();
             MulticastPublisher publisher = new MulticastPublisher(nodeName);
 
-            Boolean cont = true;
-            ipMap = theServer.register(nodeName);
+            //ipMap = theServer.register(nodeName);
             initialised=true;
             
         } catch (Exception e) {

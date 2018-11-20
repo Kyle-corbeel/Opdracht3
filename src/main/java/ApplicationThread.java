@@ -15,25 +15,30 @@ public class ApplicationThread extends Thread {
 
     }
 
+    public void initialise(){
+
+    }
+
     public void run() {
         //Connection to rmi
         Login theServer = null;
         try {
+            //System.out.println("tot hier");
             theServer = (Login) Naming.lookup("rmi://localhost/myserver");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String s = br.readLine();
+            //String s = br.readLine();
             MulticastPublisher publisher = new MulticastPublisher(name);
 
             Boolean cont = true;
             theServer.register(name);
+
             while (cont) {
                 System.out.println("Wat wilt u doen:");
                 System.out.println("1:Get file owner");
                 System.out.println("2:Send multicast");
-                //System.out.println("2: Delete dude");
 
                 System.out.println("4:Sluit af");
-                s = br.readLine();
+                String s = br.readLine();
                 if (s.equals("1")) {
                     hasMessage=true;
                     System.out.println("Wat is de filenaam waarvan u de owner wilt weten?");
@@ -57,6 +62,7 @@ public class ApplicationThread extends Thread {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("An error has occured");
 
         }
     }

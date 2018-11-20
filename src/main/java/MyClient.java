@@ -18,7 +18,7 @@ public class MyClient {
     private static int myHash=0;
     private static String myHashString="";
 
-    public void main(String[] args) throws IOException, NotBoundException {
+    public static void main(String[] args) throws IOException {
         //Startup
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welkom bij RMI filesharing, gelieve uw naam in te geven:");
@@ -31,7 +31,6 @@ public class MyClient {
             final DatagramSocket socket = new DatagramSocket();
             socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
             ip = socket.getLocalAddress().getHostAddress();
-            System.out.println(ip);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,64 +54,59 @@ public class MyClient {
 
 
         //BootstrapReplyHandler
-        while (running) {
-            try {
-                if (receiver.hasMessage()) {
-                    Message message = receiver.getMessage();
+        while (running) try {
+            if (receiver.hasMessage()) {
+                Message message = receiver.getMessage();
+                System.out.println(message);
 
-                    if (message.contains("Bootstrap")) {
-                        int hash = hash(message.getSender());
-                        if(isPrevious(hash)){
-                            previousNode = hash;
-                        }else if(isNext(hash)){
-                            publisher.multicast("BootstrapReply "+Integer.toString(nextNode));
-                            nextNode = hash;            //Respond to new node that i'm his previous, and that next is now his next
-                        }
-                    }
-                    if ((!rmiHandler.hasServer()) && message.contains("BootstrapReply") && message.getSenderName().equals("NameServer)")) {
-                        String serverIp = message.getSenderIp();
-                        rmiHandler.initialise(serverIp);
-                        if(Integer.parseInt(message.getContent().split(" ")[1]) < 1){
-                            nextNode=myHash;
-                            previousNode=myHash;
-                        }
-                    }
-                    if(message.contains("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")){
-                        previousNode = hash(message.getSender());
-                        nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
-                    }
-                    if(message.contains("Shut") && message.contains(myHashString)){
-                        if(message.getContent().split(" ")[1].equals(myHashString)){           //Ik ben previous node van de shutdowner
-                            nextNode = Integer.parseInt(message.getContent().split(" ")[2]);
-                        }else{                                                                       //Ik ben de next node van de shutdowner
-                            previousNode = Integer.parseInt(message.getContent().split(" ")[1]);
-                        }
-
+                if (message.contains("Bootstrap")) {
+                    int hash = hash(message.getSender());
+                    if (isPrevious(hash)) {
+                        previousNode = hash;
+                    } else if (isNext(hash)) {
+                        publisher.multicast("BootstrapReply " + Integer.toString(nextNode));
+                        nextNode = hash;            //Respond to new node that i'm his previous, and that next is now his next
                     }
                 }
-
-
-
-                if (app.hasCommand()) {
-                    String command = app.getCommand();
-                    if (command.equals("shutdown")) {
-                        publisher.multicast("Shut "+previousNode+" "+nextNode);
-                        running=false;
+                if ((!rmiHandler.hasServer()) && message.contains("BootstrapReply") && message.getSenderName().equals("NameServer)")) {
+                    String serverIp = message.getSenderIp();
+                    rmiHandler.initialise(serverIp);
+                    if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) {
+                        nextNode = myHash;
+                        previousNode = myHash;
                     }
                 }
-            } catch (Exception e) {
-                //FAILURE
-                //hier komt de multicast
-                publisher.multicast("Failed"); //FAILURE 1)
+                if (message.contains("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")) {
+                    previousNode = hash(message.getSender());
+                    nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
+                }
+                if (message.contains("Shut") && message.contains(myHashString)) {
+                    if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
+                        nextNode = Integer.parseInt(message.getContent().split(" ")[2]);
+                    } else {                                                                       //Ik ben de next node van de shutdowner
+                        previousNode = Integer.parseInt(message.getContent().split(" ")[1]);
+                    }
+
+                }
             }
-        }
 
-        //shutdown
-        //Deel 6 van oefening 2 hebben we niet echt gedaan (doorsturen van prev en next node).
+
+            if (app.hasCommand()) {
+                String command = app.getCommand();
+                if (command.equals("shutdown")) {
+                    publisher.multicast("Shut " + previousNode + " " + nextNode);
+                    running = false;
+                }
+            }
+        } catch (Exception e) {
+            //FAILURE
+            //hier komt de multicast
+            publisher.multicast("Failed"); //FAILURE 1)
+        }
 
     }
 
-    private boolean isNext(int hash) {
+    private static boolean isNext(int hash) {
 
         if((myHash < hash) && (hash < nextNode)){
             return true;
@@ -122,7 +116,7 @@ public class MyClient {
 
     }
 
-    private boolean isPrevious(int hash) {
+    private static boolean isPrevious(int hash) {
 
         if((hash < myHash) && (previousNode < hash)){
             previousNode = hash;
