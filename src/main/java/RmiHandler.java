@@ -10,10 +10,12 @@ import java.util.HashMap;
 public class RmiHandler {
 
     String nodeName="";
+    boolean initialised = false;
     Login theServer = null;
     HashMap<Integer,String> ipMap;
 
     public RmiHandler(String nodeName) {
+
         this.nodeName=nodeName;
     }
 
@@ -29,21 +31,27 @@ public class RmiHandler {
 
             Boolean cont = true;
             ipMap = theServer.register(nodeName);
+            initialised=true;
             
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    public HashMap<Integer,String> getMap(){
+    /*public HashMap<Integer,String> getMap(){
         for (Integer ipName: ipMap.keySet()){
-                System.out.println(ipName);
-        }
-        return ipMap;
-        
+        System.out.println(ipName);
     }
+        return ipMap;
+
+}*/
+
+
     public String getOwner(String str) throws RemoteException {
         return theServer.getOwner(str);
     }
 
+    public boolean hasServer(){
+        return initialised;
+    }
 }

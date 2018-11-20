@@ -13,10 +13,14 @@ public class MyServer implements Login {
     static File ipFile;
     static String ip;
 
-    protected MyServer() throws RemoteException {
+    protected MyServer() {
     }
 
     public static void main(String args[]) {
+        boolean running = true;
+        Message message;
+
+
         try {
             //Checking or creating IpMap
             ipFile = new File("IpMap.xml");
@@ -38,19 +42,19 @@ public class MyServer implements Login {
             r.bind("myserver", stub);
             System.out.println("Naming server is ready");
 
-            String message = new String();
 
-            while(true)
+            while(running)
             {
                 if(receiver.hasMessage()){
                     message = receiver.getMessage();
+
                     if(message.contains("Bootstrap")){
-                        publisher.multicast("BootstrapReply");
+                        addToMap(message.getSender());
+                        publisher.multicast("BootstrapReply "+countNodes());
 
                     }
-                    if(message.contains("shutdown")){
-                        String str = message.split("\tSender:")[1].split(":")[0];
-                        remove(str);
+                    if(message.contains("Shut")){
+                        remove(message.getSender());
                     }
                     if(message.contains("Failed")) {
                         //stuur nieuwe ipmap naar iederen
@@ -94,15 +98,26 @@ public class MyServer implements Login {
         return ipMap;
     }
 
-    public int hash(String nodeName)throws RemoteException {
+    public static int hash(String nodeName){
         int hash;
         hash = Math.abs(nodeName.hashCode()) % 327680;
         return hash;
     }
 
-    public static Boolean remove(String ip) throws RemoteException {
-        int hash;
-        hash = Math.abs(ip.hashCode()) % 327680;
+    public static boolean addToMap(String sender){
+        int hash = hash(sender);
+        ipMap.put(hash,sender);
+        try {
+            saveFile(ipFile);
+            System.out.println("Added Hash: "+hash+"\tHost: "+sender);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public static boolean remove(String ip){
+        int hash = hash(ip);
         ipMap.remove(hash);
         try {
             saveFile(ipFile);
@@ -161,5 +176,9 @@ public class MyServer implements Login {
             ipTemp.put(Integer.parseInt(splitLine[0]), splitLine[1]);
         }
         ipMap = ipTemp;
+    }
+
+    private static int countNodes(){
+        return ipMap.size();
     }
 }

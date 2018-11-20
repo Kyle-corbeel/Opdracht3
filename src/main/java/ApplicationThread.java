@@ -48,11 +48,6 @@ public class ApplicationThread extends Thread {
                     publisher.multicast(mess);
                     message="sendMessText"+":"+mess;
                 }
-            /*if(s.equals("2")){
-                System.out.println("Wie wenst u te verwijderen?");
-                String dude = br.readLine();
-                System.out.println("Verwijderd:" +theServer.remove(dude));
-            }*/
                 if (s.equals("4")) {
                     hasMessage=true;
                     cont = false;
@@ -65,10 +60,12 @@ public class ApplicationThread extends Thread {
 
         }
     }
+
     public boolean hasCommand(){
         return hasMessage;
     }
-    public String getMessage(){
+
+    public String getCommand(){
         hasMessage = false;
         return message;
     }

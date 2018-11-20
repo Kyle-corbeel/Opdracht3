@@ -10,6 +10,7 @@ public class MulticastReceiver extends Thread{
     protected String thisNode="";
     protected boolean gotMessage = false;
     protected String received ="";
+    protected Message m;
 
     public MulticastReceiver(String s){
         thisNode = s;
@@ -29,8 +30,8 @@ public class MulticastReceiver extends Thread{
                 received = new String(packet.getData(), 0, packet.getLength());
 
                 if(received.length()>1 && received.contains("\tsender:")){
-                    sender=received.split("\tsender:")[1];
-                    if(!sender.equals(thisNode)) {
+                    m = new Message(received);
+                    if(!m.getSender().equals(thisNode)) {
                         gotMessage = true;
                         System.out.println(received);
                         if (received.equals("end")) {
@@ -52,8 +53,8 @@ public class MulticastReceiver extends Thread{
         return gotMessage;
     }
 
-    public String getMessage(){
+    public Message getMessage(){
         gotMessage = false;
-        return received;
+        return m;
     }
 }
