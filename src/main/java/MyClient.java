@@ -2,13 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.net.DatagramSocket;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class MyClient {
     private static String nodeName="";
@@ -24,6 +20,8 @@ public class MyClient {
         System.out.println("Welkom bij RMI filesharing, gelieve uw naam in te geven:");
         String naam = br.readLine();
         String ip = "";
+
+        BlockingQueue<Message> messages = new LinkedBlockingQueue<Message>();       //deze queue wordt gedeeld met multicastreceiver
 
 
         //get IP
@@ -41,7 +39,7 @@ public class MyClient {
 
 
         //Start threads
-        MulticastReceiver receiver = new MulticastReceiver(nodeName);
+        MulticastReceiver receiver = new MulticastReceiver(nodeName, messages);
         ApplicationThread app = new ApplicationThread(nodeName);
         receiver.start();
         app.start();
@@ -55,11 +53,11 @@ public class MyClient {
 
         //BootstrapReplyHandler
         while (running) try {
-            if (receiver.hasMessage()) {
-                Message message = receiver.getMessage();
-                System.out.println(message);
+            //if (receiver.hasMessage()) {
+                //Message message = receiver.getMessage();
+                Message message = messages.take();
 
-                if (message.contains("Bootstrap")) {
+                if (message.has("Bootstrap")) {
                     int hash = hash(message.getSender());
                     if (isPrevious(hash)) {
                         previousNode = hash;
@@ -68,7 +66,7 @@ public class MyClient {
                         nextNode = hash;            //Respond to new node that i'm his previous, and that next is now his next
                     }
                 }
-                if ((!rmiHandler.hasServer()) && message.contains("BootstrapReply") && message.getSenderName().equals("NameServer)")) {
+                if ((!rmiHandler.hasServer()) && message.has("BootstrapReply") && message.getSenderName().equals("NameServer)")) {
                     String serverIp = message.getSenderIp();
                     rmiHandler.initialise(serverIp);
                     if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) {
@@ -76,18 +74,18 @@ public class MyClient {
                         previousNode = myHash;
                     }
                 }
-                if (message.contains("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")) {
+                if (message.has("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")) {
                     previousNode = hash(message.getSender());
                     nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
                 }
-                if (message.contains("Shut") && message.contains(myHashString)) {
+                if (message.has("Shut") && message.has(myHashString)) {
                     if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
                         nextNode = Integer.parseInt(message.getContent().split(" ")[2]);
                     } else {                                                                       //Ik ben de next node van de shutdowner
                         previousNode = Integer.parseInt(message.getContent().split(" ")[1]);
                     }
 
-                }
+                //}
             }
 
 

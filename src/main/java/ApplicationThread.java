@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.rmi.Naming;
 
 public class ApplicationThread extends Thread {
 
@@ -24,13 +23,13 @@ public class ApplicationThread extends Thread {
         Login theServer = null;
         try {
             //System.out.println("tot hier");
-            theServer = (Login) Naming.lookup("rmi://localhost/myserver");
+            //theServer = (Login) Naming.lookup("rmi://localhost/myserver");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             //String s = br.readLine();
             MulticastPublisher publisher = new MulticastPublisher(name);
 
             Boolean cont = true;
-            theServer.register(name);
+            //theServer.register(name);
 
             while (cont) {
                 System.out.println("Wat wilt u doen:");
@@ -43,7 +42,7 @@ public class ApplicationThread extends Thread {
                     hasMessage=true;
                     System.out.println("Wat is de filenaam waarvan u de owner wilt weten?");
                     String fName = br.readLine();
-                    System.out.println("De fileowner is " + theServer.getOwner(fName));
+                    //System.out.println("De fileowner is " + theServer.getOwner(fName));
                     message="getFileOwner"+":"+fName;
                 }
                 if (s.equals("2")) {

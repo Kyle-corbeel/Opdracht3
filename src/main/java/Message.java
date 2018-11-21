@@ -7,11 +7,17 @@ public class Message {
     private String senderName="";
 
     public Message(String mess){
-        everything=mess;
-        content=mess.split("\tsender:")[0];
-        sender=mess.split("\tsender:")[1];
-        senderIp=sender.split(":")[0];
-        senderName=sender.split(":")[1];
+
+        everything = mess;
+        content = mess.split("\tsender:")[0];
+        sender = mess.split("\tsender:")[1];
+        senderIp = sender.split(":")[0];
+        senderName = sender.split(":")[1];
+
+    }
+
+    public Message(){
+
     }
 
     public String getContent() {
@@ -34,7 +40,11 @@ public class Message {
         return everything;
     }
 
-    public boolean contains(String s){
+    public boolean has(String s){
         return content.contains(s);
+    }
+
+    public boolean isEmpty(){
+        return (everything.equals(""));
     }
 }

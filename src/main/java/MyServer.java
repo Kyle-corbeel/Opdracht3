@@ -7,11 +7,14 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class MyServer implements Login {
     static HashMap<Integer, String> ipMap;
     static File ipFile;
     static String ip;
+    static String naam = "NameServer";
 
     protected MyServer() {
     }
@@ -19,6 +22,8 @@ public class MyServer implements Login {
     public static void main(String args[]) {
         boolean running = true;
         Message message;
+
+        BlockingQueue<Message> messages = new LinkedBlockingQueue<Message>();       //Deze queue wordt gedeeld met multicastreceiver
 
 
         try {
@@ -30,10 +35,11 @@ public class MyServer implements Login {
                 loadFile(ipFile);
             }
             ip = getIp();
+            String nodeName =ip+":"+naam;
 
             //Opstarten multicast
-            MulticastPublisher publisher = new MulticastPublisher(ip +":NameServer");
-            MulticastReceiver receiver = new MulticastReceiver("NameServer");
+            MulticastPublisher publisher = new MulticastPublisher(nodeName);
+            MulticastReceiver receiver = new MulticastReceiver(nodeName, messages);
             receiver.start();
 
             //Opstarten RMI
@@ -46,23 +52,25 @@ public class MyServer implements Login {
 
             while(running)
             {
-                if(receiver.hasMessage()){
-                    message = receiver.getMessage();
-                    System.out.println(message.contains("Bootstrap"));
+                //if(receiver.hasMessage()) {
 
-                    if(message.contains("Bootstrap")){
+                    //message = receiver.getMessage();
+                message = messages.take();
+
+                    if (message.has("Bootstrap")) {
                         addToMap(message.getSender());
-                        System.out.println("rebroadcasten");
-                        publisher.multicast("BootstrapReply "+countNodes());        //Wilt nog geen reply geven, contains niet goed?
-
+                        System.out.println("replied");
+                        publisher.multicast("BootstrapReply " + countNodes());
                     }
-                    if(message.contains("Shut")){
+                    if (message.has("Shut")) {
                         remove(message.getSender());
                     }
-                    if(message.contains("Failed")) {
-                        //stuur nieuwe ipmap naar iederen
+                    if (message.has("Failed")) {
+
+
                     }
-                }
+                //}
+
             }
 
 
@@ -87,7 +95,7 @@ public class MyServer implements Login {
     }
 
 
-    public HashMap<Integer, String> register(String nodeName) throws RemoteException {
+    /*public HashMap<Integer, String> register(String nodeName) throws RemoteException {
         int hash;
         hash = Math.abs(nodeName.hashCode()) % 327680;
         ipMap.put(hash, nodeName);
@@ -99,7 +107,7 @@ public class MyServer implements Login {
         }
 
         return ipMap;
-    }
+    }*/
 
     public static int hash(String nodeName){
         int hash;
@@ -166,7 +174,7 @@ public class MyServer implements Login {
 
 
         }
-        System.out.println("Wrote file");
+        System.out.println("Saved xml-file..");
         writer.close();
     }
 
@@ -181,7 +189,7 @@ public class MyServer implements Login {
         }
         ipMap = ipTemp;
 
-        System.out.println("loaded file");
+        System.out.println("Loaded existing xml-file..");
     }
 
     private static int countNodes(){
