@@ -30,10 +30,10 @@ public class MyServer implements Login {
             //Checking or creating IpMap
             ipMap = new HashMap<Integer, String>();
             ipFile = new File("IpMap.xml");
-            if(ipFile.exists())
+            /*if(ipFile.exists())
             {
                 loadFile(ipFile);
-            }
+            }*/
             ip = getIp();
             String nodeName =ip+":"+naam;
 

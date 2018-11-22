@@ -55,7 +55,7 @@ public class MyClient {
         while (running) try {
             //if (receiver.hasMessage()) {
                 //Message message = receiver.getMessage();
-            Message message = messages.poll();
+            Message message = messages.take();
             if(message!=null){
 
                 if (message.has("Bootstrap")) {
@@ -78,6 +78,7 @@ public class MyClient {
                 if (message.has("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")) {
                     previousNode = hash(message.getSender());
                     nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
+                    printPreviousAndNext();
                 }
                 if (message.has("Shut") && message.has(myHashString)) {
                     if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
@@ -112,7 +113,9 @@ public class MyClient {
 
     private static boolean isNext(int hash) {
 
-        if(((myHash < hash) || nextNode < myHash) && (hash < nextNode)){
+        if(myHash == nextNode){
+            return true;
+        }else if(((myHash < hash) || nextNode < myHash) && (hash < nextNode)){
             return true;
         }else{
             return false;
@@ -122,7 +125,9 @@ public class MyClient {
 
     private static boolean isPrevious(int hash) {
 
-        if((hash < myHash || nextNode < myHash) && (previousNode < hash)){
+        if(myHash == nextNode){
+            return true;
+        }else if((hash < myHash || nextNode < myHash) && (previousNode < hash)){
             previousNode = hash;
             return true;
         }else{
@@ -137,19 +142,19 @@ public class MyClient {
         return hash;
     }
 
-    private void shutdown(MulticastPublisher publisher) throws IOException {
+    private static void shutdown(MulticastPublisher publisher) throws IOException {
         publisher.multicast("shutdown:"+previousNode+":"+nextNode); //shutdown:ip(prev):nam(prev):ip(next):nam(next)  sender:ip(send):nam(send)
     }
 
-    public String getPrevious(){
+    public static String getPrevious(){
         return "Previous: "+previousNode;
     }
 
-    public String getNext(){
+    public static String getNext(){
         return "Next: "+nextNode;
     }
 
-    public void printPreviousAndNext(){
+    public static void printPreviousAndNext(){
         System.out.println(getPrevious()+"\t"+getNext());
     }
 }
