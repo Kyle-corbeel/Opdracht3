@@ -59,7 +59,6 @@ public class MyServer implements Login {
 
                     if (message.has("Bootstrap")) {
                         addToMap(message.getSender());
-                        System.out.println("replied");
                         publisher.multicast("BootstrapReply " + countNodes());
                     }
                     if (message.has("Shut")) {

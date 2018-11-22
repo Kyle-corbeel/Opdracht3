@@ -55,7 +55,8 @@ public class MyClient {
         while (running) try {
             //if (receiver.hasMessage()) {
                 //Message message = receiver.getMessage();
-                Message message = messages.take();
+            Message message = messages.poll();
+            if(message!=null){
 
                 if (message.has("Bootstrap")) {
                     int hash = hash(message.getSender());
@@ -85,7 +86,7 @@ public class MyClient {
                         previousNode = Integer.parseInt(message.getContent().split(" ")[1]);
                     }
 
-                //}
+                }
             }
 
 
@@ -93,14 +94,19 @@ public class MyClient {
                 String command = app.getCommand();
                 if (command.equals("shutdown")) {
                     publisher.multicast("Shut " + previousNode + " " + nextNode);
+                    receiver.stopThread();  //Arnold this boi
+                    app.stopThread();
                     running = false;
                 }
             }
         } catch (Exception e) {
             //FAILURE
             //hier komt de multicast
+            e.printStackTrace();
             publisher.multicast("Failed"); //FAILURE 1)
+            break;
         }
+
 
     }
 

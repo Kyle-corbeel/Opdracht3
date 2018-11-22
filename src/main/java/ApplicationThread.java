@@ -6,6 +6,7 @@ public class ApplicationThread extends Thread {
     private String name;
     private static boolean hasMessage=false;
     protected String message ="";
+    protected volatile boolean cont = true;
 
 
 
@@ -20,7 +21,8 @@ public class ApplicationThread extends Thread {
 
     public void run() {
         //Connection to rmi
-        Login theServer = null;
+        //Login theServer = null;
+
         try {
             //System.out.println("tot hier");
             //theServer = (Login) Naming.lookup("rmi://localhost/myserver");
@@ -28,7 +30,7 @@ public class ApplicationThread extends Thread {
             //String s = br.readLine();
             MulticastPublisher publisher = new MulticastPublisher(name);
 
-            Boolean cont = true;
+
             //theServer.register(name);
 
             while (cont) {
@@ -73,5 +75,9 @@ public class ApplicationThread extends Thread {
     public String getCommand(){
         hasMessage = false;
         return message;
+    }
+
+    public void stopThread(){
+        cont = false;
     }
 }

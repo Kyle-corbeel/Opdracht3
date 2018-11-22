@@ -13,6 +13,7 @@ public class MulticastReceiver extends Thread{
     protected String received ="";
     protected Message m;
     private final BlockingQueue queue;
+    private volatile boolean running=true;
 
     public MulticastReceiver(String s, BlockingQueue<Message> queue){
         this.queue = queue;
@@ -29,7 +30,7 @@ public class MulticastReceiver extends Thread{
             socket.joinGroup(group);
             String sender="";
 
-            while (true) {
+            while (running) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 received = new String(packet.getData(), 0, packet.getLength());         //Krijgt multicast bericht binnen
@@ -62,5 +63,9 @@ public class MulticastReceiver extends Thread{
     public Message getMessage(){
         gotMessage = false;
         return m;
+    }
+
+    public void stopThread(){
+        running = false;
     }
 }
