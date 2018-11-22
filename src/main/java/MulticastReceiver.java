@@ -35,12 +35,13 @@ public class MulticastReceiver extends Thread{
                 socket.receive(packet);
                 received = new String(packet.getData(), 0, packet.getLength());         //Krijgt multicast bericht binnen
 
-                if(received.length()>1 && received.contains("\tsender:")){
+                if(received.length()>1 && received.contains("sender:")){
                     m = new Message(received);
                     if(!m.getSender().equals(thisNode)) {       //bericht enkel ontvangen indien deze node niet de zender is
                         gotMessage = true;
-                        System.out.println(m);
-                        queue.add(m);
+                        System.out.println("Receiver:"+m);
+                        //queue.add(m);
+                        queue.offer(m);
                         if (received.equals("end")) {
                             break;
                         }

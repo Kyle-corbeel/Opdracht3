@@ -57,17 +57,18 @@ public class MyServer implements Login {
                     //message = receiver.getMessage();
                 message = messages.take();
 
-                    if (message.has("Bootstrap")) {
-                        publisher.multicast("BootstrapReply " + countNodes());
+                    if (message.commandIs("Bootstrap")) {
+                        publisher.multicast("BootServerReply " + countNodes());
                         addToMap(message.getSender());
                     }
-                    if (message.has("Shut")) {
+                    if (message.commandIs("Shut")) {
                         remove(message.getSender());
                     }
-                    if (message.has("Failed")) {
+                    if (message.commandIs("Failed")) {
 
 
                     }
+
                 //}
 
             }

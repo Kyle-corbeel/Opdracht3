@@ -5,14 +5,16 @@ public class Message {
     private String sender="";
     private String senderIp="";
     private String senderName="";
+    private String command="";
 
     public Message(String mess){
 
         everything = mess;
-        content = mess.split("\tsender:")[0];
-        sender = mess.split("\tsender:")[1];
+        content = mess.split("sender:")[0];
+        sender = mess.split("sender:")[1];
         senderIp = sender.split(":")[0];
         senderName = sender.split(":")[1];
+        command = content.split(" ")[0];
 
     }
 
@@ -40,8 +42,16 @@ public class Message {
         return everything;
     }
 
-    public boolean has(String s){
+    public boolean commandIs(String s){
+        return command.equals(s);
+    }
+
+    /*public boolean has(String s){
         return content.contains(s);
+    }*/
+
+    public boolean has(String s){
+        return content.startsWith(s);
     }
 
     public boolean isEmpty(){

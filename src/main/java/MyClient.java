@@ -11,6 +11,7 @@ public class MyClient {
     private static int nextNode=327680;
     private static int previousNode=0;
     private static boolean running = true;
+    private static boolean hasNeighbours = false;
     private static int myHash=0;
     private static String myHashString="";
 
@@ -35,6 +36,7 @@ public class MyClient {
         nodeName = ip + ":" + naam;           //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
         myHash = hash(nodeName);
         myHashString = Integer.toString(myHash);
+        System.out.println(myHash);
 
 
 
@@ -56,31 +58,38 @@ public class MyClient {
             //if (receiver.hasMessage()) {
                 //Message message = receiver.getMessage();
             Message message = messages.take();
-            if(message!=null){
+            System.out.println("Client:"+message);
 
-                if (message.has("Bootstrap")) {
+                if (message.commandIs("Bootstrap")) {
+                    System.out.println("tester");
                     int hash = hash(message.getSender());
                     if (isPrevious(hash)) {
                         previousNode = hash;
                     } else if (isNext(hash)) {
-                        publisher.multicast("BootstrapReply " + Integer.toString(nextNode));
+                        publisher.multicast("BootNodeReply " + nextNode);
                         nextNode = hash;            //Respond to new node that i'm his previous, and that next is now his next
                     }
+                    printPreviousAndNext();
                 }
-                if ((!rmiHandler.hasServer()) && message.has("BootstrapReply") && message.getSenderName().equals("NameServer)")) {
+                if (!hasNeighbours && message.commandIs("BootServerReply")) {
                     String serverIp = message.getSenderIp();
                     rmiHandler.initialise(serverIp);
+
                     if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) {
                         nextNode = myHash;
                         previousNode = myHash;
+                        printPreviousAndNext();
+                        hasNeighbours=true;
                     }
+
                 }
-                if (message.has("BootstrapReply") && !(message.getSenderName()).equals("NameServer)")) {
+                if (!hasNeighbours && message.commandIs("BootNodeReply")) {
                     previousNode = hash(message.getSender());
                     nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
                     printPreviousAndNext();
+                    hasNeighbours=true;
                 }
-                if (message.has("Shut") && message.has(myHashString)) {
+                if (message.commandIs("Shut") && message.commandIs(myHashString)) {
                     if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
                         nextNode = Integer.parseInt(message.getContent().split(" ")[2]);
                     } else {                                                                       //Ik ben de next node van de shutdowner
@@ -88,7 +97,7 @@ public class MyClient {
                     }
 
                 }
-            }
+
 
 
             if (app.hasCommand()) {
