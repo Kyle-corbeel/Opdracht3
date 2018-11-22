@@ -112,7 +112,7 @@ public class MyClient {
 
     private static boolean isNext(int hash) {
 
-        if((myHash < hash) && (hash < nextNode)){
+        if(((myHash < hash) || nextNode < myHash) && (hash < nextNode)){
             return true;
         }else{
             return false;
@@ -122,7 +122,7 @@ public class MyClient {
 
     private static boolean isPrevious(int hash) {
 
-        if((hash < myHash) && (previousNode < hash)){
+        if((hash < myHash || nextNode < myHash) && (previousNode < hash)){
             previousNode = hash;
             return true;
         }else{
