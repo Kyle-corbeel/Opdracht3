@@ -140,4 +140,16 @@ public class MyClient {
     private void shutdown(MulticastPublisher publisher) throws IOException {
         publisher.multicast("shutdown:"+previousNode+":"+nextNode); //shutdown:ip(prev):nam(prev):ip(next):nam(next)  sender:ip(send):nam(send)
     }
+
+    public String getPrevious(){
+        return "Previous: "+previousNode;
+    }
+
+    public String getNext(){
+        return "Next: "+nextNode;
+    }
+
+    public void printPreviousAndNext(){
+        System.out.println(getPrevious()+"\t"+getNext());
+    }
 }
