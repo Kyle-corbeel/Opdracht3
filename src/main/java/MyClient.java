@@ -28,8 +28,9 @@ public class MyClient {
         //get IP
         try {
             final DatagramSocket socket = new DatagramSocket();
-            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
-            ip = socket.getLocalAddress().getHostAddress();
+            //socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
+            ip=InetAddress.getLocalHost().toString().split("/")[1];
+           // ip = "10.1.1.2";//socket.getLocalAddress().getHostAddress();
         } catch (Exception e) {
             e.printStackTrace();
         }

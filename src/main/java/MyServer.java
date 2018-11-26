@@ -63,8 +63,7 @@ public class MyServer implements Login {
                         remove(message.getSender());
                     }
                     if (message.commandIs("Failed")) {
-
-
+                        //The server will act upon incoming Failure.
                     }
 
                 }
