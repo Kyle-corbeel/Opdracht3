@@ -23,8 +23,6 @@ public class MyServer implements Login {
         boolean running = true;
         Message message;
 
-        BlockingQueue<Message> messages = new LinkedBlockingQueue<Message>();       //Deze queue wordt gedeeld met multicastreceiver
-
 
         try {
             //Checking or creating IpMap
@@ -39,8 +37,7 @@ public class MyServer implements Login {
 
             //Opstarten multicast
             MulticastPublisher publisher = new MulticastPublisher(nodeName);
-            MulticastReceiver receiver = new MulticastReceiver(nodeName, messages);
-            receiver.start();
+            MulticastReceiver receiver = new MulticastReceiver(nodeName);
 
             //Opstarten RMI
             MyServer obj = new MyServer();
@@ -52,10 +49,11 @@ public class MyServer implements Login {
 
             while(running)
             {
-                //if(receiver.hasMessage()) {
 
-                    //message = receiver.getMessage();
-                message = messages.take();
+                message = receiver.check();
+                System.out.println(message);
+                if(message != null)
+                {
 
                     if (message.commandIs("Bootstrap")) {
                         publisher.multicast("BootServerReply " + countNodes());
@@ -69,7 +67,7 @@ public class MyServer implements Login {
 
                     }
 
-                //}
+                }
 
             }
 

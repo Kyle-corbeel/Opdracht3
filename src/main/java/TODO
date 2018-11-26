@@ -1,15 +1,1 @@
-
-client:
-2 threads: multicastreceiver en application
-bootstrap-methode runt 1 maal voor whileloop
-whileloop checkt op changes van applic. en receiver
-if checked = true -> start subroutine -> data van application/receiver wordt gebruikt
-
-
-
-multicastreceiver:
-if received text changes -> boolean changed = true
-getReceived geeft message door aan client
-
-application:
-whilelus met commandos
+om fileExist op te lossen evt whileloop => checken of file bestaat => bestaat niet => maak file aan => check of file bestaat

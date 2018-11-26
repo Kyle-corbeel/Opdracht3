@@ -41,9 +41,8 @@ public class MyClient {
 
 
         //Start threads
-        MulticastReceiver receiver = new MulticastReceiver(nodeName, messages);
+        MulticastReceiver receiver = new MulticastReceiver(nodeName);
         ApplicationThread app = new ApplicationThread(nodeName);
-        receiver.start();
         app.start();
 
         //Bootstrap
@@ -55,10 +54,10 @@ public class MyClient {
 
         //BootstrapReplyHandler
         while (running) try {
-            //if (receiver.hasMessage()) {
-                //Message message = receiver.getMessage();
-            Message message = messages.take();
-            System.out.println("Client:"+message);
+
+            Message message = receiver.check();
+            if(message != null) {
+                System.out.println("Client:" + message);
 
                 if (message.commandIs("Bootstrap")) {
                     System.out.println("tester");
@@ -79,7 +78,7 @@ public class MyClient {
                         nextNode = myHash;
                         previousNode = myHash;
                         printPreviousAndNext();
-                        hasNeighbours=true;
+                        hasNeighbours = true;
                     }
 
                 }
@@ -87,7 +86,7 @@ public class MyClient {
                     previousNode = hash(message.getSender());
                     nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
                     printPreviousAndNext();
-                    hasNeighbours=true;
+                    hasNeighbours = true;
                 }
                 if (message.commandIs("Shut") && message.commandIs(myHashString)) {
                     if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
@@ -97,6 +96,7 @@ public class MyClient {
                     }
 
                 }
+            }
 
 
 
@@ -104,7 +104,6 @@ public class MyClient {
                 String command = app.getCommand();
                 if (command.equals("shutdown")) {
                     publisher.multicast("Shut " + previousNode + " " + nextNode);
-                    receiver.stopThread();  //Arnold this boi
                     app.stopThread();
                     running = false;
                 }

@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.concurrent.BlockingQueue;
 
-public class MulticastReceiver extends Thread{
+public class MulticastReceiver{
 
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
@@ -12,61 +12,44 @@ public class MulticastReceiver extends Thread{
     protected boolean gotMessage = false;
     protected String received ="";
     protected Message m;
-    private final BlockingQueue queue;
-    private volatile boolean running=true;
+    private InetAddress group = InetAddress.getByName("230.0.0.0");
 
-    public MulticastReceiver(String s, BlockingQueue<Message> queue){
-        this.queue = queue;
-        thisNode = s;
+    public MulticastReceiver(String nodeName) throws IOException {
+        thisNode = nodeName;
+        socket = new MulticastSocket(4446);
+        socket.joinGroup(group);
     }
 
 
 
-    public void run() {
+    public Message check() {
         m = new Message();
+        String sender="";
         try {
-            socket = new MulticastSocket(4446);
-            InetAddress group = InetAddress.getByName("230.0.0.0");
-            socket.joinGroup(group);
-            String sender="";
 
-            while (running) {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                socket.receive(packet);
-                received = new String(packet.getData(), 0, packet.getLength());         //Krijgt multicast bericht binnen
-
-                if(received.length()>1 && received.contains("sender:")){
-                    m = new Message(received);
-                    if(!m.getSender().equals(thisNode)) {       //bericht enkel ontvangen indien deze node niet de zender is
-                        gotMessage = true;
-                        System.out.println("Receiver:"+m);
-                        //queue.add(m);
-                        queue.offer(m);
-                        if (received.equals("end")) {
-                            break;
-                        }
-                    }
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            socket.receive(packet);
+            received = new String(packet.getData(), 0, packet.getLength());         //Krijgt multicast bericht binnen
+            if(received.length()>1 && received.contains("sender:")){
+                m = new Message(received);
+                if(!m.getSender().equals(thisNode)) {       //bericht enkel ontvangen indien deze node niet de zender is
+                    gotMessage = true;
+                    System.out.println("Receiver:"+m);
+                    return(m);
                 }
-
             }
-            socket.leaveGroup(group);
-            socket.close();
+/*            socket.leaveGroup(group);
+            socket.close();*/
+            return(null);
         }catch(IOException i) {
             i.printStackTrace();
+            return(null);
         }
 
-    }
-
-    public boolean hasMessage(){
-        return gotMessage;
     }
 
     public Message getMessage(){
         gotMessage = false;
         return m;
-    }
-
-    public void stopThread(){
-        running = false;
     }
 }
