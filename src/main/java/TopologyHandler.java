@@ -19,15 +19,38 @@ public class TopologyHandler {
         myHash = hash(nodeName);
     }
 
-    public void newNode(String sender)
+    public void newNode(String sender) //Zal opgeroepen worden wanneer de multicast een bootstrap detecteert.
     {
         int hash = hash(sender);
-        if (isPrevious(hash)) {
+        if (isPrevious(hash)) { //Er wordt gecheckt of deze nieuwe node eventueel onze lagere buur is.
             previousNode = hash;
-        } else if (isNext(hash)) {
-            publisher.multicast("BootNodeReply " + nextNode);
+        } else if (isNext(hash)) {//Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
+            publisher.multicast("BootNodeReply " + nextNode); //Indien dit het geval is laten we dit weten aan deze node.
             nextNode = hash;
-        }//Respond to new node that i'm his previous, and that next is now his next
+        }
+    }
+
+    public void enterNetwork()//Zal opgeroepen worden wanneer we zelf in het netwerk willen toetreden.
+    {
+        publisher.multicast("Bootstrap");//Laat het netwerk weten dat je wenst toe te treden.
+        Boolean setup = false;
+        while(!setup)//Blijf wachten totdat de server en eventueel andere nodes reageren
+        {
+            if ((previousNode == myHash) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
+                String serverIp = message.getSenderIp();
+                rmiHandler.initialise(serverIp);
+
+                if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) { //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
+                    setup = true;
+                }
+            }
+            if ((previousNode == myHash) && message.commandIs("BootNodeReply")) {//Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
+                previousNode = hash(message.getSender());
+                nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
+                setup = true;
+            }
+        }
+        System.out.println("Entered network\tprevious node: " +previousNode +"\tnext node: " +nextNode);
     }
 
 
@@ -46,7 +69,7 @@ public class TopologyHandler {
 
     public boolean isNext(int hash) {
 
-        if(myHash == nextNode){
+        if(myHash == nextNode){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
             return true;
         }else if(((myHash < hash) || nextNode < myHash) && (hash < nextNode)){
             return true;
@@ -58,7 +81,7 @@ public class TopologyHandler {
 
     public boolean isPrevious(int hash) {
 
-        if(myHash == nextNode){
+        if(myHash == nextNode){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
             return true;
         }else if((hash < myHash || previousNode > myHash) && (previousNode < hash)){
             previousNode = hash;
