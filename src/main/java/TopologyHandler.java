@@ -42,7 +42,7 @@ public class TopologyHandler extends Thread{
 
     public void run(){
         while(running) {
-            processMultiCast(receiveBroadcast());
+            processMultiCast(receiveMulticast());
         }
 
     }
@@ -51,7 +51,7 @@ public class TopologyHandler extends Thread{
 
     }
 
-    public void sendBroadcast(String content){
+    public void sendMulticast(String content){
         InetAddress addr = null;
 
         try {
@@ -69,7 +69,7 @@ public class TopologyHandler extends Thread{
             }
     }
 
-    public Message receiveBroadcast() {
+    public Message receiveMulticast() {
         byte[] buf = new byte[256];
         try {
 
@@ -93,34 +93,34 @@ public class TopologyHandler extends Thread{
     {
         int hash = hash(sender);
         if (isPrevious(hash)) { //Er wordt gecheckt of deze nieuwe node eventueel onze lagere buur is.
-            previousNode = hash;
+            data.setPreviousNode(hash);
         } else if (isNext(hash)) {//Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
-            publisher.multicast("BootNodeReply " + nextNode); //Indien dit het geval is laten we dit weten aan deze node.
-            nextNode = hash;
+            sendMulticast("Bootstrap"); //Indien dit het geval is laten we dit weten aan deze node.
+            data.setNextNode(hash);
         }
     }
 
     public void enterNetwork()//Zal opgeroepen worden wanneer we zelf in het netwerk willen toetreden.
     {
-        publisher.multicast("Bootstrap");//Laat het netwerk weten dat je wenst toe te treden.
+        sendMulticast("Bootstrap");//Laat het netwerk weten dat je wenst toe te treden.
         Boolean setup = false;
         while(!setup)//Blijf wachten totdat de server en eventueel andere nodes reageren
         {
-            if ((previousNode == myHash) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
+            Message message = receiveMulticast();
+            if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
                 String serverIp = message.getSenderIp();
                 rmiHandler.initialise(serverIp);
-
                 if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) { //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
                     setup = true;
                 }
             }
-            if ((previousNode == myHash) && message.commandIs("BootNodeReply")) {//Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
-                previousNode = hash(message.getSender());
-                nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
+            if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootNodeReply")) {//Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
+               data.setPreviousNode(hash(message.getSender()));
+                data.setNextNode(Integer.parseInt(message.getContent().split(" ")[1]));
                 setup = true;
             }
         }
-        System.out.println("Entered network\tprevious node: " +previousNode +"\tnext node: " +nextNode);
+        System.out.println("Entered network\tprevious node: " +data.getPreviousNode() +"\tnext node: " +data.getNextNode());
     }
 
 
@@ -129,19 +129,13 @@ public class TopologyHandler extends Thread{
         hash = Math.abs(nodeName.hashCode()) % 327680;
         return hash;
     }
-    public int getPreviousNode() {
-        return previousNode;
-    }
 
-    public int getNextNode() {
-        return nextNode;
-    }
 
     public boolean isNext(int hash) {
 
-        if(myHash == nextNode){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
+        if(data.getMyHash() == data.getNextNode()){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
             return true;
-        }else if(((myHash < hash) || nextNode < myHash) && (hash < nextNode)){
+        }else if(((data.getMyHash() < hash) || data.getNextNode() < data.getMyHash()) && (hash < data.getNextNode())){
             return true;
         }else{
             return false;
@@ -151,10 +145,10 @@ public class TopologyHandler extends Thread{
 
     public boolean isPrevious(int hash) {
 
-        if(myHash == nextNode){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
+        if(data.getMyHash() == data.getNextNode()){ //Indien dit naar zichzelf verwijst passen we zowiezo aan.
             return true;
-        }else if((hash < myHash || previousNode > myHash) && (previousNode < hash)){
-            previousNode = hash;
+        }else if((hash < data.getMyHash() || data.getPreviousNode() > data.getMyHash()) && (data.getPreviousNode() < hash)){
+            data.setPreviousNode(hash);
             return true;
         }else{
             return false;
