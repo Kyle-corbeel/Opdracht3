@@ -20,21 +20,9 @@ public class MyClient {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welkom bij RMI filesharing, gelieve uw naam in te geven:");
         String naam = br.readLine();
-        String ip = "";
-
-        BlockingQueue<Message> messages = new LinkedBlockingQueue<Message>();       //deze queue wordt gedeeld met multicastreceiver
 
 
-        //get IP
-        try {
-            final DatagramSocket socket = new DatagramSocket();
-            //socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
-            ip=InetAddress.getLocalHost().toString().split("/")[1];
-           // ip = "10.1.1.2";//socket.getLocalAddress().getHostAddress();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        nodeName = ip + ":" + naam;           //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
+        TopologyHandler topo = new TopologyHandler(naam);          //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
         myHash = hash(nodeName);
         myHashString = Integer.toString(myHash);
         System.out.println(myHash);

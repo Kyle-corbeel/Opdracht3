@@ -1,23 +1,93 @@
 import java.io.IOException;
+import java.net.*;
 
-public class TopologyHandler {
+public class TopologyHandler extends Thread{
 
-    private String nodeName;
-    private int previousNode;
-    private int nextNode;
-    private int myHash;
+    final static String INET_ADDR = "224.0.0.3";
+    final static int PORT = 8888;
+    private MulticastSocket clientSocket;
 
-    private MulticastPublisher publisher;
+    private NodeData data;
+
     private RmiHandler rmiHandler;
-    private MulticastReceiver receiver;
+    private boolean running = true;
 
-    public TopologyHandler(String nodeNameT) throws Exception {
-        this.publisher = new MulticastPublisher(nodeName);
-        this.rmiHandler = new RmiHandler(nodeName);
-        this.receiver = new MulticastReceiver(nodeName);
-        nodeName = nodeNameT;
-        myHash = hash(nodeName);
+    public TopologyHandler(String nodeNameT) {
+
+        this.rmiHandler = new RmiHandler(nodeNameT);
+        NodeData data = new NodeData(nodeNameT);
+        data.setMyHash(hash(nodeNameT));
+        data.setPreviousNode(data.getMyHash());
+        data.setNextNode(data.getMyHash());
+        initReceiver();
+
     }
+
+    public void initReceiver() {
+        InetAddress address = null;
+        try {
+            address = InetAddress.getByName(INET_ADDR);
+            // Create a new Multicast socket (that will allow other sockets/programs
+            // to join it as well.
+            clientSocket = new MulticastSocket(PORT);
+            //Join the Multicast group.
+            clientSocket.joinGroup(address);
+            clientSocket.setReuseAddress(true);
+            clientSocket.setSoTimeout(10);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void run(){
+        while(running) {
+            processMultiCast(receiveBroadcast());
+        }
+
+    }
+
+    public void processMultiCast(Message m){
+
+    }
+
+    public void sendBroadcast(String content){
+        InetAddress addr = null;
+
+        try {
+            addr = InetAddress.getByName(INET_ADDR);
+            DatagramSocket serverSocket = new DatagramSocket();
+                String msg = content+"\tsender:";
+                // Create a packet that will contain the data
+                // (in the form of bytes) and send it.
+                DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
+                serverSocket.send(msgPacket);
+                //System.out.println("Handler sent packet with msg: " + msg);
+                Thread.sleep(500);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            }
+    }
+
+    public Message receiveBroadcast() {
+        byte[] buf = new byte[256];
+        try {
+
+                // Receive the information and print it.
+                DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
+                clientSocket.receive(msgPacket);
+                ;
+                //System.out.println("Socket 1 received msg: " + msg);
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return new Message(new String(buf, 0, buf.length));
+    }
+
+
 
     public void newNode(String sender) //Zal opgeroepen worden wanneer de multicast een bootstrap detecteert.
     {

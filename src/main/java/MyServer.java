@@ -33,6 +33,7 @@ public class MyServer implements Login {
                 loadFile(ipFile);
             }*/
             ip = getIp();
+            System.out.println(ip);
             String nodeName =ip+":"+naam;
 
             //Opstarten multicast
@@ -78,12 +79,11 @@ public class MyServer implements Login {
 
     public static String getIp()
     {
-        try{
-            String ip = new String();
-            final DatagramSocket socket = new DatagramSocket();
-            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);        //Haalt IP van host
-            ip = socket.getLocalAddress().getHostAddress();
-            return ip;
+        InetAddress ip;
+        String hostname;
+        try {
+            ip = InetAddress.getLocalHost();
+            return ""+ip;
         }catch(Exception e){
             e.printStackTrace();
             return null;
