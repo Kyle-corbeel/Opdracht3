@@ -15,11 +15,13 @@ public class MyServer implements Login {
     static File ipFile;
     static String ip;
     static String naam = "NameServer";
+    static ServerMulticast multi;
 
     protected MyServer() {
     }
 
     public static void main(String args[]) {
+        multi = new ServerMulticast();
         boolean running = true;
         Message message;
 
@@ -36,9 +38,6 @@ public class MyServer implements Login {
             System.out.println(ip);
             String nodeName =ip+":"+naam;
 
-            //Opstarten multicast
-            MulticastPublisher publisher = new MulticastPublisher(nodeName);
-            MulticastReceiver receiver = new MulticastReceiver(nodeName);
 
             //Opstarten RMI
             MyServer obj = new MyServer();
@@ -51,13 +50,14 @@ public class MyServer implements Login {
             while(running)
             {
 
-                message = receiver.check();
-                System.out.println(message);
+                message = multi.receiveMulticast();
+
                 if(message != null)
                 {
+                    System.out.println(message);
 
                     if (message.commandIs("Bootstrap")) {
-                        publisher.multicast("BootServerReply " + countNodes());
+                        multi.sendMulticast("BootServerReply " + countNodes());
                         addToMap(message.getSender());
                     }
                     if (message.commandIs("Shut")) {

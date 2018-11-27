@@ -7,13 +7,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MyClient {
-    private static String nodeName="";
-    private static int nextNode=327680;
-    private static int previousNode=0;
+
     private static boolean running = true;
-    private static boolean hasNeighbours = false;
-    private static int myHash=0;
-    private static String myHashString="";
+
 
     public static void main(String[] args) throws IOException {
         //Startup
@@ -23,26 +19,17 @@ public class MyClient {
 
 
         TopologyHandler topo = new TopologyHandler(naam);          //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
-        myHash = hash(nodeName);
-        myHashString = Integer.toString(myHash);
-        System.out.println(myHash);
-
-
-
-        //Start threads
-        MulticastReceiver receiver = new MulticastReceiver(nodeName);
-        ApplicationThread app = new ApplicationThread(nodeName);
-        app.start();
+        topo.start();
 
         //Bootstrap
-        MulticastPublisher publisher = new MulticastPublisher(nodeName);
-        RmiHandler rmiHandler = new RmiHandler(nodeName);
+        //RmiHandler rmiHandler = new RmiHandler(nodeName);
 
-        publisher.multicast("Bootstrap");
-
+        //Start threads
+        ApplicationThread app = new ApplicationThread();
+        app.start();
 
         //BootstrapReplyHandler
-        while (running) try {
+        while (running) {/*
 
             Message message = receiver.check();
             if(message != null) {
@@ -103,11 +90,12 @@ public class MyClient {
             e.printStackTrace();
             publisher.multicast("Failed"); //FAILURE 1)
             break;
+        }*/
+
+
         }
 
-
-    }
-
+    /*
     private static boolean isNext(int hash) {
 
         if(myHash == nextNode){
@@ -153,5 +141,6 @@ public class MyClient {
 
     public static void printPreviousAndNext(){
         System.out.println(getPrevious()+"\t"+getNext());
+    }*/
     }
 }

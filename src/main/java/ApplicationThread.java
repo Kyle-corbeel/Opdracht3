@@ -10,8 +10,7 @@ public class ApplicationThread extends Thread {
 
 
 
-    public ApplicationThread(String nodeName) {
-        this.name = nodeName;
+    public ApplicationThread() {
 
     }
 
@@ -28,7 +27,6 @@ public class ApplicationThread extends Thread {
             //theServer = (Login) Naming.lookup("rmi://localhost/myserver");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             //String s = br.readLine();
-            MulticastPublisher publisher = new MulticastPublisher(name);
 
 
             //theServer.register(name);
@@ -46,13 +44,6 @@ public class ApplicationThread extends Thread {
                     String fName = br.readLine();
                     //System.out.println("De fileowner is " + theServer.getOwner(fName));
                     message="getFileOwner"+":"+fName;
-                }
-                if (s.equals("2")) {
-                    hasMessage=true;
-                    System.out.println("Geef messagetekst: ");
-                    String mess = br.readLine();
-                    publisher.multicast(mess);
-                    message="sendMessText"+":"+mess;
                 }
                 if (s.equals("4")) {
                     hasMessage=true;
