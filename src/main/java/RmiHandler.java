@@ -27,7 +27,6 @@ public class RmiHandler {
             theServer = (Login) Naming.lookup("rmi://"+serverIp +"/myserver");        //Later localhost vervangen door serverIP
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String s = br.readLine();
-            MulticastPublisher publisher = new MulticastPublisher(nodeName);
 
             //ipMap = theServer.register(nodeName);
             initialised=true;

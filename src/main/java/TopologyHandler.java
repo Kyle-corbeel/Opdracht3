@@ -33,7 +33,6 @@ public class TopologyHandler extends Thread{
             //Join the Multicast group.
             clientSocket.joinGroup(address);
             clientSocket.setReuseAddress(true);
-            clientSocket.setSoTimeout(10);
         }catch(Exception e){
             e.printStackTrace();
         }
