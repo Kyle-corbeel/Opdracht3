@@ -28,9 +28,9 @@ public class RmiHandler {
             /** TODO
              *  PAS DE LOCALHOST HIERBOVE AAN !!
              */
-//Later localhost vervangen door serverIP
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String s = br.readLine();
+            //Later localhost vervangen door serverIP
+            //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            //String s = br.readLine();
 
             //ipMap = theServer.register(nodeName);
             initialised=true;

@@ -32,7 +32,7 @@ public class TopologyHandler extends Thread{
             clientSocket = new MulticastSocket(PORT);
             //Join the Multicast group.
             clientSocket.joinGroup(address);
-            //clientSocket.setReuseAddress(true);
+            clientSocket.setReuseAddress(true);
             enterNetwork();
         }catch(Exception e){
             e.printStackTrace();
@@ -110,15 +110,16 @@ public class TopologyHandler extends Thread{
             Message message = receiveMulticast();
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
                 String serverIp = message.getSenderIp();
-                System.out.println(serverIp);
+                //System.out.println(serverIp);
                 rmiHandler.initialise(serverIp);
-                if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) { //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
+                System.out.println(message); //drukt de reply van de server af!!!
+                if (message.getNodeCount() < 1) { //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
                     setup = true;
                 }
             }
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootNodeReply")) {//Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
                data.setPreviousNode(hash(message.getSender()));
-                data.setNextNode(Integer.parseInt(message.getContent().split(" ")[1]));
+                data.setNextNode(message.getNodeCount());
                 setup = true;
             }
         }

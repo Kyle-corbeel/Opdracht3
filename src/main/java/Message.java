@@ -59,4 +59,8 @@ public class Message {
     public boolean isEmpty(){
         return (everything.equals(""));
     }
+
+    public int getNodeCount(){
+       return Integer.parseInt(content.split(" ")[1].split("\t")[0]);
+    }
 }
