@@ -44,4 +44,8 @@ public class NodeData {
     public void setMyHash(int myHash) {
         this.myHash = myHash;
     }
+    
+    public String getMyName(){
+        return nodeName;
+    }
 }
