@@ -14,7 +14,7 @@ public class MyServer implements Login {
     static HashMap<Integer, String> ipMap;
     static File ipFile;
     static String ip;
-    static String naam = "NameServer";
+    static String naam = "myserver";
     static ServerMulticast multi;
 
     protected MyServer() {

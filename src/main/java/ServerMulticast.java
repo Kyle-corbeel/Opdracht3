@@ -37,9 +37,11 @@ public class ServerMulticast {
         try {
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-            String msg = content+"\tsender:"+nodeName;
+            String nodeCorrect= nodeName.split("/")[1];
+            System.out.println(nodeCorrect);
+            String msg = content+"\tsender:"+nodeCorrect;
             /**TODO
-             Zet de juiste Naam en IP op de lijn hierboven.
+             Zet de juiste Naam en IP op de lijn hierboven. dees geeft probleme
              **/
             // Create a packet that will contain the data
             // (in the form of bytes) and send it.

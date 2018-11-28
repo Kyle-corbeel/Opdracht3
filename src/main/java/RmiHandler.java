@@ -24,8 +24,7 @@ public class RmiHandler {
     public void initialise(String serverIp){
 
         try {
-            String serverIpCorrect=serverIp.split("/")[1];
-            theServer = (Login) Naming.lookup("rmi://"+serverIpCorrect+"/myserver");
+            theServer = (Login) Naming.lookup("rmi://"+serverIp+"/myserver");
             /** TODO
              *  PAS DE LOCALHOST HIERBOVE AAN !!
              */
