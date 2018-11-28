@@ -20,6 +20,7 @@ public class TopologyHandler extends Thread{
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
         initReceiver();
+        enterNetwork();
 
     }
 

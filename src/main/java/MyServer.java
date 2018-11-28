@@ -68,6 +68,7 @@ public class MyServer implements Login {
                     }
 
                 }
+                System.out.println("loop");
 
             }
 

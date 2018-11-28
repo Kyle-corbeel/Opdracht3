@@ -23,7 +23,7 @@ public class ServerMulticast {
             clientSocket = new MulticastSocket(PORT);
             //Join the Multicast group.
             clientSocket.joinGroup(address);
-            clientSocket.setReuseAddress(true);
+            //clientSocket.setReuseAddress(true);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class ServerMulticast {
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
             serverSocket.send(msgPacket);
             //System.out.println("Handler sent packet with msg: " + msg);
-            Thread.sleep(500);
+            //Thread.sleep(500);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class ServerMulticast {
             // Receive the information and print it.
             DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
             clientSocket.receive(msgPacket);
-            ;
+            System.out.println("out");
             //System.out.println("Socket 1 received msg: " + msg);
 
 
