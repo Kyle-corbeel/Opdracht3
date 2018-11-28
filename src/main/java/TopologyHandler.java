@@ -57,7 +57,7 @@ public class TopologyHandler extends Thread{
         try {
             addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-                String msg = content+"\tsender:";
+                String msg = content+"\tsender:"+data.getMyName();
                 // Create a packet that will contain the data
                 // (in the form of bytes) and send it.
                 DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);

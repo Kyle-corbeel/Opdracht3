@@ -10,6 +10,7 @@ public class Message {
     public Message(String mess){
 
         everything = mess;
+        System.out.println(mess);
         content = mess.split("sender:")[0];
         sender = mess.split("sender:")[1];
         senderIp = sender.split(":")[0];
