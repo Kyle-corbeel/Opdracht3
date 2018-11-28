@@ -15,12 +15,11 @@ public class TopologyHandler extends Thread{
     public TopologyHandler(String nodeNameT) {
 
         this.rmiHandler = new RmiHandler(nodeNameT);
-        NodeData data = new NodeData(nodeNameT);
+        data = new NodeData(nodeNameT);
         data.setMyHash(hash(nodeNameT));
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
         initReceiver();
-        enterNetwork();
 
     }
 
@@ -34,6 +33,7 @@ public class TopologyHandler extends Thread{
             //Join the Multicast group.
             clientSocket.joinGroup(address);
             clientSocket.setReuseAddress(true);
+            enterNetwork();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -52,13 +52,14 @@ public class TopologyHandler extends Thread{
     }
 
     public void sendMulticast(String content){
-        InetAddress addr = null;
+       // InetAddress addr = null;
 
         try {
-            addr = InetAddress.getByName(INET_ADDR);
+            InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-                String msg = content+"\tsender:"+data.getMyName();
-                // Create a packet that will contain the data
+            String msg = content+"\tsender:"+data.getMyName();
+
+            // Create a packet that will contain the data
                 // (in the form of bytes) and send it.
                 DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
                 serverSocket.send(msgPacket);

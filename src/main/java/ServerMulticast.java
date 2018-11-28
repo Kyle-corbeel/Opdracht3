@@ -8,9 +8,11 @@ public class ServerMulticast {
 
     final static String INET_ADDR = "224.0.0.3";
     final static int PORT = 8888;
+    public String nodeName;
     private MulticastSocket clientSocket;
 
-    public ServerMulticast(){
+    public ServerMulticast(String nodeName){
+        this.nodeName=nodeName;
         initReceiver();
     }
 
@@ -30,12 +32,15 @@ public class ServerMulticast {
     }
 
     public void sendMulticast(String content){
-        InetAddress addr = null;
+        //InetAddress addr = null;
 
         try {
-            addr = InetAddress.getByName(INET_ADDR);
+            InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-            String msg = content+"\tsender:";
+            String msg = content+"\tsender:"+nodeName;
+            /**TODO
+             Zet de juiste Naam en IP op de lijn hierboven.
+             **/
             // Create a packet that will contain the data
             // (in the form of bytes) and send it.
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
@@ -54,7 +59,7 @@ public class ServerMulticast {
             // Receive the information and print it.
             DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
             clientSocket.receive(msgPacket);
-            System.out.println("out");
+            //System.out.println("out");
             //System.out.println("Socket 1 received msg: " + msg);
 
 

@@ -24,7 +24,12 @@ public class RmiHandler {
     public void initialise(String serverIp){
 
         try {
-            theServer = (Login) Naming.lookup("rmi://"+serverIp +"/myserver");        //Later localhost vervangen door serverIP
+            String serverIpCorrect=serverIp.split("/")[1];
+            theServer = (Login) Naming.lookup("rmi://"+serverIpCorrect+"/myserver");
+            /** TODO
+             *  PAS DE LOCALHOST HIERBOVE AAN !!
+             */
+//Later localhost vervangen door serverIP
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String s = br.readLine();
 

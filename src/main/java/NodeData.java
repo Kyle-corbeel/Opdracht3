@@ -2,7 +2,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class NodeData {
-    private String nodeName="";
+    private static String nodeName="";
     private int nextNode;
     private int previousNode;
     private boolean hasNeighbours = false;
@@ -13,6 +13,7 @@ public class NodeData {
         try {
             final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
             ip= InetAddress.getLocalHost().toString().split("/")[1];
+            //System.out.println(ip);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,8 +45,9 @@ public class NodeData {
     public void setMyHash(int myHash) {
         this.myHash = myHash;
     }
-    
+
     public String getMyName(){
+       // System.out.println(nodeName);
         return nodeName;
     }
 }

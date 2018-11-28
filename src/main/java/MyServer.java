@@ -21,7 +21,6 @@ public class MyServer implements Login {
     }
 
     public static void main(String args[]) {
-        multi = new ServerMulticast();
         boolean running = true;
         Message message;
 
@@ -37,6 +36,8 @@ public class MyServer implements Login {
             ip = getIp();
             System.out.println(ip);
             String nodeName =ip+":"+naam;
+            multi = new ServerMulticast(nodeName);
+
 
 
             //Opstarten RMI
@@ -54,11 +55,12 @@ public class MyServer implements Login {
 
                 if(message != null)
                 {
-                    System.out.println(message);
+                    //System.out.println(message);
 
-                    if (message.commandIs("Bootstrap")) {
+                    if (message.commandIs("Bootstrap\t")) {
                         multi.sendMulticast("BootServerReply " + countNodes());
                         addToMap(message.getSender());
+                        //System.out.println("in den bootstrap if");
                     }
                     if (message.commandIs("Shut")) {
                         remove(message.getSender());
@@ -66,9 +68,9 @@ public class MyServer implements Login {
                     if (message.commandIs("Failed")) {
                         //The server will act upon incoming Failure.
                     }
-
+                    //System.out.println("moet 1x staan");
                 }
-                System.out.println("loop");
+                //System.out.println("loop"); werkt
 
             }
 

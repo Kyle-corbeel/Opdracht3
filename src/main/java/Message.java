@@ -10,7 +10,7 @@ public class Message {
     public Message(String mess){
 
         everything = mess;
-        System.out.println(mess);
+        //System.out.println(mess);
         content = mess.split("sender:")[0];
         sender = mess.split("sender:")[1];
         senderIp = sender.split(":")[0];
@@ -44,6 +44,7 @@ public class Message {
     }
 
     public boolean commandIs(String s){
+        //System.out.println(command+"check waaar spatie komt");
         return command.equals(s);
     }
 
