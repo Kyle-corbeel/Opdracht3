@@ -6,9 +6,11 @@ public class Message {
     private String senderIp="";
     private String senderName="";
     private String command="";
+    private boolean empty=true;
 
     public Message(String mess){
-
+        if(mess!=null){
+            empty=false;
         everything = mess;
         //System.out.println(mess);
         content = mess.split("sender:")[0];
@@ -16,11 +18,14 @@ public class Message {
         senderIp = sender.split(":")[0];
         senderName = sender.split(":")[1];
         command = content.split(" ")[0];
-
+        }
     }
 
     public Message(){
 
+    }
+    public boolean isEmpty(){
+        return empty;
     }
 
     public String getContent() {
@@ -54,10 +59,6 @@ public class Message {
 
     public boolean has(String s){
         return content.startsWith(s);
-    }
-
-    public boolean isEmpty(){
-        return (everything.equals(""));
     }
 
     public int getNodeCount(){

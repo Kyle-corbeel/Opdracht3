@@ -35,6 +35,7 @@ public class ServerMulticast {
         //InetAddress addr = null;
 
         try {
+            //Thread.sleep(10);
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
             String nodeCorrect= nodeName.split("/")[1];
@@ -48,6 +49,7 @@ public class ServerMulticast {
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
             serverSocket.send(msgPacket);
             //System.out.println("Handler sent packet with msg: " + msg);
+            System.out.println(msg);
             //Thread.sleep(500);
         } catch (Exception ex) {
             ex.printStackTrace();
