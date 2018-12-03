@@ -24,14 +24,14 @@ public class TopologyHandler extends Thread{
     public void initReceiver() {
         InetAddress address = null;
         try {
-           /* address = InetAddress.getByName(INET_ADDR);
+            address = InetAddress.getByName(INET_ADDR);
             // Create a new Multicast socket (that will allow other sockets/programs
             // to join it as well.
             clientSocket = new MulticastSocket(PORT);
             //Join the Multicast group.
             clientSocket.joinGroup(address);
             clientSocket.setReuseAddress(true);
-            //clientSocket.setSoTimeout(5000);*/
+            //clientSocket.setSoTimeout(5000);
             enterNetwork();
         }catch(Exception e){
             e.printStackTrace();
@@ -80,11 +80,11 @@ public class TopologyHandler extends Thread{
         byte[] buf = new byte[256];
         try {
             InetAddress address = InetAddress.getByName(INET_ADDR);
-                clientSocket = new MulticastSocket(PORT);
+                //clientSocket = new MulticastSocket(PORT);
             //Join the Multicast group.
-                clientSocket.joinGroup(address);
-                clientSocket.setReuseAddress(true);
-            clientSocket.setSoTimeout(1000);
+                //clientSocket.joinGroup(address);
+                //clientSocket.setReuseAddress(true);
+            //clientSocket.setSoTimeout(1000);
             // Receive the information and print it.
                 DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
                 clientSocket.receive(msgPacket);
