@@ -30,7 +30,7 @@ public class MyServer implements Login {
             ipMap = new HashMap<Integer, String>();
             ipFile = new File("IpMap.xml");
             /*if(ipFile.exists())
-            {
+            {//
                 loadFile(ipFile);
             }*/
             ip = getIp();
