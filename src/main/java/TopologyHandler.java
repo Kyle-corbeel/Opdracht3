@@ -15,7 +15,8 @@ public class TopologyHandler extends Thread{
     public TopologyHandler(String nodeNameT) {
         this.rmiHandler = new RmiHandler(nodeNameT);
         data = new NodeData(nodeNameT);
-        data.setMyHash(hash(nodeNameT));
+        data.setMyHash(hash(data.getMyName()));
+        //System.out.println(data.getMyHash()+" "+data.getMyName());
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
         initReceiver();
@@ -50,8 +51,10 @@ public class TopologyHandler extends Thread{
     public void processMultiCast(Message mess){
         //System.out.println(mess.getContent().contains("BootServerReply"));
         if(!mess.isEmpty()) {
-            if (mess.getContent().contains("BootServerReply")) {
+            if (mess.getContent().contains("Bootstrap")) {
+                System.out.println(mess.getSender());
                 newNode(mess.getSender());
+
                // System.out.println("if entered");
             }
         }else
@@ -89,14 +92,17 @@ public class TopologyHandler extends Thread{
                 DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
                 clientSocket.receive(msgPacket);
 
-            System.out.println("Socket 1 received msg: " + msgPacket);
+            //System.out.println("Socket 1 received msg: " + msgPacket);
 
         } catch (Exception ex) {
             //ex.printStackTrace();
             System.out.println("left loop");
             return new Message(null);
         }
-        return new Message(new String(buf, 0, buf.length));
+        Message mess =new Message(new String(buf, 0, buf.length));
+        //System.out.println(mess);
+
+        return mess; //steek in buffer
     }
 
 
@@ -108,11 +114,11 @@ public class TopologyHandler extends Thread{
         if (isPrevious(hash)) { //Er wordt gecheckt of deze nieuwe node eventueel onze lagere buur is.
             data.setPreviousNode(hash);
             //System.out.println("newNode entered if 1");
-
-        } else if (isNext(hash)) {//Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
-            sendMulticast("BootNodeReply"); //Indien dit het geval is laten we dit weten aan deze node.
+        }
+        if (isNext(hash)) {//Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
+            sendMulticast("BootNodeReply "+data.getNextNode()); //Indien dit het geval is laten we dit weten aan deze node.
             data.setNextNode(hash);
-           // System.out.println("newNode entered if 2");
+            System.out.println("newNode entered if 2");
         }
     }
 
@@ -131,14 +137,20 @@ public class TopologyHandler extends Thread{
                 System.out.println(message.getNodeCount()); //drukt de reply van de server af!!!
                 if (message.getNodeCount() < 1) { //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
                     setup = true;
+
+                    System.out.println("in de if"+setup);
                 }
             }
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootNodeReply")) {//Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
-               data.setPreviousNode(hash(message.getSender()));
-               data.setNextNode(message.getNodeCount());
+                data.setPreviousNode(hash(message.getSender()));
+                System.out.println(message.getSender()+" "+hash(message.getSender()));
+                data.setNextNode(Integer.parseInt(message.getContent().split(" ")[1].split("\t")[0]));
+                //System.out.println(message.getContent().split(" ")[1].split("\t")[0]);
                 setup = true;
             }
-            message = receiveMulticast();
+            if(!setup){
+                message = receiveMulticast();
+            }
         }
         System.out.println("Entered network\tprevious node: " +data.getPreviousNode() +"\tnext node: " +data.getNextNode());
     }
