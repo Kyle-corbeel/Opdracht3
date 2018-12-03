@@ -13,14 +13,12 @@ public class TopologyHandler extends Thread{
     private boolean running = true;
 
     public TopologyHandler(String nodeNameT) {
-
         this.rmiHandler = new RmiHandler(nodeNameT);
         data = new NodeData(nodeNameT);
         data.setMyHash(hash(nodeNameT));
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
         initReceiver();
-
     }
 
     public void initReceiver() {
@@ -67,7 +65,6 @@ public class TopologyHandler extends Thread{
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
             String msg = content+"\tsender:"+data.getMyName();
-
             // Create a packet that will contain the data
                 // (in the form of bytes) and send it.
                 DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
@@ -95,7 +92,7 @@ public class TopologyHandler extends Thread{
             System.out.println("Socket 1 received msg: " + msgPacket);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             System.out.println("left loop");
             return new Message(null);
         }
@@ -116,7 +113,6 @@ public class TopologyHandler extends Thread{
             sendMulticast("BootNodeReply"); //Indien dit het geval is laten we dit weten aan deze node.
             data.setNextNode(hash);
            // System.out.println("newNode entered if 2");
-
         }
     }
 
