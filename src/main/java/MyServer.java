@@ -47,7 +47,7 @@ public class MyServer implements Login {
             r.bind("myserver", stub);
             System.out.println("Naming server is ready");
 
-
+//
             while(running)
             {
 
