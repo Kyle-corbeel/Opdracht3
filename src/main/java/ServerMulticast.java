@@ -11,36 +11,31 @@ public class ServerMulticast {
     public String nodeName;
     private MulticastSocket clientSocket;
 
-    public ServerMulticast(String nodeName){
-        this.nodeName=nodeName;
+    public ServerMulticast(String nodeName) {
+        this.nodeName = nodeName;
         initReceiver();
     }
 
     public void initReceiver() {
         InetAddress address = null;
         try {
-            address = InetAddress.getByName(INET_ADDR);
-            // Create a new Multicast socket (that will allow other sockets/programs
-            // to join it as well.
-            clientSocket = new MulticastSocket(PORT);
-            //Join the Multicast group.
-            clientSocket.joinGroup(address);
+            address = InetAddress.getByName(INET_ADDR);     // Create a new Multicast socket (that will allow other sockets/programs
+            clientSocket = new MulticastSocket(PORT);       // to join it as well.
+            clientSocket.joinGroup(address);                //Join the Multicast group.
             //clientSocket.setReuseAddress(true);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void sendMulticast(String content){
-        //InetAddress addr = null;
-
+    public void sendMulticast(String content) {
         try {
             //Thread.sleep(10);
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-            String nodeCorrect= nodeName.split("/")[1];
+            String nodeCorrect = nodeName.split("/")[1];
             //System.out.println(nodeCorrect);
-            String msg = content+"\tsender:"+nodeCorrect;
+            String msg = content + "\tsender:" + nodeCorrect;
             /**TODO
              Zet de juiste Naam en IP op de lijn hierboven. dees geeft probleme
              **/
@@ -59,13 +54,10 @@ public class ServerMulticast {
     public Message receiveMulticast() {
         byte[] buf = new byte[256];
         try {
-
-            // Receive the information and print it.
-            DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
+            DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);     // Receive the information and print it.
             clientSocket.receive(msgPacket);
             //System.out.println("out");
             //System.out.println("Socket 1 received msg: " + msg);
-
 
         } catch (IOException ex) {
             ex.printStackTrace();

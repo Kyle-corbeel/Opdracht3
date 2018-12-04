@@ -8,16 +8,16 @@ public class Message {
     private String command="";
     private boolean empty=true;
 
-    public Message(String mess){
-        if(mess!=null){
-            empty=false;
-        everything = mess;
-        //System.out.println(mess);
-        content = mess.split("sender:")[0];
-        sender = mess.split("sender:")[1];
-        senderIp = sender.split(":")[0];
-        senderName = sender.split(":")[1];
-        command = content.split(" ")[0];
+    public Message(String mess) {
+        if (mess != null) {
+            empty = false;
+            everything = mess;
+            //System.out.println(mess);
+            content = mess.split("sender:")[0];
+            sender = mess.split("sender:")[1].split("#")[0];
+            senderIp = sender.split(":")[0];
+            senderName = sender.split(":")[1];
+            command = content.split(" ")[0];
         }
     }
 
@@ -49,7 +49,6 @@ public class Message {
     }
 
     public boolean commandIs(String s){
-        //System.out.println(command+"check waaar spatie komt");
         return command.equals(s);
     }
 
