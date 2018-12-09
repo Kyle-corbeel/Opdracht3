@@ -29,7 +29,15 @@ public class MyClient {
         app.start();
 
         //BootstrapReplyHandler
-        while (running) {/*
+        while (running) {
+            if(app.hasCommand()){
+                if(app.getCommand().equals("shutdown")){
+                    app.stopThread();
+                    topo.shutdownProtocol(); //stuurt een multicast van shutdown
+                    running=false;
+                }
+            }
+            /*
 
             Message message = receiver.check();
             if(message != null) {
