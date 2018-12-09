@@ -53,8 +53,8 @@ public class RmiHandler {
         return theServer.getOwner(str);
     }
 
-    public String getNeighbours(int nodeHash) throws RemoteException {
-        return theServer.getNeighbours(nodeHash);
+    public String getNeighboursFail(int nodeHash) throws RemoteException {
+        return theServer.getNeighboursFail(nodeHash);
     }
 
     public boolean hasServer(){
