@@ -66,6 +66,18 @@ public class TopologyHandler extends Thread{
             {
                 updateNetwork(mess.getContent().split(" ")[1] +" " +mess.getContent().split(" ")[2]);
             }
+            //shutdown herkenning gebeurt hieronder.
+            //hij moet zien of hij de previous of de next node was van degene die gaat shutten.
+            if(mess.getContent().contains("Shutdown")) {
+                if (!(mess.getSender() == data.getMyName())) {//als ik niet de verstuurder ben (miss gaf dit fouten dus ik zet het er voor code compleetheid erbij)
+                    if (hash(mess.getSender()) == data.getNextNode()) { //als de verstuurder MIJN volgende is dan moet ik zijn volgende krijgen!
+                        data.setNextNode(hash(mess.getContent().split(":")[1].split(" ")[1])); //zet zijn nextnode op mijn nextnode
+                    }
+                    if (hash(mess.getSender()) == data.getPreviousNode()) { //als de verstuurder mijn VORIGE is dan moet ik zijn vorige krijgen
+                        data.setPreviousNode(hash(mess.getContent().split(":")[1].split(" ")[0]));//zet zijn prev node op mijn prev node!
+                    }
+                }
+            }
         } else
             System.out.println("message empty");
     }
@@ -114,7 +126,7 @@ public class TopologyHandler extends Thread{
     {
         int failHash = hash(nodeName);
         try {
-            String neighbours = rmiHandler.getNeighbours(failHash);
+            String neighbours = rmiHandler.getNeighboursFail(failHash);
             sendMulticast("FailNode " +neighbours);
             updateNetwork(neighbours);
         } catch (Exception e) {
@@ -155,7 +167,7 @@ public class TopologyHandler extends Thread{
                 if (message.getNodeCount() < 1) {                                                          //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
                     setup = true;
 
-                    System.out.println("in de if" + setup);
+                    //System.out.println("in de if" + setup);
                 }
             }
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootNodeReply")) {   //Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
@@ -215,6 +227,10 @@ public class TopologyHandler extends Thread{
             return false;
         }
 
+    }
+    public void shutdownProtocol(){
+        sendMulticast("Shutdown:"+data.getPreviousNode()+" "+data.getNextNode()); //vorm van bericht
+        // SHUTDOWN:previous next sender:ip ...
     }
 }
 
