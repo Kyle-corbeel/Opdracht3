@@ -148,7 +148,7 @@ public class MyServer implements Login {
         return ipMap.get(closeKey);
     }
 
-    public String getNeighbours(int nodeHash) throws RemoteException {
+    public String getNeighboursFail(int nodeHash) throws RemoteException {
         int previous = 0;
         int next = 327680;
         ipMap.remove(nodeHash);
