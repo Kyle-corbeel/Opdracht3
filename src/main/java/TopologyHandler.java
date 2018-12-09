@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.*;
+import java.rmi.RemoteException;
 
 public class TopologyHandler extends Thread{
 
@@ -61,6 +62,10 @@ public class TopologyHandler extends Thread{
 
                 // System.out.println("if entered");
             }
+            if(mess.getContent().contains("FailNode"))
+            {
+                updateNetwork(mess.getContent().split(" ")[1] +" " +mess.getContent().split(" ")[2]);
+            }
         } else
             System.out.println("message empty");
     }
@@ -103,6 +108,19 @@ public class TopologyHandler extends Thread{
         //System.out.println(mess);
 
         return mess;         //steek in buffer
+    }
+
+    public void nodeFailure(String nodeName)
+    {
+        int failHash = hash(nodeName);
+        try {
+            String neighbours = rmiHandler.getNeighbours(failHash);
+            sendMulticast("FailNode " +neighbours);
+            updateNetwork(neighbours);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -152,6 +170,18 @@ public class TopologyHandler extends Thread{
             }
         }
         System.out.println("Entered network\tprevious node: " + data.getPreviousNode() + "\tnext node: " + data.getNextNode());
+    }
+
+    public void updateNetwork(String neighbours) //Krijgt een set hashes door en checkt of hijzelf 1 van de 2 is
+    {
+        if(Integer.parseInt(neighbours.split(" ")[0]) == data.getMyHash())
+        {
+            data.setNextNode(Integer.parseInt(neighbours.split(" ")[1])); //Zoja zet hij de andere als next
+        }
+        if(Integer.parseInt(neighbours.split(" ")[1]) == data.getMyHash())
+        {
+            data.setPreviousNode(Integer.parseInt(neighbours.split(" ")[0])); //of als previous
+        }
     }
 
 

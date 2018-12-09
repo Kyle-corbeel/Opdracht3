@@ -148,6 +148,38 @@ public class MyServer implements Login {
         return ipMap.get(closeKey);
     }
 
+    public String getNeighbours(int nodeHash) throws RemoteException {
+        int previous = 0;
+        int next = 327680;
+        ipMap.remove(nodeHash);
+        for (Integer key : ipMap.keySet()) { //Lagere buur vinden
+
+            if (key < nodeHash) {
+                if (key > previous) {
+                    previous = key;
+                }
+            }
+        }
+        if (previous == 0 && !ipMap.containsKey(0)) {
+            previous = Collections.max(ipMap.keySet());
+        }
+
+        for (Integer key : ipMap.keySet()) { //Hogere buur vinden
+
+            if (key < nodeHash) {
+                if (key < next) {
+                    next = key;
+                }
+            }
+        }
+        if (next == 327680 && !ipMap.containsKey(327680)) {
+            next = Collections.max(ipMap.keySet());
+        }
+
+        String returnSentence = (ipMap.get(previous) +" " +ipMap.get(next));
+        return returnSentence;
+    }
+
     private static void saveFile(File saveFile) throws IOException {
         Writer writer = new BufferedWriter(new FileWriter(saveFile));
         for (Integer hash : ipMap.keySet()) {
