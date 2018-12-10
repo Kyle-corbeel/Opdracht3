@@ -1,5 +1,4 @@
 import java.io.*;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,36 +6,35 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 public class MyServer implements Login {
     static HashMap<Integer, String> ipMap;
     static File ipFile;
     static String ip;
-    static String naam = "NameServer";
+    static String naam = "myserver";
     static ServerMulticast multi;
 
     protected MyServer() {
+
     }
 
     public static void main(String args[]) {
-        multi = new ServerMulticast();
         boolean running = true;
         Message message;
 
 
         try {
-            //Checking or creating IpMap
             ipMap = new HashMap<Integer, String>();
-            ipFile = new File("IpMap.xml");
+            ipFile = new File("IpMap.xml");     //Creating ipMap
             /*if(ipFile.exists())
             {
                 loadFile(ipFile);
             }*/
+
             ip = getIp();
             System.out.println(ip);
-            String nodeName =ip+":"+naam;
+            String nodeName = ip + ":" + naam;
+            multi = new ServerMulticast(nodeName);       //Create multicast-object
 
 
             //Opstarten RMI
@@ -46,52 +44,44 @@ public class MyServer implements Login {
             r.bind("myserver", stub);
             System.out.println("Naming server is ready");
 
-
-            while(running)
+            while (running)        //Action loop
             {
 
                 message = multi.receiveMulticast();
-                System.out.println(message);
 
-                if(message != null)
-                {
-                    System.out.println(message);
+                if (message != null) {
 
-                    if (message.commandIs("Bootstrap")) {
+                    if (message.commandIs("Bootstrap\t")) {
                         multi.sendMulticast("BootServerReply " + countNodes());
                         addToMap(message.getSender());
+                        //System.out.println("in den bootstrap if");
                     }
                     if (message.commandIs("Shut")) {
                         remove(message.getSender());
                     }
-                    if (message.commandIs("Failed")) {
-                        //The server will act upon incoming Failure.
-                    }
+                    if (message.commandIs("Failed")) {          //The server will act upon incoming Failure.
 
+                    }
                 }
 
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static String getIp()
-    {
+    public static String getIp() {
         InetAddress ip;
         String hostname;
         try {
             ip = InetAddress.getLocalHost();
-            return ""+ip;
-        }catch(Exception e){
+            return "" + ip;
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
     }
-
 
     /*public HashMap<Integer, String> register(String nodeName) throws RemoteException {
         int hash;
@@ -107,30 +97,30 @@ public class MyServer implements Login {
         return ipMap;
     }*/
 
-    public static int hash(String nodeName){
+    public static int hash(String nodeName) {
         int hash;
         hash = Math.abs(nodeName.hashCode()) % 327680;
         return hash;
     }
 
-    public static boolean addToMap(String sender){
+    public static boolean addToMap(String sender) {
         int hash = hash(sender);
-        ipMap.put(hash,sender);
+        ipMap.put(hash, sender);
         try {
             saveFile(ipFile);
-            System.out.println("Added Hash: "+hash+"\tHost: "+sender);
+            System.out.println("Added Hash: " + hash + "\tHost: " + sender);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public static boolean remove(String ip){
+    public static boolean remove(String ip) {
         int hash = hash(ip);
         ipMap.remove(hash);
         try {
             saveFile(ipFile);
-            System.out.println("Removed: Hash: "+hash+"\tHost: "+ip);
+            System.out.println("Removed: Hash: " + hash + "\tHost: " + ip);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,19 +132,16 @@ public class MyServer implements Login {
         int closeKey = 0;
         hash = Math.abs(fileName.hashCode()) % 327680;
         System.out.println(hash);
-        for (Integer key: ipMap.keySet()){
+        for (Integer key : ipMap.keySet()) {
 
-            if(key<hash)
-            {
-                if(key>closeKey)
-                {
+            if (key < hash) {
+                if (key > closeKey) {
                     closeKey = key;
                 }
             }
         }
 
-        if(closeKey ==0 )
-        {
+        if (closeKey == 0) {
             closeKey = Collections.max(ipMap.keySet());
         }
         System.out.println(closeKey);
@@ -163,12 +150,11 @@ public class MyServer implements Login {
 
     private static void saveFile(File saveFile) throws IOException {
         Writer writer = new BufferedWriter(new FileWriter(saveFile));
-        for (Integer hash: ipMap.keySet()){
+        for (Integer hash : ipMap.keySet()) {
 
-            String key =hash.toString();
+            String key = hash.toString();
             String value = ipMap.get(hash).toString();
-            writer.write(key + " " + value +"\n");
-
+            writer.write(key + " " + value + "\n");
 
 
         }
@@ -180,8 +166,7 @@ public class MyServer implements Login {
         HashMap<Integer, String> ipTemp = new HashMap<Integer, String>();
         BufferedReader br = new BufferedReader(new FileReader(loadFile));
         String line;
-        while ((line = br.readLine()) != null)
-        {
+        while ((line = br.readLine()) != null) {
             String[] splitLine = line.split(" ");
             ipTemp.put(Integer.parseInt(splitLine[0]), splitLine[1]);
         }
