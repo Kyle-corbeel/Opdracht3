@@ -127,6 +127,10 @@ public class MyServer implements Login {
         return true;
     }
 
+    public HashMap<Integer, String> getTopology() throws RemoteException {
+        return ipMap;
+    }
+
     public String getOwner(String fileName) throws RemoteException {
         int hash;
         int closeKey = 0;
