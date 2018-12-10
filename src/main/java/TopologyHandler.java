@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 public class TopologyHandler extends Thread{
 
-    final static String INET_ADDR = "224.0.0.3";
+    final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de PI's
     final static int PORT = 8888;
     private MulticastSocket clientSocket;
 

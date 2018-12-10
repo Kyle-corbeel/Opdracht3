@@ -6,7 +6,7 @@ import java.net.MulticastSocket;
 
 public class ServerMulticast {
 
-    final static String INET_ADDR = "224.0.0.3";
+    final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de Pi's
     final static int PORT = 8888;
     public String nodeName;
     private MulticastSocket clientSocket;

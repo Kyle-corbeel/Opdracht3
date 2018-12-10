@@ -40,13 +40,18 @@ public class RmiHandler {
         }
     }
     
-    /*public HashMap<Integer,String> getMap(){
+    public HashMap<Integer,String> getTopology(){
+        try {
+            ipMap = theServer.getTopology();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         for (Integer ipName: ipMap.keySet()){
         System.out.println(ipName);
     }
         return ipMap;
 
-}*/
+}
 
 
     public String getOwner(String str) throws RemoteException {
