@@ -56,7 +56,7 @@ public class MyServer implements Login {
                         addToMap(message.getSender());
                         //System.out.println("in den bootstrap if");
                     }
-                    if (message.commandIs("Shut")) {
+                    if (message.getContent().contains("Shutdown")) {
                         remove(message.getSender());
                     }
                     if (message.commandIs("Failed")) {          //The server will act upon incoming Failure.

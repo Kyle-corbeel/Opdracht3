@@ -4,8 +4,8 @@ import java.io.InputStreamReader;
 public class ApplicationThread extends Thread {
 
     private String name;
-    private static boolean hasMessage=false;
-    protected String message ="";
+    private volatile boolean hasMessage=false;
+    public volatile String message ="";
     protected volatile boolean cont = true;
 
 
@@ -48,7 +48,8 @@ public class ApplicationThread extends Thread {
                 if (s.equals("4")) {
                     hasMessage=true;
                     cont = false;
-                    message="shutdown";
+                    message="Shutdown";
+                   // System.out.println("In de shutdownIF");
                 }
 
             }
