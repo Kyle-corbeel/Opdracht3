@@ -148,6 +148,10 @@ public class MyServer implements Login {
         return ipMap.get(closeKey);
     }
 
+    public String getIpFromHash(int hash){
+        return ipMap.get(hash);
+    }
+
     private static void saveFile(File saveFile) throws IOException {
         Writer writer = new BufferedWriter(new FileWriter(saveFile));
         for (Integer hash : ipMap.keySet()) {

@@ -53,6 +53,10 @@ public class RmiHandler {
         return theServer.getOwner(str);
     }
 
+    public String getIpFromHash(int hash) throws RemoteException {
+        return theServer.getIpFromHash(hash);
+    }
+
     public boolean hasServer(){
         return initialised;
     }

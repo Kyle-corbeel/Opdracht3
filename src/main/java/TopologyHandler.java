@@ -1,5 +1,7 @@
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class TopologyHandler extends Thread{
 
@@ -38,9 +40,58 @@ public class TopologyHandler extends Thread{
             clientSocket.setReuseAddress(true);
             //clientSocket.setSoTimeout(5000);
             enterNetwork();
+            fileStartup();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void fileStartup() {
+        replicateFiles(listFiles());
+
+    }
+
+    private void replicateFiles(ArrayList<String> fileNames) {
+        String replicateNode="";
+
+        try {
+            for (String fileName : fileNames) {
+
+                String owner = rmiHandler.getOwner(fileName);
+                if(owner.equals(data.getMyName())){
+                    replicateNode = rmiHandler.getIpFromHash(data.getPreviousNode());
+                }else {
+                    replicateNode = owner;
+                }
+                sendMulticast("Replicate "+fileName+" "+replicateNode);
+                sendToTCP(replicateNode, fileName);
+            }
+
+        }catch(RemoteException e){
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<String> listFiles() {
+        File folder = new File("files");
+        File[] listOfFiles = folder.listFiles();
+        System.out.println("Listing local files..");
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("Local File: " + listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Local Directory " + listOfFiles[i].getName());
+            }
+        }
+
+        ArrayList<String> fileNames = new ArrayList<String>();
+        for(File f : listOfFiles){
+            fileNames.add(f.getName());
+        }
+
+        return fileNames;
+
     }
 
 
@@ -60,6 +111,11 @@ public class TopologyHandler extends Thread{
                 newNode(mess.getSender());
 
                 // System.out.println("if entered");
+            }
+            if(mess.getContent().contains("Replicate")){
+                if(mess.getContent().split(" ")[2].equals(data.getMyName())){
+                    getFromTCP(mess.getContent().split(" ")[1]);
+                }
             }
         } else
             System.out.println("message empty");
@@ -186,5 +242,66 @@ public class TopologyHandler extends Thread{
         }
 
     }
+
+    public void sendToTCP(String receiver, String fileName){
+        String hostName = receiver;
+        int portNumber = 4444;
+
+        try {
+            Socket echoSocket = new Socket(hostName, portNumber);
+            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
+            //BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+            String line = null;
+
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+                out.println(line);
+                System.out.println(line);
+            }
+            // Always close files.
+            bufferedReader.close();
+            /*while (in.readLine() != null) {
+                System.out.println(in.readLine());
+            }
+            System.exit(0);*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 }
+
+
+    public void getFromTCP(String fileName){
+        int portNumber = 4444;//Integer.pars    eInt(args[0]);
+        try {
+            File f = new File(fileName);
+            ServerSocket serverSocket = new ServerSocket(4444/*Integer.parseInt(args[0]*/);
+            Socket clientSocket = serverSocket.accept();
+            //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+                writer.write(inputLine);
+                writer.newLine();
+                //System.out.println(inputLine);
+                //out.println(inputLine);
+                writer.close();
+            }
+            System.out.println("Done downloading file");
+        } catch (IOException e) {
+            System.out.println("Exception caught when trying to listen on port "
+                    + portNumber + " or listening for a connection");
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
 
