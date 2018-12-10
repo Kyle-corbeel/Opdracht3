@@ -11,7 +11,7 @@ public class TopologyHandler extends Thread{
     private NodeData data;
 
     private RmiHandler rmiHandler;
-    private boolean running = true;
+    private volatile boolean running = true;
 
     /*TODO: Nagaan of clients nu correct hun previous & next krijgen.
       TODO: Nagaan of Shutdown al correct wordt gedaan
@@ -69,14 +69,15 @@ public class TopologyHandler extends Thread{
             //shutdown herkenning gebeurt hieronder.
             //hij moet zien of hij de previous of de next node was van degene die gaat shutten.
             if(mess.getContent().contains("Shutdown")) {
-                if (!(mess.getSender() == data.getMyName())) {//als ik niet de verstuurder ben (miss gaf dit fouten dus ik zet het er voor code compleetheid erbij)
+                //if (!(mess.getSender() == data.getMyName())) {//als ik niet de verstuurder ben (miss gaf dit fouten dus ik zet het er voor code compleetheid erbij)
                     if (hash(mess.getSender()) == data.getNextNode()) { //als de verstuurder MIJN volgende is dan moet ik zijn volgende krijgen!
-                        data.setNextNode(hash(mess.getContent().split(":")[1].split(" ")[1])); //zet zijn nextnode op mijn nextnode
+                        data.setNextNode(hash(mess.getContent().split(" ")[2])); //zet zijn nextnode op mijn nextnode
                     }
                     if (hash(mess.getSender()) == data.getPreviousNode()) { //als de verstuurder mijn VORIGE is dan moet ik zijn vorige krijgen
-                        data.setPreviousNode(hash(mess.getContent().split(":")[1].split(" ")[0]));//zet zijn prev node op mijn prev node!
+                        data.setPreviousNode(hash(mess.getContent().split(" ")[1]));//zet zijn prev node op mijn prev node!
                     }
-                }
+                //updateNetwork(mess.getContent().split(" ")[1] +" " +mess.getContent().split(" ")[2]);
+                //}
             }
         } else
             System.out.println("message empty");
@@ -91,7 +92,7 @@ public class TopologyHandler extends Thread{
             String msg = content + "\tsender:" + data.getMyName() + "#";            // (in the form of bytes) and send it.
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
             serverSocket.send(msgPacket);
-            //System.out.println("Handler sent packet with msg: " + msg);
+            System.out.println("Handler sent packet with msg: " + msg);
             Thread.sleep(500);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -229,8 +230,9 @@ public class TopologyHandler extends Thread{
 
     }
     public void shutdownProtocol(){
-        sendMulticast("Shutdown:"+data.getPreviousNode()+" "+data.getNextNode()); //vorm van bericht
-        // SHUTDOWN:previous next sender:ip ...
+        sendMulticast("Shutdown "+data.getPreviousNode()+" "+data.getNextNode()); //vorm van bericht
+        // SHUTDOWN previous next sender:ip ...
+        System.exit(0);
     }
 }
 

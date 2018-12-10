@@ -30,13 +30,15 @@ public class MyClient {
 
         //BootstrapReplyHandler
         while (running) {
-            if(app.hasCommand()){
-                if(app.getCommand().equals("shutdown")){
+            //System.out.println("In de shutdownIF"+app.hasCommand());
+            if (app.hasCommand()) {
+                if (app.getCommand().equals("Shutdown")) {
                     app.stopThread();
                     topo.shutdownProtocol(); //stuurt een multicast van shutdown
-                    running=false;
+                    running = false;
                 }
             }
+        }
             /*
 
             Message message = receiver.check();
@@ -151,4 +153,3 @@ public class MyClient {
         System.out.println(getPrevious()+"\t"+getNext());
     }*/
     }
-}
