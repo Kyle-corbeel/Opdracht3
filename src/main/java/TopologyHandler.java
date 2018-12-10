@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 public class TopologyHandler extends Thread{
 
     final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de PI's
-    final static int PORT = 8888;
+    final static int PORT = 4567;
     private MulticastSocket clientSocket;
 
     private NodeData data;
@@ -35,6 +35,7 @@ public class TopologyHandler extends Thread{
             address = InetAddress.getByName(INET_ADDR); // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);   // to join it as well.
             //Join the Multicast group.
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(address));
             clientSocket.joinGroup(address);
             clientSocket.setReuseAddress(true);
             //clientSocket.setSoTimeout(5000);

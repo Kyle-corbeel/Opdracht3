@@ -1,13 +1,11 @@
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.net.*;
+import java.util.Enumeration;
 
 public class ServerMulticast {
 
     final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de Pi's
-    final static int PORT = 8888;
+    final static int PORT = 4567;
     public String nodeName;
     private MulticastSocket clientSocket;
 
@@ -21,6 +19,8 @@ public class ServerMulticast {
         try {
             address = InetAddress.getByName(INET_ADDR);     // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);       // to join it as well.
+            clientSocket.setReuseAddress(true);
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
             clientSocket.joinGroup(address);                //Join the Multicast group.
             //clientSocket.setReuseAddress(true);
         } catch (Exception e) {
