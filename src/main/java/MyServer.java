@@ -144,7 +144,7 @@ public class MyServer implements Login {
         if (closeKey == 0) {
             closeKey = Collections.max(ipMap.keySet());
         }
-        System.out.println(closeKey);
+        //System.out.println(closeKey);
         return ipMap.get(closeKey);
     }
 

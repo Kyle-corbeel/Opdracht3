@@ -13,6 +13,7 @@ public class TopologyHandler extends Thread{
 
     private RmiHandler rmiHandler;
     private boolean running = true;
+    private boolean setup = false;
 
     /*TODO: Nagaan of clients nu correct hun previous & next krijgen.
       TODO: Nagaan of Shutdown al correct wordt gedaan
@@ -53,6 +54,7 @@ public class TopologyHandler extends Thread{
 
     private void replicateFiles(ArrayList<String> fileNames) {
         String replicateNode="";
+        boolean send = true;
 
         try {
             for (String fileName : fileNames) {
@@ -60,11 +62,16 @@ public class TopologyHandler extends Thread{
                 String owner = rmiHandler.getOwner(fileName);
                 if(owner.equals(data.getMyName())){
                     replicateNode = rmiHandler.getIpFromHash(data.getPreviousNode());
+                    if(replicateNode.equals(data.getMyName())){
+                        send = false;
+                    }
                 }else {
                     replicateNode = owner;
                 }
-                sendMulticast("Replicate "+fileName+" "+replicateNode);
-                sendToTCP(replicateNode, fileName);
+                if(send==true) {
+                    sendMulticast("Replicate " + fileName + " " + replicateNode);
+                    sendToTCP(replicateNode, fileName);
+                }
             }
 
         }catch(RemoteException e){
@@ -128,6 +135,7 @@ public class TopologyHandler extends Thread{
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();                     // Create a packet that will contain the data
             String msg = content + "\tsender:" + data.getMyName() + "#";            // (in the form of bytes) and send it.
+            System.out.println(msg);
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
             serverSocket.send(msgPacket);
             //System.out.println("Handler sent packet with msg: " + msg);
@@ -181,7 +189,7 @@ public class TopologyHandler extends Thread{
     {
         sendMulticast("Bootstrap");                                 //Laat het netwerk weten dat je wenst toe te treden.
         Message message = receiveMulticast();
-        Boolean setup = false;
+        setup = false;
         while (!setup)                                                       //Blijf wachten totdat de server en eventueel andere nodes reageren
         {
             System.out.println(message);
@@ -244,7 +252,7 @@ public class TopologyHandler extends Thread{
     }
 
     public void sendToTCP(String receiver, String fileName){
-        String hostName = receiver;
+        String hostName = receiver.split(":")[0];
         int portNumber = 4444;
 
         try {
@@ -267,6 +275,7 @@ public class TopologyHandler extends Thread{
             }
             // Always close files.
             bufferedReader.close();
+            System.out.println("Done sending file..");
             /*while (in.readLine() != null) {
                 System.out.println(in.readLine());
             }
@@ -281,7 +290,7 @@ public class TopologyHandler extends Thread{
     public void getFromTCP(String fileName){
         int portNumber = 4444;//Integer.pars    eInt(args[0]);
         try {
-            File f = new File(fileName);
+            File f = new File("C:\\Users\\Wouter\\Desktop\\Testfiles\\"+fileName);
             ServerSocket serverSocket = new ServerSocket(4444/*Integer.parseInt(args[0]*/);
             Socket clientSocket = serverSocket.accept();
             //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -295,7 +304,7 @@ public class TopologyHandler extends Thread{
                 //out.println(inputLine);
                 writer.close();
             }
-            System.out.println("Done downloading file");
+            System.out.println("Done downloading file..");
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
                     + portNumber + " or listening for a connection");
