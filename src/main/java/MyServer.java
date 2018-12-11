@@ -1,10 +1,13 @@
 import java.io.*;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 public class MyServer implements Login {
@@ -72,10 +75,18 @@ public class MyServer implements Login {
     }
 
     public static String getIp() {
-        InetAddress ip;
-        String hostname;
+        String ip = "";
         try {
-            ip = InetAddress.getLocalHost();
+            NetworkInterface eth = NetworkInterface.getByName("eth0");
+            Enumeration<InetAddress> adresNUM = eth.getInetAddresses();
+            while(adresNUM.hasMoreElements() && ip.equals(""))
+            {
+                InetAddress addr = adresNUM.nextElement();
+                if(addr instanceof Inet4Address && !addr.isLoopbackAddress())
+                {
+                    ip = addr.getHostAddress();
+                }
+            }
             return "" + ip;
         } catch (Exception e) {
             e.printStackTrace();

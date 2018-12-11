@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <build>
-        <finalName>Lab2Server</finalName>
+        <finalName>Lab2Client</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -22,7 +22,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>MyServer</mainClass>
+                            <mainClass>MyClient</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -20,7 +20,8 @@ public class ServerMulticast {
             address = InetAddress.getByName(INET_ADDR);     // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);       // to join it as well.
             clientSocket.setReuseAddress(true);
-            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
+            System.out.println(getIp());
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(getIp())));
             clientSocket.joinGroup(address);                //Join the Multicast group.
             //clientSocket.setReuseAddress(true);
         } catch (Exception e) {
@@ -64,5 +65,25 @@ public class ServerMulticast {
             return null;
         }
         return new Message(new String(buf, 0, buf.length));
+    }
+
+    public static String getIp() {
+        String ip = "";
+        try {
+            NetworkInterface eth = NetworkInterface.getByName("eth0");
+            Enumeration<InetAddress> adresNUM = eth.getInetAddresses();
+            while(adresNUM.hasMoreElements() && ip.equals(""))
+            {
+                InetAddress addr = adresNUM.nextElement();
+                if(addr instanceof Inet4Address && !addr.isLoopbackAddress())
+                {
+                    ip = addr.getHostAddress();
+                }
+            }
+            return "" + ip;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

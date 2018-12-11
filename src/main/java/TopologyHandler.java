@@ -35,7 +35,7 @@ public class TopologyHandler extends Thread{
             address = InetAddress.getByName(INET_ADDR); // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);   // to join it as well.
             //Join the Multicast group.
-            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(address));
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(data.getIp())));
             clientSocket.joinGroup(address);
             clientSocket.setReuseAddress(true);
             //clientSocket.setSoTimeout(5000);
