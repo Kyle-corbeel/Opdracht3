@@ -70,7 +70,7 @@ public class TopologyHandler extends Thread{
                 }
                 if(send==true) {
                     sendMulticast("Replicate " + fileName + " " + replicateNode);
-                    sendToTCP(replicateNode, fileName);
+                    //sendToTCP(replicateNode, fileName);
                 }
             }
 
@@ -122,7 +122,11 @@ public class TopologyHandler extends Thread{
             if(mess.getContent().contains("Replicate")){
                 if(mess.getContent().split(" ")[2].equals(data.getMyName())){
                     getFromTCP(mess.getContent().split(" ")[1]);
+                    sendMulticast("TCPopen"+mess.getContent().split(" ")[1]+" "+mess.getSender());
                 }
+            }
+            if(mess.getContent().contains("TCPopen")){
+                sendToTCP(mess.getSender(), mess.getContent().split(" ")[1]);
             }
         } else
             System.out.println("message empty");
@@ -256,7 +260,7 @@ public class TopologyHandler extends Thread{
         int portNumber = 4444;
 
         try {
-            Socket echoSocket = new Socket(hostName, portNumber);
+            Socket echoSocket = new Socket("localhost", portNumber);
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             //BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String line = null;
