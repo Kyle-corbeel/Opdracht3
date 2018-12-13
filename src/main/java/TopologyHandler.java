@@ -69,8 +69,21 @@ public class TopologyHandler extends Thread{
                     replicateNode = owner;
                 }
                 if(send==true) {
+
+                    boolean received = false;
                     sendMulticast("Replicate " + fileName + " " + replicateNode);
-                    //sendToTCP(replicateNode, fileName);
+                    while(!received)
+                    {
+                        Message mess=receiveMulticast();
+                        if(mess.getContent().contains("TCPopen")){
+                            System.out.println("Receiver opened socket : send file");
+                            //sendToTCP(mess.getSender(), mess.getContent().split(" ")[1]);
+                            sendToTCP(replicateNode, "files\\"+fileName);
+                            received=true;
+                        }
+
+                    }
+
                 }
             }
 
@@ -105,7 +118,10 @@ public class TopologyHandler extends Thread{
     public void run() {
         while (running) {
             //System.out.println("voor");
-            processMultiCast(receiveMulticast());
+            Message mess = receiveMulticast();
+            if(!mess.getSender().equals(data.getMyName())) {
+                processMultiCast(receiveMulticast());
+            }
             //System.out.println("na");
         }
     }
@@ -114,20 +130,23 @@ public class TopologyHandler extends Thread{
         //System.out.println(mess.getContent().contains("BootServerReply"));
         if (!mess.isEmpty()) {
             if (mess.getContent().contains("Bootstrap")) {
-                System.out.println(mess.getSender());
+                //System.out.println(mess.getSender());
                 newNode(mess.getSender());
 
                 // System.out.println("if entered");
             }
             if(mess.getContent().contains("Replicate")){
-                if(mess.getContent().split(" ")[2].equals(data.getMyName())){
+                //System.out.println("Bugfix: "+mess.getContent().split(" ")[2].trim());
+                if(mess.getContent().split(" ")[2].trim().equals(data.getMyName())){
+                    System.out.println("Request received : opening TCP socket");
+                    sendMulticast("TCPopen "+mess.getContent().split(" ")[1]+" "+mess.getSender());
                     getFromTCP(mess.getContent().split(" ")[1]);
-                    sendMulticast("TCPopen"+mess.getContent().split(" ")[1]+" "+mess.getSender());
-                }
+                    }
             }
-            if(mess.getContent().contains("TCPopen")){
+           /* if(mess.getContent().contains("TCPopen")){
+                System.out.println("Receiver opened socket : send file")
                 sendToTCP(mess.getSender(), mess.getContent().split(" ")[1]);
-            }
+            }*/
         } else
             System.out.println("message empty");
     }
@@ -139,7 +158,7 @@ public class TopologyHandler extends Thread{
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();                     // Create a packet that will contain the data
             String msg = content + "\tsender:" + data.getMyName() + "#";            // (in the form of bytes) and send it.
-            System.out.println(msg);
+            System.out.println("Sending: "+msg);
             DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
             serverSocket.send(msgPacket);
             //System.out.println("Handler sent packet with msg: " + msg);
@@ -164,11 +183,12 @@ public class TopologyHandler extends Thread{
 
         } catch (Exception ex) {
             //ex.printStackTrace();
-            System.out.println("left loop");
+            //System.out.println("left loop");
             return new Message(null);
         }
         Message mess = new Message(new String(buf, 0, buf.length));
-        //System.out.println(mess);
+        if()
+        System.out.println("Received: "+mess);
 
         return mess;         //steek in buffer
     }
@@ -185,7 +205,7 @@ public class TopologyHandler extends Thread{
         if (isNext(hash)) {                                                 //Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
             sendMulticast("BootNodeReply " + data.getNextNode());     //Indien dit het geval is laten we dit weten aan deze node.
             data.setNextNode(hash);
-            System.out.println("newNode entered if 2");
+            //System.out.println("newNode entered if 2");
         }
     }
 
@@ -196,21 +216,21 @@ public class TopologyHandler extends Thread{
         setup = false;
         while (!setup)                                                       //Blijf wachten totdat de server en eventueel andere nodes reageren
         {
-            System.out.println(message);
+            //System.out.println(message);
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
                 String serverIp = message.getSenderIp();
                 //System.out.println(serverIp);
                 rmiHandler.initialise(serverIp);
-                System.out.println(message.getNodeCount());                                                //drukt de reply van de server af!!!
+                //System.out.println(message.getNodeCount());                                                //drukt de reply van de server af!!!
                 if (message.getNodeCount() < 1) {                                                          //Indien er nog geen andere nodes zijn moeten we niet wachten op nodereplies
                     setup = true;
 
-                    System.out.println("in de if" + setup);
+                    //System.out.println("in de if" + setup);
                 }
             }
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootNodeReply")) {   //Indien er al nodes aanwezig zijn zal de previousNode dit laten weten.
                 data.setPreviousNode(hash(message.getSender()));
-                System.out.println(message.getSender() + " " + hash(message.getSender()));
+                //System.out.println(message.getSender() + " " + hash(message.getSender()));
                 data.setNextNode(Integer.parseInt(message.getContent().split(" ")[1].split("\t")[0]));
                 //System.out.println(message.getContent().split(" ")[1].split("\t")[0]);
                 setup = true;
@@ -275,11 +295,13 @@ public class TopologyHandler extends Thread{
 
             while ((line = bufferedReader.readLine()) != null) {
                 out.println(line);
-                System.out.println(line);
+                //System.out.println(line);
             }
             // Always close files.
             bufferedReader.close();
             System.out.println("Done sending file..");
+            out.close();
+            echoSocket.close();
             /*while (in.readLine() != null) {
                 System.out.println(in.readLine());
             }
@@ -294,21 +316,23 @@ public class TopologyHandler extends Thread{
     public void getFromTCP(String fileName){
         int portNumber = 4444;//Integer.pars    eInt(args[0]);
         try {
-            File f = new File("C:\\Users\\Wouter\\Desktop\\Testfiles\\"+fileName);
+            File f = new File("C:\\Users\\Yasin\\Documents\\GitHub\\Opdracht3\\Replicated\\"+fileName);
             ServerSocket serverSocket = new ServerSocket(4444/*Integer.parseInt(args[0]*/);
             Socket clientSocket = serverSocket.accept();
             //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String inputLine;
+            BufferedWriter writer = new BufferedWriter(new FileWriter(f));
             while ((inputLine = in.readLine()) != null) {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(f));
                 writer.write(inputLine);
                 writer.newLine();
                 //System.out.println(inputLine);
                 //out.println(inputLine);
-                writer.close();
             }
+            writer.close();
             System.out.println("Done downloading file..");
+            clientSocket.close();
+            serverSocket.close();
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
                     + portNumber + " or listening for a connection");
