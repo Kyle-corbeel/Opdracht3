@@ -25,7 +25,7 @@ public class TopologyHandler extends Thread{
         this.rmiHandler = new RmiHandler(nodeNameT);
         data = new NodeData(nodeNameT);
         data.setMyHash(hash(data.getMyName()));
-        //System.out.println(data.getMyHash()+" "+data.getMyName());
+        System.out.println("This node has hash: "+data.getMyHash());
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
         initReceiver();
@@ -132,7 +132,6 @@ public class TopologyHandler extends Thread{
 
         if (!mess.isEmpty()) {
             if (mess.getContent().contains("Bootstrap")) {
-                System.out.println("Bootstrap gekregen");
                 //System.out.println(mess.getSender());
                 newNode(mess.getSender());
 
@@ -243,7 +242,6 @@ public class TopologyHandler extends Thread{
             if (!setup) {
                 message = receiveMulticast();
             }
-            System.out.println(setup);
         }
         System.out.println("Entered network\tprevious node: " + data.getPreviousNode() + "\tnext node: " + data.getNextNode());
     }
