@@ -10,7 +10,7 @@ public class TopologyHandler extends Thread{
 
     private NodeData data;
 
-    private RmiHandler rmiHandler;
+    public static volatile RmiHandler rmiHandler;
     private volatile boolean running = true;
 
     /*TODO: Nagaan of clients nu correct hun previous & next krijgen.
@@ -65,7 +65,7 @@ public class TopologyHandler extends Thread{
             }
             if(mess.getContent().contains("FailNode"))
             {
-                updateNetwork(mess.getContent().split(" ")[1] +" " +mess.getContent().split(" ")[2]);
+                updateNetwork(mess);
             }
             //shutdown herkenning gebeurt hieronder.
             //hij moet zien of hij de previous of de next node was van degene die gaat shutten.
@@ -126,11 +126,14 @@ public class TopologyHandler extends Thread{
 
     public void nodeFailure(String nodeName)
     {
+        System.out.println("NodeName is : " +nodeName);
         int failHash = hash(nodeName);
         try {
             String neighbours = rmiHandler.getNeighboursFail(failHash);
             sendMulticast("FailNode " +neighbours);
-            updateNetwork(neighbours);
+            Message failMess = new Message("FailNode " +neighbours +" sender:" +data.getMyName());
+            System.out.println(failMess);
+            updateNetwork(failMess);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -186,16 +189,23 @@ public class TopologyHandler extends Thread{
         System.out.println("Entered network\tprevious node: " + data.getPreviousNode() + "\tnext node: " + data.getNextNode());
     }
 
-    public void updateNetwork(String neighbours) //Krijgt een set hashes door en checkt of hijzelf 1 van de 2 is
+    public void updateNetwork(Message mess) //Krijgt een set hashes door en checkt of hijzelf 1 van de 2 is
     {
-        if(Integer.parseInt(neighbours.split(" ")[0]) == data.getMyHash())
+        if (hash(mess.getSender()) == data.getNextNode()) { //als de verstuurder MIJN volgende is dan moet ik zijn volgende krijgen!
+            data.setNextNode(hash(mess.getContent().split(" ")[2])); //zet zijn nextnode op mijn nextnode
+        }
+        if (hash(mess.getSender()) == data.getPreviousNode()) { //als de verstuurder mijn VORIGE is dan moet ik zijn vorige krijgen
+            data.setPreviousNode(hash(mess.getContent().split(" ")[1]));//zet zijn prev node op mijn prev node!
+        }
+
+        /*if(Integer.parseInt(neighbours.split(" ")[0]) == data.getMyHash())
         {
             data.setNextNode(Integer.parseInt(neighbours.split(" ")[1])); //Zoja zet hij de andere als next
         }
         if(Integer.parseInt(neighbours.split(" ")[1]) == data.getMyHash())
         {
             data.setPreviousNode(Integer.parseInt(neighbours.split(" ")[0])); //of als previous
-        }
+        }*/
     }
 
 
