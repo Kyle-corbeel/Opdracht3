@@ -109,6 +109,7 @@ public class TopologyHandler extends Thread{
         for(File f : listOfFiles){
             fileNames.add(f.getName());
         }
+        System.out.println();
 
         return fileNames;
 
@@ -172,6 +173,7 @@ public class TopologyHandler extends Thread{
 
     public Message receiveMulticast() {
         byte[] buf = new byte[256];
+
         try {
             InetAddress address = InetAddress.getByName(INET_ADDR);
             /*clientSocket = new MulticastSocket(PORT); //Join the Multicast group.
@@ -189,7 +191,9 @@ public class TopologyHandler extends Thread{
             return new Message(null);
         }
         Message mess = new Message(new String(buf, 0, buf.length));
-        System.out.println("Received: "+mess);
+        if(!mess.getSender().equals(data.getMyName())) {
+            System.out.println("Received: " + mess);
+        }
 
         return mess;         //steek in buffer
     }
@@ -301,7 +305,7 @@ public class TopologyHandler extends Thread{
             }
             // Always close files.
             bufferedReader.close();
-            System.out.println("Done sending file..");
+            System.out.println("Done sending file..\n");
             out.close();
             echoSocket.close();
             /*while (in.readLine() != null) {
@@ -332,7 +336,7 @@ public class TopologyHandler extends Thread{
                 //out.println(inputLine);
             }
             writer.close();
-            System.out.println("Done downloading file..");
+            System.out.println("Done downloading file..\n");
             clientSocket.close();
             serverSocket.close();
         } catch (IOException e) {

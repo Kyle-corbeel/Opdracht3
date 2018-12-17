@@ -3,6 +3,7 @@ import java.net.InetAddress;
 
 public class NodeData {
     private static String nodeName="";
+    private static String hostName="";
     private int nextNode;
     private int previousNode;
     private boolean hasNeighbours = false;
@@ -17,7 +18,12 @@ public class NodeData {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        hostName = name;
         nodeName = ip + ":" + name;
+    }
+
+    public static String getHostName() {
+        return hostName;
     }
 
     public int getNextNode() {
