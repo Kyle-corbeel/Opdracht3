@@ -11,8 +11,28 @@ public class NodeData {
     private boolean hasNeighbours = false;
     private int myHash=0;
     private String ip;
+    public static NodeData instance;
 
-    public NodeData(String name) {
+
+    private NodeData(String name) {
+
+    }
+
+    public static NodeData getInstance(){
+        return instance;
+    }
+
+    public void initNodeData(String name){
+        try {
+            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
+            ip = InetAddress.getLocalHost().toString().split("/")[1];
+            //System.out.println(ip);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        nodeName = ip + ":" + name;
+
+        /*
         try {
             final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
             ip = getIp();
@@ -20,7 +40,7 @@ public class NodeData {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        nodeName = ip + ":" + name;
+        nodeName = ip + ":" + name;*/
     }
 
     public int getNextNode() {
@@ -52,7 +72,7 @@ public class NodeData {
         return nodeName;
     }
 
-    public static String getIp() {
+    public String getIp() {
         String ip = "";
         try {
             NetworkInterface eth = NetworkInterface.getByName("eth0");
