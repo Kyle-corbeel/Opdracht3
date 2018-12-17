@@ -20,10 +20,14 @@ public class ServerMulticast {
             address = InetAddress.getByName(INET_ADDR);     // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);       // to join it as well.
             clientSocket.setReuseAddress(true);
-            System.out.println(getIp());
-            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(getIp())));
+            //System.out.println(getIp());
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName("192.168.0.40"))); //Hardcoded IP
+            //clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(getIp())));      Weggecomment vanwege PI's
             clientSocket.joinGroup(address);                //Join the Multicast group.
             //clientSocket.setReuseAddress(true);
+            /*TODO
+            IP's voor PI en PC compatibel maken
+             */
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,6 +71,9 @@ public class ServerMulticast {
     }
 
     public static String getIp() {
+
+
+
         String ip = "";
         try {
             NetworkInterface eth = NetworkInterface.getByName("eth0");
@@ -84,5 +91,6 @@ public class ServerMulticast {
             e.printStackTrace();
             return null;
         }
+
     }
 }

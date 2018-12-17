@@ -114,7 +114,7 @@ public class TopologyHandler extends Thread{
         Message message = multi.receiveMulticast();
         while (!setup)                                                       //Blijf wachten totdat de server en eventueel andere nodes reageren
         {
-            System.out.println(message);
+            //System.out.println(message);
             if ((data.getPreviousNode() == data.getMyHash()) && message.commandIs("BootServerReply")) { //Wanneer de server antwoordt kunnen we binden op de RMI
                 String serverIp = message.getSenderIp();
                 //System.out.println(serverIp);

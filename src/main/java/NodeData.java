@@ -11,10 +11,10 @@ public class NodeData {
     private boolean hasNeighbours = false;
     private int myHash=0;
     private String ip;
-    public static NodeData instance;
+    private static final NodeData instance = new NodeData();
 
 
-    private NodeData(String name) {
+    private NodeData() {
 
     }
 
@@ -34,7 +34,7 @@ public class NodeData {
 
         /*
         try {
-            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
+            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host voor Pi's
             ip = getIp();
             //System.out.println(ip);
         } catch (Exception e) {

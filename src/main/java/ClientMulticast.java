@@ -1,3 +1,5 @@
+import com.sun.security.ntlm.Client;
+
 import java.net.*;
 
 public class ClientMulticast {
@@ -6,7 +8,7 @@ public class ClientMulticast {
     final static int PORT = 4567;
     public static String nodeName, ip;
     private MulticastSocket clientSocket;
-    public static ClientMulticast instance;
+    private static final ClientMulticast instance = new ClientMulticast(); //Final zorgt ervoor dat er maar 1 enkele instance is
 
     private ClientMulticast(){
     }
@@ -19,8 +21,20 @@ public class ClientMulticast {
 
 
     public void initReceiver(String temp, String tempip) {
+        try {
+            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
+            ip = InetAddress.getLocalHost().toString().split("/")[1];
+            //System.out.println(ip);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        nodeName = ip + ":" + temp;
+
+
+        /*
         nodeName = temp;
         ip = tempip;
+        nodeName = ip+":"+nodeName;
         InetAddress address = null;
         try {
             address = InetAddress.getByName(INET_ADDR); // Create a new Multicast socket (that will allow other sockets/programs
@@ -32,7 +46,7 @@ public class ClientMulticast {
             //clientSocket.setSoTimeout(5000);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void sendMulticast(String content) {
@@ -66,12 +80,12 @@ public class ClientMulticast {
 
         } catch (Exception ex) {
             //ex.printStackTrace();
-            System.out.println("left loop");
+            //System.out.println("Null Message");
             return new Message(null);
         }
         Message mess = new Message(new String(buf, 0, buf.length));
         //System.out.println(mess);
-        if(mess.getSender().equals(ip+":"+nodeName)){
+        if(mess.getSender().equals(nodeName)){
             return null;
         }else {
             return mess;         //steek in buffer
