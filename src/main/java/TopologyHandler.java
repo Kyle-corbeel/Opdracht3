@@ -120,7 +120,7 @@ public class TopologyHandler extends Thread{
             //System.out.println("voor");
             Message mess = receiveMulticast();
             if(!mess.getSender().equals(data.getMyName())) {
-                processMultiCast(receiveMulticast());
+                processMultiCast(mess);
             }
             //System.out.println("na");
         }
@@ -128,8 +128,10 @@ public class TopologyHandler extends Thread{
 
     public void processMultiCast(Message mess) {
         //System.out.println(mess.getContent().contains("BootServerReply"));
+
         if (!mess.isEmpty()) {
             if (mess.getContent().contains("Bootstrap")) {
+                System.out.println("Bootstrap gekregen");
                 //System.out.println(mess.getSender());
                 newNode(mess.getSender());
 
@@ -187,7 +189,6 @@ public class TopologyHandler extends Thread{
             return new Message(null);
         }
         Message mess = new Message(new String(buf, 0, buf.length));
-        if()
         System.out.println("Received: "+mess);
 
         return mess;         //steek in buffer
@@ -238,6 +239,7 @@ public class TopologyHandler extends Thread{
             if (!setup) {
                 message = receiveMulticast();
             }
+            System.out.println(setup);
         }
         System.out.println("Entered network\tprevious node: " + data.getPreviousNode() + "\tnext node: " + data.getNextNode());
     }
@@ -316,7 +318,7 @@ public class TopologyHandler extends Thread{
     public void getFromTCP(String fileName){
         int portNumber = 4444;//Integer.pars    eInt(args[0]);
         try {
-            File f = new File("C:\\Users\\Yasin\\Documents\\GitHub\\Opdracht3\\Replicated\\"+fileName);
+            File f = new File("Replicated\\"+fileName);
             ServerSocket serverSocket = new ServerSocket(4444/*Integer.parseInt(args[0]*/);
             Socket clientSocket = serverSocket.accept();
             //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
