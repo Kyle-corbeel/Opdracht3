@@ -34,9 +34,8 @@ public class ServerMulticast {
             //Thread.sleep(10);
             InetAddress addr = InetAddress.getByName(INET_ADDR);
             DatagramSocket serverSocket = new DatagramSocket();
-            String nodeCorrect = nodeName.split("/")[1];
             //System.out.println(nodeCorrect);
-            String msg = content + "\tsender:" + nodeCorrect;
+            String msg = content + "\tsender:" + nodeName;
             /**TODO
              Zet de juiste Naam en IP op de lijn hierboven. dees geeft probleme
              **/

@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 public class ApplicationThread extends Thread {
 
     private String name;
-    private volatile boolean hasMessage=false;
+    public volatile boolean hasMessage=false;
     public volatile String message ="";
     protected volatile boolean cont = true;
 
@@ -34,22 +34,28 @@ public class ApplicationThread extends Thread {
             while (cont) {
                 System.out.println("Wat wilt u doen:");
                 System.out.println("1:Get file owner");
-                System.out.println("2:Send multicast");
+                System.out.println("2:Ping a node");
 
                 System.out.println("4:Sluit af");
                 String s = br.readLine();
                 if (s.equals("1")) {
-                    hasMessage=true;
                     System.out.println("Wat is de filenaam waarvan u de owner wilt weten?");
                     String fName = br.readLine();
                     //System.out.println("De fileowner is " + theServer.getOwner(fName));
                     message="getFileOwner"+":"+fName;
+                    hasMessage=true;
+                }
+                if(s.equals("2")){
+                    System.out.println("Welke node wilt u pingen:");
+                    String pingIP = br.readLine();
+                    message = "sendPing:" +pingIP;
+                    hasMessage = true;
                 }
                 if (s.equals("4")) {
-                    hasMessage=true;
-                    cont = false;
+                    //cont = false;
                     message="Shutdown";
-                   // System.out.println("In de shutdownIF");
+                    hasMessage=true;
+                   System.out.println("In de shutdownCase");
                 }
 
             }

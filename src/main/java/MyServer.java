@@ -43,6 +43,9 @@ public class MyServer implements Login {
             //Opstarten RMI
             MyServer obj = new MyServer();
             Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
+            System.out.println(System.getProperty("java.rmi.server.hostname"));
+            System.setProperty("java.rmi.server.hostname",ip);
+            System.out.println(System.getProperty("java.rmi.server.hostname"));
             Registry r = LocateRegistry.createRegistry(1099);
             r.bind("myserver", stub);
             System.out.println("Naming server is ready");

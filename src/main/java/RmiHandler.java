@@ -25,6 +25,7 @@ public class RmiHandler {
 
         try {
             theServer = (Login) Naming.lookup("rmi://"+serverIp+"/myserver");
+            System.out.println(theServer.getOwner("test"));
             /** TODO
              *  PAS DE LOCALHOST HIERBOVE AAN !!
              */
@@ -59,6 +60,7 @@ public class RmiHandler {
     }
 
     public String getNeighboursFail(int nodeHash) throws RemoteException {
+        System.out.println(nodeHash);
         return theServer.getNeighboursFail(nodeHash);
     }
 

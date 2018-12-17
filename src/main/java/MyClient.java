@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.DatagramSocket;
+import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -32,78 +33,44 @@ public class MyClient {
         while (running) {
             //System.out.println("In de shutdownIF"+app.hasCommand());
             if (app.hasCommand()) {
-                if (app.getCommand().equals("Shutdown")) {
+                String appCommand = app.getCommand();
+                System.out.println("hascommand");
+                if (appCommand.equals("Shutdown")) {
+                    System.out.println("Shutdown in client loop");
                     app.stopThread();
                     topo.shutdownProtocol(); //stuurt een multicast van shutdown
                     running = false;
                 }
+                if (appCommand.contains("getFileOwner")) {
+                    System.out.println("getFileOwner loop");
+                    System.out.println(TopologyHandler.rmiHandler.getOwner(appCommand.split(":")[1]));
+
+                }
+                if (appCommand.contains("sendPing")) {
+                    if(!sendPing(appCommand.split(":")[1]))
+                    {
+                        topo.nodeFailure(appCommand.split(":")[1] +":" +appCommand.split(":")[2]);
+                    }
+
+                }
             }
         }
-            /*
+    }
 
-            Message message = receiver.check();
-            if(message != null) {
-                System.out.println("Client:" + message);
-
-                if (message.commandIs("Bootstrap")) {
-                    System.out.println("tester");
-                    int hash = hash(message.getSender());
-                    if (isPrevious(hash)) {
-                        previousNode = hash;
-                    } else if (isNext(hash)) {
-                        publisher.multicast("BootNodeReply " + nextNode);
-                        nextNode = hash;            //Respond to new node that i'm his previous, and that next is now his next
-                    }
-                    printPreviousAndNext();
-                }
-                if (!hasNeighbours && message.commandIs("BootServerReply")) {
-                    String serverIp = message.getSenderIp();
-                    rmiHandler.initialise(serverIp);
-
-                    if (Integer.parseInt(message.getContent().split(" ")[1]) < 1) {
-                        nextNode = myHash;
-                        previousNode = myHash;
-                        printPreviousAndNext();
-                        hasNeighbours = true;
-                    }
-
-                }
-                if (!hasNeighbours && message.commandIs("BootNodeReply")) {
-                    previousNode = hash(message.getSender());
-                    nextNode = Integer.parseInt(message.getContent().split(" ")[1]);
-                    printPreviousAndNext();
-                    hasNeighbours = true;
-                }
-                if (message.commandIs("Shut") && message.commandIs(myHashString)) {
-                    if (message.getContent().split(" ")[1].equals(myHashString)) {           //Ik ben previous node van de shutdowner
-                        nextNode = Integer.parseInt(message.getContent().split(" ")[2]);
-                    } else {                                                                       //Ik ben de next node van de shutdowner
-                        previousNode = Integer.parseInt(message.getContent().split(" ")[1]);
-                    }
-
-                }
-            }
-
-
-
-            if (app.hasCommand()) {
-                String command = app.getCommand();
-                if (command.equals("shutdown")) {
-                    publisher.multicast("Shut " + previousNode + " " + nextNode);
-                    app.stopThread();
-                    running = false;
-                }
-            }
-        } catch (Exception e) {
-            //FAILURE
-            //hier komt de multicast
-            e.printStackTrace();
-            publisher.multicast("Failed"); //FAILURE 1)
-            break;
-        }*/
-
-
+    public static boolean sendPing(String ipAddress)
+            throws UnknownHostException, IOException
+    {
+        InetAddress IP = InetAddress.getByName(ipAddress);
+        System.out.println("Ping to: " + ipAddress);
+        if (IP.isReachable(5000)) {
+            System.out.println("Ping successful");
+            return (true);
         }
+        else{
+            System.out.println("Ping failed");
+            return(false);
+        }
+    }
 
     /*
     private static boolean isNext(int hash) {
