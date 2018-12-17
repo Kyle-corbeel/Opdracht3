@@ -4,54 +4,42 @@ import java.rmi.RemoteException;
 
 public class TopologyHandler extends Thread{
 
-    final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de PI's
-    final static int PORT = 4567;
-    private MulticastSocket clientSocket;
+
 
     private NodeData data;
 
     public static volatile RmiHandler rmiHandler;
     private volatile boolean running = true;
+    public volatile boolean setup = false;
 
     /*TODO: Nagaan of clients nu correct hun previous & next krijgen.
       TODO: Nagaan of Shutdown al correct wordt gedaan
       TODO: Failure
      */
 
+    ClientMulticast multi;
 
-    public TopologyHandler(String nodeNameT) {
-        this.rmiHandler = new RmiHandler(nodeNameT);
-        data = new NodeData(nodeNameT);
+
+    public TopologyHandler() {
+        this.rmiHandler = RmiHandler.getInstance();
+        data = NodeData.getInstance();
         data.setMyHash(hash(data.getMyName()));
         //System.out.println(data.getMyHash()+" "+data.getMyName());
         data.setPreviousNode(data.getMyHash());
         data.setNextNode(data.getMyHash());
-        initReceiver();
+        multi = ClientMulticast.getInstance();
+
     }
 
-    public void initReceiver() {
-        InetAddress address = null;
-        try {
-            address = InetAddress.getByName(INET_ADDR); // Create a new Multicast socket (that will allow other sockets/programs
-            clientSocket = new MulticastSocket(PORT);   // to join it as well.
-            //Join the Multicast group.
-            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(data.getIp())));
-            clientSocket.joinGroup(address);
-            clientSocket.setReuseAddress(true);
-            //clientSocket.setSoTimeout(5000);
-            enterNetwork();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
     public void run() {
-        while (running) {
-            //System.out.println("voor");
-            processMultiCast(receiveMulticast());
-            //System.out.println("na");
+        enterNetwork();
+        while(running){
+
         }
+
     }
 
     public void processMultiCast(Message mess) {
@@ -84,45 +72,9 @@ public class TopologyHandler extends Thread{
             System.out.println("message empty");
     }
 
-    public void sendMulticast(String content) {
-        // InetAddress addr = null;
 
-        try {
-            InetAddress addr = InetAddress.getByName(INET_ADDR);
-            DatagramSocket serverSocket = new DatagramSocket();                     // Create a packet that will contain the data
-            String msg = content + "\tsender:" + data.getMyName() + "#";            // (in the form of bytes) and send it.
-            DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, addr, PORT);
-            serverSocket.send(msgPacket);
-            System.out.println("Handler sent packet with msg: " + msg);
-            Thread.sleep(500);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
-    public Message receiveMulticast() {
-        byte[] buf = new byte[256];
-        try {
-            InetAddress address = InetAddress.getByName(INET_ADDR);
-            /*clientSocket = new MulticastSocket(PORT); //Join the Multicast group.
-            clientSocket.joinGroup(address);
-            clientSocket.setReuseAddress(true);
-            clientSocket.setSoTimeout(1000);.*/
-            DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
-            clientSocket.receive(msgPacket);
 
-            //System.out.println("Socket 1 received msg: " + msgPacket);
-
-        } catch (Exception ex) {
-            //ex.printStackTrace();
-            System.out.println("left loop");
-            return new Message(null);
-        }
-        Message mess = new Message(new String(buf, 0, buf.length));
-        //System.out.println(mess);
-
-        return mess;         //steek in buffer
-    }
 
     public void nodeFailure(String nodeName)
     {
@@ -130,7 +82,7 @@ public class TopologyHandler extends Thread{
         int failHash = hash(nodeName);
         try {
             String neighbours = rmiHandler.getNeighboursFail(failHash);
-            sendMulticast("FailNode " +neighbours);
+            multi.sendMulticast("FailNode " +neighbours);
             Message failMess = new Message("FailNode " +neighbours +" sender:" +data.getMyName());
             System.out.println(failMess);
             updateNetwork(failMess);
@@ -150,7 +102,7 @@ public class TopologyHandler extends Thread{
             //System.out.println("newNode entered if 1");
         }
         if (isNext(hash)) {                                                 //Er wordt gecheckt of deze nieuwe node eventueel onze hogerebuur is.
-            sendMulticast("BootNodeReply " + data.getNextNode());     //Indien dit het geval is laten we dit weten aan deze node.
+            multi.sendMulticast("BootNodeReply " + data.getNextNode());     //Indien dit het geval is laten we dit weten aan deze node.
             data.setNextNode(hash);
             System.out.println("newNode entered if 2");
         }
@@ -158,9 +110,8 @@ public class TopologyHandler extends Thread{
 
     public void enterNetwork()                                              //Zal opgeroepen worden wanneer we zelf in het netwerk willen toetreden.
     {
-        sendMulticast("Bootstrap");                                 //Laat het netwerk weten dat je wenst toe te treden.
-        Message message = receiveMulticast();
-        Boolean setup = false;
+        multi.sendMulticast("Bootstrap");                                 //Laat het netwerk weten dat je wenst toe te treden.
+        Message message = multi.receiveMulticast();
         while (!setup)                                                       //Blijf wachten totdat de server en eventueel andere nodes reageren
         {
             System.out.println(message);
@@ -183,7 +134,7 @@ public class TopologyHandler extends Thread{
                 setup = true;
             }
             if (!setup) {
-                message = receiveMulticast();
+                message = multi.receiveMulticast();
             }
         }
         System.out.println("Entered network\tprevious node: " + data.getPreviousNode() + "\tnext node: " + data.getNextNode());
@@ -241,7 +192,7 @@ public class TopologyHandler extends Thread{
 
     }
     public void shutdownProtocol(){
-        sendMulticast("Shutdown "+data.getPreviousNode()+" "+data.getNextNode()); //vorm van bericht
+        multi.sendMulticast("Shutdown "+data.getPreviousNode()+" "+data.getNextNode()); //vorm van bericht
         // SHUTDOWN previous next sender:ip ...
         System.exit(0);
     }

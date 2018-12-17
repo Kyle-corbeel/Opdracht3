@@ -19,7 +19,14 @@ public class MyClient {
         String naam = br.readLine();
 
 
-        TopologyHandler topo = new TopologyHandler(naam);          //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
+        NodeData data = NodeData.getInstance();
+        data.initNodeData(naam);
+
+        //ClientMulticast multi = new ClientMulticast(naam, data.getIp());
+        ClientMulticast multi = ClientMulticast.getInstance();    //Maakt singleton aan van multicastclass
+        multi.initReceiver(naam, data.getIp());                                                       //Initialiseert receiver
+
+        TopologyHandler topo = new TopologyHandler();          //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
         topo.start();
 
         //Bootstrap
@@ -29,8 +36,18 @@ public class MyClient {
         ApplicationThread app = new ApplicationThread();
         app.start();
 
+        while(!topo.setup){
+
+        }
+
         //BootstrapReplyHandler
         while (running) {
+
+            Message mess = multi.receiveMulticast();
+            topo.processMultiCast(mess);
+
+
+
             //System.out.println("In de shutdownIF"+app.hasCommand());
             if (app.hasCommand()) {
                 String appCommand = app.getCommand();

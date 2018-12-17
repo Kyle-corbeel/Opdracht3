@@ -9,14 +9,20 @@ import java.util.HashMap;
 
 public class RmiHandler {
 
-    String nodeName="";
+
     boolean initialised = false;
     Login theServer = null;
     HashMap<Integer,String> ipMap;
+    public static RmiHandler instance;
 
-    public RmiHandler(String nodeName) {
 
-        this.nodeName=nodeName;
+
+    private RmiHandler() {
+
+    }
+
+    public static RmiHandler getInstance(){
+        return instance;
     }
 
 
