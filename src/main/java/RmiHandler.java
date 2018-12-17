@@ -13,7 +13,7 @@ public class RmiHandler {
     boolean initialised = false;
     Login theServer = null;
     HashMap<Integer,String> ipMap;
-    public static RmiHandler instance;
+    public static final RmiHandler instance = new RmiHandler();
 
 
 
