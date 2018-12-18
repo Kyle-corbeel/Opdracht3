@@ -13,56 +13,60 @@ public class MyClient {
 
 
     public static void main(String[] args) throws IOException {
-        //Startup
+        //[START]:Startup
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welkom bij RMI filesharing, gelieve uw naam in te geven:");
         String naam = br.readLine();
+        //[END]:Startup
 
-
+        //[Start]:Get instances of the classes (using singleton)
         NodeData data = NodeData.getInstance();
         data.initNodeData(naam);
 
-        //ClientMulticast multi = new ClientMulticast(naam, data.getIp());
         ClientMulticast multi = ClientMulticast.getInstance();    //Maakt singleton aan van multicastclass
         multi.initReceiver(naam, data.getIp());                                                       //Initialiseert receiver
 
         TopologyHandler topo = new TopologyHandler();          //Voegt IP en gekozen naam samen tot Bv, 143.169.252.202:Wouter
         topo.start();
 
-        //Bootstrap
-        //RmiHandler rmiHandler = new RmiHandler(nodeName);
-
-        //Start threads
         ApplicationThread app = new ApplicationThread();
         app.start();
+        //[END]: Getting instances complete.
+
 
         while(!topo.setup){
 
         }
 
-        //BootstrapReplyHandler
+        //[Start]: Loop in which our client will keep existing
         while (running) {
 
             Message mess = multi.receiveMulticast();
             topo.processMultiCast(mess);
 
-
-
-            //System.out.println("In de shutdownIF"+app.hasCommand());
-            if (app.hasCommand()) {
+            if (app.hasCommand()) { //The applicattionThread as got a command from user input.
                 String appCommand = app.getCommand();
                 System.out.println("hascommand");
-                if (appCommand.equals("Shutdown")) {
+
+                //[Start]: Command 1: Shutdown
+                if (appCommand.equals("Shutdown")) { //IF the command is to shutdown the node we will shut all the threads.
                     System.out.println("Shutdown in client loop");
+                    /*TODO:Shut de instances?*/
                     app.stopThread();
                     topo.shutdownProtocol(); //stuurt een multicast van shutdown
-                    running = false;
+                    running = false; //Put running on false so the client stops existing
                 }
+                //[End]: If everything goes right, the client will stop existing and node will shut down.
+
+                //[Start]: Command 2: get owner of file.
                 if (appCommand.contains("getFileOwner")) {
                     System.out.println("getFileOwner loop");
                     System.out.println(TopologyHandler.rmiHandler.getOwner(appCommand.split(":")[1]));
 
                 }
+                //[End]: Will get owner of file
+
+                //[Start]: Will ping a certain node and handle failure.
                 if (appCommand.contains("sendPing")) {
                     if(!sendPing(appCommand.split(":")[1]))
                     {
@@ -70,10 +74,14 @@ public class MyClient {
                     }
 
                 }
+                //[End]: If it goes trough -> no problem, if not-> nodeFailureProtocol.
             }
         }
+        //[End]:Client stops existing
     }
 
+
+    //[Start]: Method that will send a ping to a user inputted node.
     public static boolean sendPing(String ipAddress)
             throws UnknownHostException, IOException
     {
@@ -88,6 +96,7 @@ public class MyClient {
             return(false);
         }
     }
+    //[End]: method
 
     /*
     private static boolean isNext(int hash) {
