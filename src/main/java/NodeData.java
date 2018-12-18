@@ -4,6 +4,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+/**
+ * Basic information:
+ * A class we made to store all of the data of the node.
+ */
 public class NodeData {
     private static String nodeName="";
     private int nextNode;
