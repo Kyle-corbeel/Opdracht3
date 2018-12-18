@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.net.*;
 import java.rmi.RemoteException;
 
+/**
+ * Basic Information:
+ * We created this class to handle everything that has to do with the network topology.
+ * The rmi communication will happen here.
+ */
 public class TopologyHandler extends Thread{
 
 

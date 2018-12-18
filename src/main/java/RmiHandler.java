@@ -4,9 +4,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
-//deze class dient als tussenpersoon tussen de server en de client.
-//Hij zal verschillende elementen ophalen van de server en bijhouden zodat de client deze kan opvragen.
-
+/**
+ * This class is a unit between the server and the client.
+ */
 public class RmiHandler {
 
 

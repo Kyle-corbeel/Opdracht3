@@ -4,31 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
+    <groupId>groep2</groupId>
     <artifactId>Opdracht3</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <build>
-        <finalName>Lab2Client</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <!-- DO NOT include log4j.properties file in your Jar -->
-                    <excludes>
-                        <exclude>**/log4j.properties</exclude>
-                    </excludes>
-                    <archive>
-                        <manifest>
-                            <!-- Jar file entry point -->
-                            <mainClass>MyClient</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <packaging>jar</packaging>
 
     
 </project>
