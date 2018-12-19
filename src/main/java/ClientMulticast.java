@@ -2,6 +2,11 @@ import com.sun.security.ntlm.Client;
 
 import java.net.*;
 
+
+/** Basic information:
+  *This class was created to handle the sending and recieiving of the multicasts. (on client side)
+  * */
+
 public class ClientMulticast {
 
     final static String INET_ADDR = "224.0.0.251"; //Specifiek voor de PI's
@@ -19,7 +24,7 @@ public class ClientMulticast {
     }
 
 
-
+    //[Start]: Initialising the multicaster
     public void initReceiver(String temp, String tempip) {
         try {
             final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
@@ -48,7 +53,11 @@ public class ClientMulticast {
             e.printStackTrace();
         }*/
     }
+    //[End]: done initilialising
 
+
+
+    //[Start]: Sending a multicast method
     public void sendMulticast(String content) {
         // InetAddress addr = null;
 
@@ -64,7 +73,9 @@ public class ClientMulticast {
             ex.printStackTrace();
         }
     }
+    //[End]: Method of sending multicast
 
+    //[Start]: Recieving of multicast method
     public Message receiveMulticast() {
         byte[] buf = new byte[256];
         try {
@@ -91,6 +102,7 @@ public class ClientMulticast {
             return mess;         //steek in buffer
         }
     }
+    //[End]: Reciecing of multicast method
 
 
 

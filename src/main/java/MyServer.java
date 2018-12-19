@@ -69,9 +69,7 @@ public class MyServer implements Login {
 
                     }
                 }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

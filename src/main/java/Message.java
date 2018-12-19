@@ -1,3 +1,8 @@
+/**
+ * Basic information:
+ * This class is to split our messages into their parts so we can extract information straightforwardly.
+ * Most of the methods here are straightforward
+ */
 public class Message {
 
     private String everything="";

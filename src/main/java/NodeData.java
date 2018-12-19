@@ -4,6 +4,10 @@ import java.io.InputStreamReader;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+/**
+ * Basic information:
+ * A class we made to store all of the data of the node.
+ */
 public class NodeData {
     private static String nodeID="";
     private static String nodeName="";
