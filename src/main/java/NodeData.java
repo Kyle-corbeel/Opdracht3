@@ -1,28 +1,50 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.DatagramSocket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 public class NodeData {
+    private static String nodeID="";
     private static String nodeName="";
     private int nextNode;
     private int previousNode;
     private boolean hasNeighbours = false;
-    private int myHash=0;
-    private String ip;
-    private static final NodeData instance = new NodeData();
+    private int nodeHash=0;
+    private String nodeIP;
+    private String serverIP="";
 
+    public NodeData() {
+        nodeIP = generateIP();
 
-    private NodeData() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Welcome to the filesharing service!\nPlease insert your name: ");
+            String naam = br.readLine();
+            nodeName = naam;
+            nodeID = nodeIP + ":" + nodeName;
+            nodeHash = hash(nodeID);
+            System.out.println("\n\t\tWELCOME\n\tYour hash is: "+nodeHash+"\n");
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
 
     }
 
-    public static NodeData getInstance(){
-        return instance;
+    public NodeData(boolean isServer){
+        nodeIP = generateIP();
+        serverIP = nodeIP;
+        nodeName = "namingServer";
+        nodeID = nodeIP + ":" + nodeName;
+        nodeHash = hash(nodeID);
+
+        System.out.println("Naming Server booted\nServer-IP: "+nodeIP);
+        System.out.println("Awaiting nodes...");
     }
 
-    public void initNodeData(String name){
+    private String generateIP() {
+        String ip="";
         try {
             final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
             ip = InetAddress.getLocalHost().toString().split("/")[1];
@@ -30,17 +52,11 @@ public class NodeData {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        nodeName = ip + ":" + name;
+        return ip;
+    }
 
-        /*
-        try {
-            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host voor Pi's
-            ip = getIp();
-            //System.out.println(ip);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        nodeName = ip + ":" + name;*/
+    public static String getNodeName() {
+        return nodeName;
     }
 
     public int getNextNode() {
@@ -60,35 +76,32 @@ public class NodeData {
     }
 
     public int getMyHash() {
-        return myHash;
+        return nodeHash;
     }
 
-    public void setMyHash(int myHash) {
-        this.myHash = myHash;
+    public String getNodeID(){
+        return nodeID;
     }
 
-    public String getMyName(){
-       // System.out.println(nodeName);
-        return nodeName;
+    public String getNodeIP(){
+        return nodeIP;
     }
 
-    public String getIp() {
-        String ip = "";
-        try {
-            NetworkInterface eth = NetworkInterface.getByName("eth0");
-            Enumeration<InetAddress> adresNUM = eth.getInetAddresses();
-            while(adresNUM.hasMoreElements() && ip.equals(""))
-            {
-                InetAddress addr = adresNUM.nextElement();
-                if(addr instanceof Inet4Address && !addr.isLoopbackAddress())
-                {
-                    ip = addr.getHostAddress();
-                }
-            }
-            return "" + ip;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
+    public int hash(String name) {
+        int hash;
+        hash = Math.abs(name.hashCode()) % 327680;
+        return hash;
+    }
+
+    public void startRMI() {
+
     }
 }
