@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d47f5f35-c645-4837-b716-d4849362a42c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TopologyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TopologyHandler.java" afterDir="false" />
+    <list default="true" id="8a0471dc-8eb3-4d3e-bd10-24214f2f2be5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -14,292 +14,112 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="1233280584">
+    <session id="1778646195">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="918" />
-          <entry key="txt" value="28" />
-          <entry key="xml" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="918" />
-          <entry key="PLAIN_TEXT" value="28" />
-          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="iml" value="1" />
-          <entry key="java" value="3" />
-          <entry key="xml" value="1" />
+          <entry key="java" value="4" />
+          <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="3" />
-          <entry key="XML" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.create.new" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="716455721">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="17" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.20" value="1" />
-          <entry key="project.open.time.6" value="4" />
-          <entry key="project.open.time.7" value="3" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="17" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.checkout.remote" value="1" />
-          <entry key="git.branch.merge" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="22" />
-          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="JAVA" value="4" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3116" />
-          <entry key="txt" value="149" />
+          <entry key="iml" value="1" />
+          <entry key="xml" value="121" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6112" />
-          <entry key="PLAIN_TEXT" value="468" />
-          <entry key="XML" value="14" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="1190763082">
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.checkout.remote" value="3" />
-          <entry key="git.branch.delete.remote" value="1" />
-          <entry key="git.branch.merge" value="2" />
-          <entry key="git.branch.rebase" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="4654" />
-          <entry key="txt" value="445" />
-          <entry key="xml" value="19" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="4654" />
-          <entry key="PLAIN_TEXT" value="445" />
-          <entry key="XML" value="19" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="TODO" value="1" />
-          <entry key="java" value="8" />
-          <entry key="xml" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="8" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="XML" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="IDEA_MODULE" value="1" />
+          <entry key="XML" value="121" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/MyServer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="113" column="28" selection-start-line="113" selection-start-column="28" selection-end-line="113" selection-end-column="28" />
+            <state relative-caret-position="221">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/MyClient.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/FileHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="20" column="55" lean-forward="true" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ServerMapHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-136">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/NetworkHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-170">
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TopologyHandler.java">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="144" column="28" lean-forward="true" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="36" />
+            <state relative-caret-position="272">
+              <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TODO">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Login.java">
+        <entry file="file://$PROJECT_DIR$/DistributedWouterFix.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/NodeData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-              <folding>
-                <element signature="e#914#915#0" expanded="true" />
-                <element signature="e#962#963#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ServerMulticast.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ApplicationThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/RmiHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Message.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+            <state relative-caret-position="238">
+              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>server</find>
-      <find>cont</find>
-      <find>ipMap</find>
-      <find>327</find>
-      <find>register</find>
-      <find>added</find>
-      <find>addto</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Satish Singh &lt;raju-52@hotmail.com&gt;" />
-        <option value="Kyle" />
-        <option value="kyle" />
-        <option value="Kyle-corbeel" />
-      </list>
-    </option>
-    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="Clientside" />
-      </map>
-    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/Login.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ApplicationThread.java" />
-        <option value="$PROJECT_DIR$/IpMap.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/MulticastPublisher.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MulticastReceiver.java" />
-        <option value="$PROJECT_DIR$/src/main/java/NodeData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/RmiHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MyClient.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MyServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Message.java" />
+        <option value="$PROJECT_DIR$/DistributedWouterFix.iml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/ServerMulticast.java" />
-        <option value="$PROJECT_DIR$/src/main/java/TopologyHandler.java" />
       </list>
     </option>
   </component>
@@ -308,21 +128,24 @@
       <expand>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="Opdracht3" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="DistributedWouterFix" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="Opdracht3" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="DistributedWouterFix" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
         </path>
       </expand>
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
-    <option name="width" value="974" />
+    <option name="width" value="1225" />
     <option name="height" value="1047" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -334,36 +157,31 @@
         <subPane>
           <expand>
             <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
+              <item name="DistributedWouterFix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedWouterFix" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
+              <item name="DistributedWouterFix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedWouterFix" type="462c0819:PsiDirectoryNode" />
               <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
+              <item name="DistributedWouterFix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedWouterFix" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
+              <item name="DistributedWouterFix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedWouterFix" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
+              <item name="DistributedWouterFix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedWouterFix" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Opdracht3Correct" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Opdracht3Correct" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -373,13 +191,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543872754224" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545249978363" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -393,30 +210,36 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MyClient">
-    <configuration name="MyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MyClient" />
-      <module name="Opdracht3Correct" />
+  <component name="RunManager" selected="Application.Server">
+    <configuration name="ClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ClientApplication" />
+      <module name="DistributedWouterFix" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="MyServer" />
-      <module name="Opdracht3Correct" />
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Server" />
+      <module name="DistributedWouterFix" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Server" />
+      <module name="DistributedWouterFix" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MyClient" />
-      <item itemvalue="Application.MyServer" />
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.ClientApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MyClient" />
-        <item itemvalue="Application.MyServer" />
+        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.ClientApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -425,401 +248,91 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d47f5f35-c645-4837-b716-d4849362a42c" name="Default Changelist" comment="" />
-      <created>1541491391982</created>
+      <changelist id="8a0471dc-8eb3-4d3e-bd10-24214f2f2be5" name="Default Changelist" comment="" />
+      <created>1545247823403</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1541491391982</updated>
+      <updated>1545247823403</updated>
     </task>
-    <task id="LOCAL-00001" summary="Init">
-      <created>1541491440547</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1541491440547</updated>
-    </task>
-    <task id="LOCAL-00002" summary="test">
-      <created>1541492064261</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1541492064261</updated>
-    </task>
-    <task id="LOCAL-00003" summary="test">
-      <created>1541492605673</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1541492605673</updated>
-    </task>
-    <task id="LOCAL-00004" summary="test">
-      <created>1541492924226</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1541492924226</updated>
-    </task>
-    <task id="LOCAL-00005" summary="test">
-      <created>1541493058584</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1541493058584</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Base">
-      <created>1541493733212</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1541493733212</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Base">
-      <created>1541493892395</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1541493892395</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Verbeter bootstrap myClient">
-      <created>1542274129312</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1542274129312</updated>
-    </task>
-    <task id="LOCAL-00009" summary="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap">
-      <created>1542705128387</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1542705128387</updated>
-    </task>
-    <task id="LOCAL-00010" summary="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap">
-      <created>1542730103369</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1542730103369</updated>
-    </task>
-    <task id="LOCAL-00011" summary="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap">
-      <created>1542740935863</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1542740935863</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Structuur aangepast:&#10;Message-class aangemaakt, broadcasts worden overzichtelijker zo&#10;Message bevat content, sender, senderIp en senderName&#10;Bootstrap, discovery en shutdown werken zoals in de opdracht&#10;Geen map meer doorgegeven">
-      <created>1542741054043</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1542741054043</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Paar errors gefixt van oude code&#10;Nog een error bij bootstrapreply momenteel">
-      <created>1542745108970</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1542745108970</updated>
-    </task>
-    <task id="LOCAL-00014" summary="MessageReceiver en client&amp;server werken nu met een blockingqueue van messages&#10;Messages worden goed doorgegeven">
-      <created>1542844373214</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1542844373214</updated>
-    </task>
-    <task id="LOCAL-00015" summary="ip client update">
-      <created>1543230120072</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1543230120072</updated>
-    </task>
-    <task id="LOCAL-00016" summary="enterNetwork() method used in topologyhandler thread. (array bound bug)">
-      <created>1543416042629</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1543416042629</updated>
-    </task>
-    <task id="LOCAL-00017" summary="NullPointerException line 60 Topohandler">
-      <created>1543417090271</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1543417090271</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Bug in binding with server">
-      <created>1543425309938</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1543425309939</updated>
-    </task>
-    <task id="LOCAL-00019" summary="rmihandler bind niet met rmi.">
-      <created>1543428154751</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1543428154751</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Second Client add not working.">
-      <created>1543430936672</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1543430936672</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Bug in binding with server">
-      <created>1543483689901</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1543483689901</updated>
-    </task>
-    <task id="LOCAL-00022" summary="zonder timeoutExpcetion">
-      <created>1543867376698</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1543867376698</updated>
-    </task>
-    <task id="LOCAL-00023" summary="push tuss versie">
-      <created>1543868730525</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1543868730525</updated>
-    </task>
-    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="0" width="1225" height="1047" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1130064" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.4025751" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Designer" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" weight="0.32968238" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Debug" order="1" sideWeight="0.49671772" weight="0.40197152" />
-      <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="4" sideWeight="0.49946696" weight="0.3286334" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49946696" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50067115" side_tool="true" weight="0.3275488" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.07483731" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.42857143" weight="0.40563992" />
-      <window_info anchor="bottom" id="Find" order="9" sideWeight="0.4978678" weight="0.3286334" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33296824" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info active="true" anchor="right" id="Maven Projects" visible="true" weight="0.14935622" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" sideWeight="0.4989154" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" weight="0.5682303" />
-      <window_info anchor="right" id="Flutter Inspector" order="8" />
-      <window_info anchor="right" id="Flutter Outline" order="9" />
-      <window_info anchor="right" id="Run" order="10" sideWeight="0.5010846" side_tool="true" visible="true" weight="0.35341153" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15991472" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Designer" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.49932885" visible="true" weight="0.3264642" />
-      <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
-      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="5" weight="0.329718" />
-      <window_info anchor="bottom" id="Terminal" order="6" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50067115" side_tool="true" weight="0.3286119" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.07592191" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.12581345" />
-      <window_info anchor="bottom" id="Find" order="10" weight="0.329718" />
-      <window_info anchor="right" id="Flutter Inspector" order="0" />
-      <window_info anchor="right" id="Flutter Outline" order="1" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Theme Preview" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info anchor="right" id="Maven Projects" order="9" weight="0.56865466" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Init" />
-    <MESSAGE value="test" />
-    <MESSAGE value="Base" />
-    <MESSAGE value="Verbeter bootstrap myClient" />
-    <MESSAGE value="myClient updates,&#10;myServer updates,&#10;RMIHandler updates&#10;&#10;Shutdown+deel5 en 6 bootstrap" />
-    <MESSAGE value="Structuur aangepast:&#10;Message-class aangemaakt, broadcasts worden overzichtelijker zo&#10;Message bevat content, sender, senderIp en senderName&#10;Bootstrap, discovery en shutdown werken zoals in de opdracht&#10;Geen map meer doorgegeven" />
-    <MESSAGE value="Paar errors gefixt van oude code&#10;Nog een error bij bootstrapreply momenteel" />
-    <MESSAGE value="MessageReceiver en client&amp;server werken nu met een blockingqueue van messages&#10;Messages worden goed doorgegeven" />
-    <MESSAGE value="ip client update" />
-    <MESSAGE value="enterNetwork() method used in topologyhandler thread. (array bound bug)" />
-    <MESSAGE value="NullPointerException line 60 Topohandler" />
-    <MESSAGE value="rmihandler bind niet met rmi." />
-    <MESSAGE value="Second Client add not working." />
-    <MESSAGE value="Bug in binding with server" />
-    <MESSAGE value="zonder timeoutExpcetion" />
-    <MESSAGE value="push tuss versie" />
-    <option name="LAST_COMMIT_MESSAGE" value="push tuss versie" />
-  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ServerMapHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/NetworkHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/FileHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="383" column="20" lean-forward="true" selection-start-line="383" selection-start-column="20" selection-end-line="383" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://G:/Program Files/Java/jdk-9/lib/src.zip!/java.base/java/net/TwoStacksPlainDatagramSocketImpl.java" />
-    <entry file="jar://G:/Program Files/Java/jdk-9/lib/src.zip!/java.base/java/io/FileInputStream.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/MulticastReceiver.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/MulticastPublisher.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/TwoStacksPlainDatagramSocketImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-227">
-          <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/DatagramSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9705">
-          <caret line="811" selection-start-line="811" selection-end-line="811" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Opdracht3.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IpMap.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/io/FileInputStream.java">
+    <entry file="file://$PROJECT_DIR$/DistributedWouterFix.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3298">
-          <caret line="218" column="23" selection-start-line="218" selection-start-column="23" selection-end-line="218" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/io/BufferedReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6086">
-          <caret line="388" selection-start-line="388" selection-end-line="388" />
+        <state relative-caret-position="238">
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ApplicationThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TODO">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="20" column="55" lean-forward="true" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ServerMulticast.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="113" column="28" selection-start-line="113" selection-start-column="28" selection-end-line="113" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RmiHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/NodeData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-          <folding>
-            <element signature="e#914#915#0" expanded="true" />
-            <element signature="e#962#963#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TopologyHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="144" column="28" lean-forward="true" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="36" />
+        <state relative-caret-position="272">
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -863,7 +376,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.8</last-edited>
+          <last-edited>9</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -875,7 +388,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Opdracht3</last-edited>
+          <last-edited>DistributedWouterFix</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -886,30 +399,7 @@
           </splitter-proportions>
         </settings>
       </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>9</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
       <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
         <settings>
           <splitter-proportions>
             <option name="proportions">
