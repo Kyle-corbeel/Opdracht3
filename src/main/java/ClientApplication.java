@@ -31,12 +31,16 @@ public class ClientApplication extends MulticastSender{
 
             while (cont) {
                 System.out.println("What action should be performed?");
-                System.out.println("1: Shut Down\n");
+                System.out.println("1: Shut Down\n2: Send Ping\n");
                 String s = br.readLine();
                 if (s.equals("1")) {
                     cont = false;
                     System.out.println("Shutting down this ClientThread..");
-                    app.sendMulticast("ShutRequest");
+                    app.sendMulticast("Shut " +data.getPreviousNode() +" " +data.getNextNode());
+                }if (s.equals("2")) {
+                    System.out.println("What node would you like to ping");
+                    s = br.readLine();
+                    backgroundWorker.nodeFailure(s);
                 }
 
             }
