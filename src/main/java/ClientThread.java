@@ -79,6 +79,7 @@ public class ClientThread extends Thread{
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
     }
 
     public void nodeFailure(String nodeID)
