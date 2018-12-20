@@ -57,4 +57,9 @@ public class Server implements Login{
     public String getIDFromHash(int hash){
         return map.getIDFromHash(hash);
     }
+
+    @Override
+    public String getNeighboursFail(String nodeID) throws RemoteException {
+        return map.getNeighboursFail(nodeID);
+    }
 }
