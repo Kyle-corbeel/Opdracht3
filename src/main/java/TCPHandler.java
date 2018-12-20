@@ -10,11 +10,11 @@ public class TCPHandler {
     }
 
     public void sendToTCP(String receiver, String fileName) {
-        String hostName = receiver.split(":")[0];
+        String hostIP = receiver.split(":")[0];
         int portNumber = 4444;
 
         try {
-            Socket echoSocket = new Socket("localhost", portNumber);
+            Socket echoSocket = new Socket(hostIP, portNumber);
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             //BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String line = null;
