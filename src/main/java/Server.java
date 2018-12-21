@@ -17,7 +17,7 @@ public class Server implements Login{
         map = new ServerMapHandler(data);
         MulticastReceiver multi = new MulticastReceiver(data);
 
-        rmiStartup(data.getServerIP());
+        rmiStartup();
 
         while(running){
 
@@ -35,12 +35,11 @@ public class Server implements Login{
         }
     }
 
-    public static void rmiStartup(String ip){
+    public static void rmiStartup(){
         Server obj = new Server();
         try{
         Login stub = (Login) UnicastRemoteObject.exportObject(obj, 0);
         Registry r = null;
-        System.setProperty("java.rmi.server.hostname",ip);
         r = LocateRegistry.createRegistry(1099);
         r.bind("myserver", stub);
         } catch (RemoteException e) {
@@ -57,10 +56,5 @@ public class Server implements Login{
 
     public String getIDFromHash(int hash){
         return map.getIDFromHash(hash);
-    }
-
-    @Override
-    public String getNeighboursFail(String nodeID) throws RemoteException {
-        return map.getNeighboursFail(nodeID);
     }
 }

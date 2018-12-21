@@ -1,8 +1,3 @@
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
 public class ClientThread extends Thread{
 
     private volatile boolean running = true;
@@ -10,9 +5,6 @@ public class ClientThread extends Thread{
     private NodeData data;
     private NetworkHandler net;
     private MulticastReceiver multi;
-    MulticastSender multis;
-    boolean initialised = false;
-    Login theServer = null;
 
 
 
@@ -23,10 +15,10 @@ public class ClientThread extends Thread{
     public void run(){
         net = new NetworkHandler(data);
         multi = new MulticastReceiver(data);
-        multis = new MulticastSender(data);
+        MulticastSender multis = new MulticastSender(data);
 
         networkSetup();
-        rmiStartup();
+        data.startRMI();
         FileHandler file = new FileHandler(data);
 
         while(running){
@@ -65,30 +57,6 @@ public class ClientThread extends Thread{
             running=false;
         }else{
             running=true;
-        }
-    }
-
-    private void rmiStartup() {
-        try {
-            theServer = (Login) Naming.lookup("rmi://"+data.getServerIP()+"/myserver");
-            initialised = true;
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void nodeFailure(String nodeID)
-    {
-        try {
-            String neighboursFail = theServer.getNeighboursFail(nodeID);
-            multis.sendMulticast("Shut " +neighboursFail);
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 

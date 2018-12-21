@@ -1,12 +1,17 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
-public class ClientApplication extends MulticastSender{
+public class ClientApplication extends MulticastSender implements RMINode{
 
     private String name;
     private static boolean hasMessage = false;
     protected String message = "";
     protected static  boolean cont = true;
+    private RMINode rmiNode=null;
 
     public ClientApplication(NodeData d){
         super(d);
@@ -31,16 +36,12 @@ public class ClientApplication extends MulticastSender{
 
             while (cont) {
                 System.out.println("What action should be performed?");
-                System.out.println("1: Shut Down\n2: Send Ping\n");
+                System.out.println("1: Shut Down\n");
                 String s = br.readLine();
                 if (s.equals("1")) {
                     cont = false;
                     System.out.println("Shutting down this ClientThread..");
-                    app.sendMulticast("Shut " +data.getPreviousNode() +" " +data.getNextNode());
-                }if (s.equals("2")) {
-                    System.out.println("What node would you like to ping");
-                    s = br.readLine();
-                    backgroundWorker.nodeFailure(s);
+                    app.sendMulticast("ShutRequest");
                 }
 
             }
@@ -49,5 +50,23 @@ public class ClientApplication extends MulticastSender{
             System.err.println("An error has occured");
 
         }
+    }
+    private void RMInodeInit()
+    {
+        try {
+            rmiNode = (RMINode) Naming.lookup("rmi://"+data.getNextNode()+"/mynextnode");
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void RMIrequest() {
+        Agent agent= new Agent();
+        agent.run();
+        rmiNode.RMIrequest();
     }
 }

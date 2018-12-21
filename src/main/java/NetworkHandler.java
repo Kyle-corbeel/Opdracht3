@@ -23,28 +23,21 @@ public class NetworkHandler extends MulticastSender{
                 case "BootReplyNode":
                     System.out.println("This node has already been setup, ignoring BootReplyNode");
                     break;
-                /*case "ShutRequest":
+                case "ShutRequest":
                     if(mess.getSenderID().equals(data.getNodeID())) {
-                        System.out.println("In de case geraakt!");
                         sendMulticast("Shut " + data.getPreviousNode() + " " + data.getNextNode());   //If shut request comes from self, send neighbours and shutdown
                         running = false;
                     }else{
                         System.out.println("Another node is shutting down, ignoring ShutRequest");
                     }
-                    break;*/
+                    break;
                 case "Shut":
-                    if(mess.getSenderID().equals(data.getNodeID())) {
-                        System.out.println("Networkhandler shutting down");
-                        running = false;
-                    }
-                    else {
-                        if (Integer.parseInt(mess.getParameters()[0]) == data.getMyHash()) {                   //If shutrequest comes from someone else, check if i'm his next/previous
-                            data.setNextNode(Integer.parseInt(mess.getParameters()[1]));        //If so, set new next to the shut next or new previous to the shut previous accordingly
-                            printNeighbours();
-                        } else if (Integer.parseInt(mess.getParameters()[1]) == data.getMyHash()) {
-                            data.setPreviousNode(Integer.parseInt(mess.getParameters()[0]));
-                            printNeighbours();
-                        }
+                    if(Integer.parseInt(mess.getParameters()[0])==data.getMyHash()){                   //If shutrequest comes from someone else, check if i'm his next/previous
+                        data.setNextNode(Integer.parseInt(mess.getParameters()[1]));        //If so, set new next to the shut next or new previous to the shut previous accordingly
+                        printNeighbours();
+                    }else if(Integer.parseInt(mess.getParameters()[1])==data.getMyHash()){
+                        data.setPreviousNode(Integer.parseInt(mess.getParameters()[0]));
+                        printNeighbours();
                     }
                     break;
 
@@ -142,4 +135,5 @@ public class NetworkHandler extends MulticastSender{
     public void printNeighbours(){
         System.out.println("NEW NEIGHBOURS\n\tYour previous node is: "+data.getPreviousNode()+"\tYour next node is: "+data.getNextNode());
     }
+
 }

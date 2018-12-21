@@ -2,10 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.DatagramSocket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 /**
  * Basic information:
@@ -50,24 +47,16 @@ public class NodeData {
         System.out.println("Awaiting nodes...");
     }
 
-    public String generateIP() {
+    private String generateIP() {
         String ip="";
         try {
-            NetworkInterface eth = NetworkInterface.getByName("eth0");
-            Enumeration<InetAddress> adresNUM = eth.getInetAddresses();
-            while(adresNUM.hasMoreElements() && ip.equals(""))
-            {
-                InetAddress addr = adresNUM.nextElement();
-                if(addr instanceof Inet4Address && !addr.isLoopbackAddress())
-                {
-                    ip = addr.getHostAddress();
-                }
-            }
-            return "" + ip;
+            final DatagramSocket socket = new DatagramSocket();                 //Haalt IP van host
+            ip = InetAddress.getLocalHost().toString().split("/")[1];
+            //System.out.println(ip);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return ip;
     }
 
     public static String getNodeName() {
