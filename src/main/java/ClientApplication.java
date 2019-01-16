@@ -36,7 +36,7 @@ public class ClientApplication extends MulticastSender{
                 if (s.equals("1")) {
                     cont = false;
                     System.out.println("Shutting down this ClientThread..");
-                    app.sendMulticast("ShutRequest");
+                    app.sendMulticast("Shut " +data.getPreviousNode() +" " +data.getNextNode());
                 }if (s.equals("2")) {
                     System.out.println("What node would you like to ping");
                     s = br.readLine();

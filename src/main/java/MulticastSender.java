@@ -8,18 +8,21 @@ public class MulticastSender {
     public NodeData data;
     InetAddress address;
 
-    final static String INET_ADDR = "224.0.0.3";
-    final static int PORT = 8888;
+    final static String INET_ADDR = "224.0.0.251";
+    final static int PORT = 4567;
     private MulticastSocket clientSocket;
 
     public MulticastSender(NodeData data){
         this.data = data;
 
         try {
-            address = InetAddress.getByName(INET_ADDR);
+            address = InetAddress.getByName(INET_ADDR); // Create a new Multicast socket (that will allow other sockets/programs
             clientSocket = new MulticastSocket(PORT);   // to join it as well.
+            clientSocket.setNetworkInterface(NetworkInterface.getByInetAddress(InetAddress.getByName(data.generateIP())));
             clientSocket.joinGroup(address);            //Join the Multicast group.
+
             clientSocket.setReuseAddress(true);
+            //clientSocket.setSoTimeout(5000);
         }catch (UnknownHostException e){
             e.printStackTrace();
         }catch(SocketException d){
