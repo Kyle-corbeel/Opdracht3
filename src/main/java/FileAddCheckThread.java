@@ -37,7 +37,7 @@ public class FileAddCheckThread extends Thread {
     }
 
     private ArrayList<String> listFiles(String directory) {
-        File folder = new File("Files\\"+directory);
+        File folder = new File("Files/"+directory);
         ArrayList<String> fileNames = new ArrayList<String>();
         File[] listOfFiles = folder.listFiles();
 

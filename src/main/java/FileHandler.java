@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -19,10 +21,11 @@ public class FileHandler extends MulticastSender{
     ArrayList<String> replicatedNames = new ArrayList<String>();
     ArrayList<String> fileNames;
     FileAddCheckThread fileChecker;
+    RmiHandler rmi = RmiHandler.getInstance();
 
     public FileHandler(NodeData d){
         super(d);
-        rmiStartup();
+        rmi.rmiStartup(d);
         tcp = new TCPHandler();
         fileStartup();
         //fileChecker = new FileAddCheckThread(data);
@@ -61,18 +64,6 @@ public class FileHandler extends MulticastSender{
         return processed;
     }
 
-    private void rmiStartup() {
-        try {
-            theServer = (Login) Naming.lookup("rmi://"+data.getServerIP()+"/myserver");
-            initialised = true;
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void fileStartup() {
         fileNames = listFiles("Local");
@@ -87,7 +78,7 @@ public class FileHandler extends MulticastSender{
             System.out.println("File "+f+" doesnt have to be replicated");
         }else {
             sendMulticast("Replicate " + f + " " + receiver);
-            tcp.sendToTCP(receiver, "Files\\Local\\"+f);
+            tcp.sendToTCP(receiver, "Files/Local/"+f);
         }
     }
 
@@ -123,7 +114,7 @@ public class FileHandler extends MulticastSender{
     }
 
     private ArrayList<String> listFiles(String directory) {
-        File folder = new File("Files\\"+directory);
+        File folder = new File("Files/"+directory);
         ArrayList<String> fileNames = new ArrayList<String>();
         File[] listOfFiles = folder.listFiles();
 
@@ -164,7 +155,7 @@ public class FileHandler extends MulticastSender{
     public String getOwner(String fileName){
         String owner="";
         try {
-            owner = theServer.getOwner(fileName);
+            owner = rmi.getOwner(fileName);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -174,7 +165,7 @@ public class FileHandler extends MulticastSender{
     public String getIDFromHash(int hash){
         String ID="";
         try {
-            ID = theServer.getIDFromHash(hash);
+            ID = rmi.getIDFromHash(hash);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

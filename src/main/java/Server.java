@@ -42,7 +42,7 @@ public class Server implements Login{
         Registry r = null;
         System.setProperty("java.rmi.server.hostname",ip);
         r = LocateRegistry.createRegistry(1099);
-        r.bind("myserver", stub);
+        r.bind("Login", stub);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (AlreadyBoundException e) {
